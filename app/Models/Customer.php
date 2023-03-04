@@ -15,9 +15,11 @@ class Customer extends Model
         'address',
         'phone',
         'email',
-        'password',
         'vip_id',
         'created_at',
         'updated_at',
+    ];
+    protected $hidden = [
+        'password',
     ];
 }
