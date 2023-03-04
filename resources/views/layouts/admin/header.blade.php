@@ -572,9 +572,9 @@
                     <div class="mobile-menu">
                         <nav id="dropdown">
                             <ul class="mobile-menu-nav">
-                                <li><a data-toggle="collapse" data-target="#Charts" href="#">Home <span class="admin-project-icon nalika-icon nalika-down-arrow"></span></a>
+                                <li><a data-toggle="collapse" data-target="#Charts" href="#">Hfdsfdsome <span class="admin-project-icon nalika-icon nalika-down-arrow"></span></a>
                                     <ul class="collapse dropdown-header-top">
-                                        <li><a href="index.html">Dashboard v.1</a></li>
+                                        <li><a href="index.html">Dashboardsad</a></li>
                                         <li><a href="index-1.html">Dashboard v.2</a></li>
                                         <li><a href="index-3.html">Dashboard v.3</a></li>
                                         <li><a href="product-list.html">Product List</a></li>
@@ -608,25 +608,8 @@
                                         <li><a href="500.html">500 Page</a></li>
                                     </ul>
                                 </li>
-                                <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">Interface <span class="admin-project-icon nalika-icon nalika-down-arrow"></span></a>
-                                    <ul id="Miscellaneousmob" class="collapse dropdown-header-top">
-                                        <li><a href="google-map.html">Google Map</a>
-                                        </li>
-                                        <li><a href="data-maps.html">Data Maps</a>
-                                        </li>
-                                        <li><a href="pdf-viewer.html">Pdf Viewer</a>
-                                        </li>
-                                        <li><a href="x-editable.html">X-Editable</a>
-                                        </li>
-                                        <li><a href="code-editor.html">Code Editor</a>
-                                        </li>
-                                        <li><a href="tree-view.html">Tree View</a>
-                                        </li>
-                                        <li><a href="preloader.html">Preloader</a>
-                                        </li>
-                                        <li><a href="images-cropper.html">Images Cropper</a>
-                                        </li>
-                                    </ul>
+                                <li>
+                                    <a data-toggle="collapse" href="#">Quản Lý <span class="admin-project-icon nalika-icon nalika-down-arrow"></span></a>
                                 </li>
                                 <li><a data-toggle="collapse" data-target="#Chartsmob" href="#">Charts <span class="admin-project-icon nalika-icon nalika-down-arrow"></span></a>
                                     <ul id="Chartsmob" class="collapse dropdown-header-top">

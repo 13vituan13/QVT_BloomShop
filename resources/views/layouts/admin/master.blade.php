@@ -61,6 +61,10 @@
     <link rel="stylesheet" href="{{ asset('css/admin/responsive.css')}}">
     <!-- modernizr JS
 		============================================ -->
+    <link rel="stylesheet" href="https://kit.fontawesome.com/c461128840.css" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c461128840.js" crossorigin="anonymous"></script>
+    
+
     <script src="{{ asset('js/admin/vendor/modernizr-2.8.3.min.js')}}"></script>
 </head>
 
