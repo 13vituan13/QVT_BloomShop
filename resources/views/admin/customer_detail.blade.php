@@ -275,7 +275,7 @@
                 headers: {
                     'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
                 },
-
+                
                 beforeSend: function() {},
                 success: function(response) {
                     console.log(response)
