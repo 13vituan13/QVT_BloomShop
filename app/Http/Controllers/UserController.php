@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 class UserController extends StatusController
 {
     public function home()
-    {
+    {   
         return view("user.home");
     }
 
