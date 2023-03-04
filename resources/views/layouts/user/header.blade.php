@@ -11,7 +11,7 @@
             <div class="col-md-6 col-xs-6 text-center menu-1">
                 <ul>
                     <li class="has-dropdown">
-                        <a href="{{ route('product') }}">Product</a>
+                        <a href="{{ route('product') }}">San pham</a>
                         <ul class="dropdown">
                             <li><a href="{{ route('single') }}">Single Shop</a></li>
                         </ul>
