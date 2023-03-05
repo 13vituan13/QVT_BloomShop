@@ -25,7 +25,7 @@
                     
                 </ul>
                 <div class="ButtonUserGroup row">
-                    <button class="ButtonUserGroup__login">ĐĂNG NHẬP</button>
+                    <button id="openModalBtn" class="ButtonUserGroup__login">ĐĂNG NHẬP</button>
                     <button class="ButtonUserGroup__regist">ĐĂNG KÍ</button>
                 </div>
             </div>

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->increments('banner_id');
             $table->string('name');
             $table->string('image');
-            $table->timestamps();
         });
          
     }
