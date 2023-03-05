@@ -10,13 +10,18 @@ class BannerSeeder extends Seeder
 {
     public function run()
     {
-        $banners = ['xuân' => 'image_banner_01.jpg','hạ' => 'image_banner_02.jpg','thu' => 'image_banner_03.jpg', 'đông' => 'image_banner_04.jpg'];
+        $banners = [    
+                        'banner_1' => 'banner_1.png',
+                        'banner_2' => 'banner_2.png',
+                        'banner_3' => 'banner_3.png', 
+                        'banner_4' => 'banner_4.png',
+                        'banner_5' => 'banner_5.png', 
+                        'banner_6' => 'banner_6.png'
+                    ];
         foreach ($banners as $name => $banner) {
             Banner::insert([
                 'name' => $name,
                 'image' => $banner,
-                'created_at' => now(),
-                'updated_at' => now()
             ]);
         }
     }
