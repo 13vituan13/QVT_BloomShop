@@ -14,7 +14,6 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'image',
         'Inventory_number',
         'categogry_id',
         'created_at',

@@ -32,9 +32,9 @@ class UserController extends StatusController
         return view("user.services");
     }
     
-    public function single()
+    public function product_detail()
     {
-        return view("user.single");
+        return view("user.product_detail");
     }
 
 }

@@ -24,7 +24,7 @@ Route::get('/about', [USER::class, 'about'])->name('about');
 Route::get('/contact', [USER::class, 'contact'])->name('contact');
 Route::get('/product', [USER::class, 'product'])->name('product');
 Route::get('/services', [USER::class, 'services'])->name('services');
-Route::get('/single', [USER::class, 'single'])->name('single');
+Route::get('/product_detail', [USER::class, 'product_detail'])->name('product_detail');
 
 
 
