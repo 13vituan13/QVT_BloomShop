@@ -49,7 +49,7 @@
                         </ul>
                     </li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="{{ route('admin.logout') }}">
                             <i class="fa-solid fa-arrow-right-from-bracket icon-wrap"></i>
                             <span class="mini-click-non">Đăng Xuất</span>
                         </a>

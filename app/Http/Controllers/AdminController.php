@@ -7,8 +7,6 @@ class AdminController extends StatusController
 {
     public function product()
     {   
-        $admin = Auth::guard('admin')->user();
-        
         return view("admin.product_list");
     }
 }

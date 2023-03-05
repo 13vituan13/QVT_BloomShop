@@ -8,11 +8,10 @@ class CheckAdminSession
 {
     public function handle($request, Closure $next)
     {
-        return $next($request);
-        // if (Auth::guard('admin')->check()) {
-        //     return $next($request);
-        // }
-        // return redirect('/admin/login');
+        if (Auth::guard('admin')->check()) {
+            return $next($request);
+        }
+        return redirect('/admin/login');
     }
 }
 

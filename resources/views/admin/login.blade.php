@@ -36,15 +36,27 @@
                             <form class="signin-form" method="POST" action="{{ route('admin.login.submit') }}">
                                 {{ csrf_field() }}
                                 <div class="form-group mt-3">
-                                    <input type="text" class="form-control" id="email" name="email"
-                                        value="{{ old('email') }}" required autofocus>
+                                    <input type="text" class="form-control @if($errors->has('email')){{'border-danger'}}@endif" id="email" name="email"
+                                        value="{{ old('email') }}"  autofocus>
                                     <label class="form-control-placeholder" for="username">Username</label>
+                                    @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                    @endif
                                 </div>
+                                
                                 <div class="form-group">
-                                    <input type="password" id="password" name="password" class="form-control" required>
+                                    <input type="password" id="password" name="password" class="form-control @if($errors->has('password')){{'border-danger'}}@endif">
                                     <label class="form-control-placeholder" for="password">Password</label>
-                                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" 
+                                        @if($errors->has('password')){{"style=top:30%"}}@endif
+                                    ></span>
+                                    @if ($errors->has('password'))
+                                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                                    @endif
                                 </div>
+                                @if ($errors->has('loginfail'))
+                                    <div class="text-danger text-center">{{ $errors->first('loginfail') }}</div>
+                                @endif
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign
                                         In</button>
