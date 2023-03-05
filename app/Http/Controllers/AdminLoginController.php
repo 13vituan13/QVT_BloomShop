@@ -19,6 +19,7 @@ class AdminLoginController extends Controller
         $credentials = $request->only('email', 'password');
         // $remember = $request->has('remember'); // kiểm tra xem người dùng đã chọn "remember me" hay chưa
         if (Auth::guard('admin')->attempt($credentials)) {
+            
             return redirect()->intended('admin/product');
         }
         else {

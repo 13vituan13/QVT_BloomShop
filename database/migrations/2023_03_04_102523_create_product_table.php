@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('image');
             $table->integer('Inventory_number');
-            $table->integer('type_id');
+            $table->integer('category_id');
             $table->timestamps();
         });
          

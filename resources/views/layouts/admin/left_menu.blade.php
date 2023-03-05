@@ -26,13 +26,14 @@
                             <span class="mini-click-non">Trang Chủ</span>
                         </a>
                     </li>
-                    
-                    <li>
-                        <a href="index.html">
-                            <i class="fa-solid fa-user icon-wrap"></i>
-                            <span class="mini-click-non">Nhân Viên</span>
-                        </a>
-                    </li>
+                    @if(Auth::guard('admin')->user()->hasRole('admin'))
+                        <li>
+                            <a href="index.html">
+                                <i class="fa-solid fa-user icon-wrap"></i>
+                                <span class="mini-click-non">Nhân Viên</span>
+                            </a>
+                        </li>
+                    @endif
                     <li>
                         <a class="has-arrow" href="mailbox.html" aria-expanded="false">
                             <i class="fa-solid fa-list icon-wrap"></i>
