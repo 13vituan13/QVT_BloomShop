@@ -1,11 +1,11 @@
 @extends('layouts.user.master')
 @section('title', 'Home')
 @section('content')
-<aside id="fh5co-hero" class="js-fullheight">
-    <div class="flexslider js-fullheight">
+<aside id="fh5co-hero" style="height: auto;">
+    <div class="flexslider " style="height: auto;">
         <ul class="slides">
             @foreach ($banners as $item)
-            <li class="banner" style="background-image: url(../images/{{ $item->image }});">
+            <li class="banner" style="background-image: url({{ asset('images/banner/'.$item->image) }}" style="height: auto;">
                 <div class="overlay-gradient"></div>
                 <div class="container">
                     <div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
@@ -65,9 +65,11 @@
     <div class="container">
         <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <span>Cool Stuff</span>
-                <h2>Products.</h2>
-                <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+                <span>SẢN PHẨM HOA</span>
+                <h2>BEST CHOICE</h2>
+                <p>Hoa hồng Ecuador – Vẻ Đẹp Kiêu Hãnh Từ Bên Kia Địa Cầu<br>
+                    Hoa hồng Ecuador được ví như nàng thơ dịu dàng, quyến rũ trước một rừng hoa bạt ngàn màu sắc. Vẻ đẹp của hồng Ecuador thật khó để diễn tả bằng lời, và người tặng nó cũng mang nhiều nỗi tâm tư tình cảm giấu kín. 
+                </p>
             </div>
         </div>
         <div class="row">
@@ -239,11 +241,11 @@
                         <div class="item">
                             <div class="testimony-slide active text-center">
                                 <figure>
-                                    <img src="images/person1.jpg" alt="user">
+                                    <img src="{{ asset('images/client/client_01.png') }}" alt="user">
                                 </figure>
-                                <span>Jean Doe, via <a href="#" class="twitter">Twitter</a></span>
+                                <span>Mrs Trang, <a href="#" class="twitter">FACEBOOK</a></span>
                                 <blockquote>
-                                    <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+                                    <p>Hoa của shop đẹp tuyệt vời, giao nhanh, nhiệt tình, 10 điểm!!!</p>
                                 </blockquote>
                             </div>
                         </div>
