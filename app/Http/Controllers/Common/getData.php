@@ -24,7 +24,9 @@ function getProductList($inputs)
     $category_id = isset($inputs['category_id']) ? $inputs['category_id'] : null;
     $inventory_number = isset($inputs['inventory_number']) ? $inputs['inventory_number'] : null;
 
-    $query = Product::with('productImage')->with('Category')->with('Status');
+    $query = Product::with('category')
+                    ->with('status')
+                    ->with('product_image');
 
     if ($product_id) {
         $query->where('products.id', '=', $product_id);

@@ -28,18 +28,10 @@
                                     @foreach ($product_list as $item)
                                         <tr>
                                             <td>
-                                                {{-- @php
-                                                    // $img = isset($item->product_image) ? $item->product_image[0]['image'] : '';
-                                                    // echo $item->product_image;
-                                                    $img = $item->product_image[0]['image'];
-                                                @endphp --}}
-                                                {{-- @if(count($item->product_image) > 0)
-                                                    @foreach ($item->product_image as $v)
-                                                    {{ $v->image }}
-                                                    @endforeach
-                                                @endif --}}
-                                                
-                                                {{-- <img src="{{ asset("images/products/1/{$item->product_image[0]['image']}") }}" alt="" /> --}}
+                                                @php
+                                                    $img = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                                                @endphp
+                                                <img src="{{ asset("images/products/$item->product_id/{$img}") }}" alt="" />
                                             </td>
                                             <td>{{ $item->name }}</td>
                                             <td>

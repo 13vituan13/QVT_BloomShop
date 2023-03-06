@@ -27,7 +27,5 @@ class AdminController extends StatusController
         } else {
             return view("admin.product_list",$dataView);
         }
-        
     }
-    
 }
