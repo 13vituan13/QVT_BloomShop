@@ -5,10 +5,12 @@ class UserController extends StatusController
 {
     public function home()
     {   
-        $banners = getAllBanner();
+        
         $data = [
-            'banners' => $banners
+            'banners' => getAllBanner(),
+            'best_choice' => getBestChoiceProduct(),
         ];
+        
         return view("user.home",$data);
     }
 

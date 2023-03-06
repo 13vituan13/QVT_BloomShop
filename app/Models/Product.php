@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProductImage;
 
 class Product extends Model
 {
@@ -19,4 +20,8 @@ class Product extends Model
         'created_at',
         'updated_at',
     ];
+    public function productImage()
+    {
+        return $this->hasMany(ProductImage::class,'product_id','product_id');
+    }
 }
