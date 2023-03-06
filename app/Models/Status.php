@@ -3,12 +3,12 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class VipMember extends Model
+class Status extends Model
 {
-    protected $table = 'vip_member';
-    protected $primaryKey = 'vip_id';
+    protected $table = 'status';
+    protected $primaryKey = 'status_id';
     protected $fillable = [
+        'status_id',
         'name',
-        'offer'
     ];
 }
