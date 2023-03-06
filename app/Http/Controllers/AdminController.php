@@ -25,7 +25,7 @@ class AdminController extends StatusController
         if ($request->ajax()) {
             $tableHTML = view('admin.partial.product_table', $dataView)->render();
         } else {
-            return view("admin.product_list");
+            return view("admin.product_list",$dataView);
         }
         
     }
