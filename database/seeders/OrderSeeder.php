@@ -13,7 +13,7 @@ class OrderSeeder extends Seeder
     {
         $faker = Faker::create();
         for ($i = 0; $i < 20; $i++) {
-            Order::table('order')->insert([
+            Order::insert([
                 'customer_id' => rand(1, 50),
                 'date' => $faker->dateTimeBetween('-1 month', 'now'),
                 'created_at' => now(),
