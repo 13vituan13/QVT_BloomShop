@@ -37,16 +37,22 @@
                                 {{ csrf_field() }}
                                 <div class="form-group mt-3">
                                     <input type="text" class="form-control @if($errors->has('email')){{'border-danger'}}@endif" id="email" name="email"
-                                        value="{{ old('email') }}"  autofocus>
+                                        value="{{ old('email') }}"  required autofocus
+                                        aria-required="true" 
+                                        oninvalid="this.setCustomValidity('Vui lòng nhập tài khoản của bạn')" 
+                                        oninput="setCustomValidity('')">
                                     <label class="form-control-placeholder" for="username">Username</label>
                                     @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                     @endif
                                 </div>
                                 
-                                <div class="form-group">
-                                    <input type="password" id="password" name="password" class="form-control @if($errors->has('password')){{'border-danger'}}@endif">
-                                    <label class="form-control-placeholder" for="password">Password</label>
+                                <div class="form-group" style="margin-top:2rem">
+                                    <input type="password" id="password" name="password"  required class="form-control @if($errors->has('password')){{'border-danger'}}@endif"
+                                        aria-required="true" 
+                                        oninvalid="this.setCustomValidity('Vui lòng nhập password của bạn')" 
+                                        oninput="setCustomValidity('')">
+                                    <label class="form-control-placeholder" for="password" >Password</label>
                                     <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" 
                                         @if($errors->has('password')){{"style=top:30%"}}@endif
                                     ></span>

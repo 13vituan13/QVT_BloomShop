@@ -230,7 +230,7 @@
     <div class="container">
         <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <span>Testimony</span>
+                <span>PHẢN HỒI</span>
                 <h2>Happy Clients</h2>
             </div>
         </div>
@@ -241,33 +241,36 @@
                         <div class="item">
                             <div class="testimony-slide active text-center">
                                 <figure>
+                                    <img src="{{ asset('images/client/client_02.png') }}" alt="user">
+                                </figure>
+                                <span>Mr. Ralph Waldo, Emerson <a href="#" class="twitter">TWITTER</a></span>
+                                <blockquote>
+                                    <p>&ldquo;Hoa là một nụ cười của thiên nhiên.<br> 
+                                    Hoa không chỉ làm cho thế giới trở nên đẹp hơn, nó còn giúp con người cảm thấy yêu đời hơn.&rdquo;</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="testimony-slide active text-center">
+                                <figure>
                                     <img src="{{ asset('images/client/client_01.png') }}" alt="user">
                                 </figure>
-                                <span>Mrs Trang, <a href="#" class="twitter">FACEBOOK</a></span>
+                                <span>Mrs. Trang, <a href="#" class="twitter">FACEBOOK</a></span>
                                 <blockquote>
-                                    <p>Hoa của shop đẹp tuyệt vời, giao nhanh, nhiệt tình, 10 điểm!!!</p>
+                                    <p>Hoa của shop đẹp tuyệt vời,chuyển phát giao nhanh,nhân viên nhiệt tình, 100 điểm!!!<br>
+                                    Sẽ quay lại và đặt thêm nhiều vào các dịp khác nữa.</p>
                                 </blockquote>
                             </div>
                         </div>
                         <div class="item">
                             <div class="testimony-slide active text-center">
                                 <figure>
-                                    <img src="images/person2.jpg" alt="user">
+                                    <img src="{{ asset('images/client/client_03.png') }}" alt="user">
                                 </figure>
-                                <span>John Doe, via <a href="#" class="twitter">Twitter</a></span>
+                                <span>Mrs. Deborah Chaskin <a href="#" class="twitter">INSTAGRAM</a></span>
                                 <blockquote>
-                                    <p>&ldquo;Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony-slide active text-center">
-                                <figure>
-                                    <img src="images/person3.jpg" alt="user">
-                                </figure>
-                                <span>John Doe, via <a href="#" class="twitter">Twitter</a></span>
-                                <blockquote>
-                                    <p>&ldquo;Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+                                    <p>&ldquo;Hoa là ngôn ngữ của tình yêu.<br>
+                                    Hoa không nói, nhưng nếu bạn nghe kỹ, bạn sẽ cảm nhận được tình yêu của chúng.&rdquo;</p>
                                 </blockquote>
                             </div>
                         </div>
@@ -331,30 +334,6 @@
     </div>
 </div>
 
-<div id="fh5co-started">
-    <div class="container">
-        <div class="row animate-box">
-            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <h2>Newsletter</h2>
-                <p>Just stay tune for our latest Product. Now you can subscribe</p>
-            </div>
-        </div>
-        <div class="row animate-box">
-            <div class="col-md-8 col-md-offset-2">
-                <form class="form-inline">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <button type="submit" class="btn btn-default btn-block">Subscribe</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 @include('user.login')
 @endsection
