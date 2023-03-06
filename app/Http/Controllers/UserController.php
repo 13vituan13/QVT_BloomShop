@@ -1,12 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
 
 class UserController extends StatusController
 {
     public function home()
-    {
-        return view("user.home");
+    {   
+        $banners = getAllBanner();
+        $data = [
+            'banners' => $banners
+        ];
+        return view("user.home",$data);
     }
 
     public function about()
@@ -29,9 +32,9 @@ class UserController extends StatusController
         return view("user.services");
     }
     
-    public function single()
+    public function product_detail()
     {
-        return view("user.single");
+        return view("user.product_detail");
     }
 
 }

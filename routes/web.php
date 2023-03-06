@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\UserController AS USER;
+use App\Http\Controllers\UserLoginController AS USER_LOGIN;
+
+use App\Http\Controllers\AdminController AS ADMIN;
+use App\Http\Controllers\AdminLoginController AS ADMIN_LOGIN;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +19,24 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', [UserController::class, 'home'])->name('home');
-Route::get('/about', [UserController::class, 'about'])->name('about');
-Route::get('/contact', [UserController::class, 'contact'])->name('contact');
-Route::get('/product', [UserController::class, 'product'])->name('product');
-Route::get('/services', [UserController::class, 'services'])->name('services');
-Route::get('/single', [UserController::class, 'single'])->name('single');
+Route::get('/', [USER::class, 'home'])->name('home');
+Route::get('/about', [USER::class, 'about'])->name('about');
+Route::get('/contact', [USER::class, 'contact'])->name('contact');
+Route::get('/product', [USER::class, 'product'])->name('product');
+Route::get('/services', [USER::class, 'services'])->name('services');
+Route::get('/product_detail', [USER::class, 'product_detail'])->name('product_detail');
 
 
-Route::get('/admin/product', [AdminController::class, 'product'])->name('admin.product');
+
+Route::prefix('/admin')->group(function() {
+    Route::get('login', [ADMIN_LOGIN::class, 'login'])->name('admin.login');
+    Route::get('logout', [ADMIN_LOGIN::class, 'logout'])->name('admin.logout');
+
+    Route::post('login_submit', [ADMIN_LOGIN::class, 'postLogin'])->name('admin.login.submit');
+});
+
+Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
+    Route::get('product', [ADMIN::class, 'product'])->name('admin.product');
+});
+
 

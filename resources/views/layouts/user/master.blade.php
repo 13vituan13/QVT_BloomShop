@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 
-  	
+	<link rel="shortcut icon" href="{{ asset('images/logo/Favicons/favicon-60x60.png') }}" type="image/x-icon">
 
 	<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
 	<!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i" rel="stylesheet"> -->
@@ -16,8 +16,10 @@
 	<link rel="stylesheet" href="{{ asset('css/user/animate.css') }}">
 	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="{{ asset('css/user/icomoon.css')}}">
+	
 	<!-- Bootstrap  -->
 	<link rel="stylesheet" href="{{ asset('css/user/bootstrap.css')}}">
+	
 
 	<!-- Flexslider  -->
 	<link rel="stylesheet" href="{{ asset('css/user/flexslider.css')}}">
@@ -35,6 +37,7 @@
 	<!--[if lt IE 9]>
 	<script src="{{ asset('js/user/respond.min.js')}}"></script>
 	<![endif]-->
+	
 
 	</head>
 	<body>
@@ -70,7 +73,29 @@
 	<script src="{{ asset('js/user/main.js')}}"></script>
 	<script>
 		$(document).ready(function(){
-			$('.banner').css('height','auto');
+				$('.banner').css('height','auto');
+				// Lấy các phần tử từ HTML
+				var modal = $("#myModal");
+				var btn = $("#openModalBtn");
+				var span = $(".close")[0];
+
+				// Khi người dùng nhấn nút mở modal, hiển thị modal
+				btn.on("click", function() {
+				modal.css("display", "block");
+				});
+
+				// Khi người dùng nhấn vào nút đóng, ẩn modal
+				$(span).on("click", function() {
+				modal.css("display", "none");
+				});
+
+				// Khi người dùng nhấn ra ngoài modal, ẩn modal
+				$(window).on("click", function(event) {
+				if (event.target == modal[0]) {
+				modal.css("display", "none");
+				}
+				});
+
 		});
 	</script>
 	</body>
