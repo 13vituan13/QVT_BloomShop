@@ -18,9 +18,10 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('Inventory_number');
             $table->integer('category_id');
+            $table->integer('status_id');
+            $table->integer('flg_del')->nullable();
             $table->timestamps();
         });
-         
     }
 
     /**

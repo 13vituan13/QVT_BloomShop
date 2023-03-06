@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
-
+use App\Models\VipMember;
 class VIPSeeder extends Seeder
 {
     public function run()
@@ -18,7 +16,7 @@ class VIPSeeder extends Seeder
                 ];
 
         foreach($data as $key => $value){
-            DB::table('vip_member')->insert([
+            VipMember::insert([
                 'name' => $key,
                 'offer' => $value,
                 'created_at' => now(),

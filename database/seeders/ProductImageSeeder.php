@@ -11,14 +11,10 @@ class ProductImageSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
-        $productIds = Product::pluck('product_id')->toArray();
-        
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 1; $i < 10; $i++) {
             ProductImage::insert([
-                'product_id' => $faker->randomElement($productIds),
-                'no'    => rand(1, 50),
-                'image' => $faker->imageUrl(640, 480, 'cats'),
+                'product_id' => $i,
+                'image' => 'product.png',
             ]);
         }
     }

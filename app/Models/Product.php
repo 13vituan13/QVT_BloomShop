@@ -2,6 +2,9 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Status;
+use App\Models\Category;
+use App\Models\ProductImage;
 
 class Product extends Model
 {
@@ -16,7 +19,21 @@ class Product extends Model
         'price',
         'Inventory_number',
         'categogry_id',
+        'status_id',
+        'flg_del',
         'created_at',
         'updated_at',
     ];
+    public function Status()
+    {
+        return $this->hasOne(Status::class,'status_id','status_id');
+    }
+    public function Category()
+    {
+        return $this->hasOne(Category::class,'category_id','category_id');
+    }
+    public function productImage()
+    {
+        return $this->hasMany(ProductImage::class,'product_id','product_id');
+    }
 }
