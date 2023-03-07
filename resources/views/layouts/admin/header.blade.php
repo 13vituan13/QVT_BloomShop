@@ -698,11 +698,12 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                 <div class="breadcomb-wp">
                                     <div class="breadcomb-icon">
-                                        <i class="icon nalika-home"></i>
+                                        {{-- <i class="icon nalika-home"></i> --}}
+                                        <i class="{{ $icon_title }}"></i>
                                     </div>
                                     <div class="breadcomb-ctn">
-                                        <h2>Product List</h2>
-                                        <p>Welcome to Nalika <span class="bread-ntd">Admin Template</span></p>
+                                        <h2>{{ $title }}</h2>
+                                        <p>BloomShop <span class="bread-ntd">Admin</span></p>
                                     </div>
                                 </div>
                             </div>

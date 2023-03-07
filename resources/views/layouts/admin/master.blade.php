@@ -7,6 +7,7 @@
     <title>Product List | Nalika - Material Admin Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- favicon
 		============================================ -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
@@ -59,8 +60,14 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('css/admin/responsive.css')}}">
+
+    <!-- CKEDITOR JS
+		============================================ -->
+    <script src="//cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
     <!-- modernizr JS
 		============================================ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" href="https://kit.fontawesome.com/c461128840.css" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c461128840.js" crossorigin="anonymous"></script>
     
@@ -127,6 +134,7 @@
     <!-- main JS
 		============================================ -->
     <script src="{{ asset('js/admin/main.js')}}"></script>
+    
 </body>
 
 </html>

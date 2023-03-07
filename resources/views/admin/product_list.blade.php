@@ -11,7 +11,7 @@
                     <div class="product-status-wrap">
                         <h4>Danh Sách Sản Phẩm</h4>
                         <div class="add-product">
-                            <a href="product-edit.html">Add Product</a>
+                            <a href="{{ route('admin.product_detail') }}">Add Product</a>
                         </div>
                         <table>
                             <thead>
@@ -42,7 +42,7 @@
                                                 @endif
                                             </td>
                                             <td>{{ isset($item->category) ? $item->category['name'] : ''}}</td>
-                                            <td>{{ $item->Inventory_number }}</td>
+                                            <td>{{ $item->inventory_number }}</td>
                                             <td>{{ "$$item->price" }}</td>
                                             <td>
                                                 <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
@@ -54,14 +54,11 @@
                             </tbody>
                         </table>
                         <div class="custom-pagination">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
+                            {{ $product_list->links('admin.partial.pagination') }}
                         </div>
+                        
+                            
+                       
                     </div>
                 </div>
             </div>
