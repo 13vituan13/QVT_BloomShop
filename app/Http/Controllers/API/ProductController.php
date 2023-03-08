@@ -59,10 +59,9 @@ class ProductController extends APIStatusController
         //Start create
         DB::beginTransaction();
         try {
-            Product::create($input);
-            $product = new Product();
-            $last_id= $product->getConnection()->getPdo()->lastInsertId();
-            $res = array('id' => $last_id);
+            $product = Product::create($input);
+            $last_id = $product->id; //just apply for Id = auto-incrementing
+            $res = ['id' => $last_id];
             //End create
             DB::commit();
             return $this->successResponse('Insert successfully created.',  $res);
