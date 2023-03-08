@@ -51,5 +51,10 @@ class AdminController extends Controller
 
         return view("admin.product_detail", $dataView);
     }
+    public function test()
+    {   
+        
+        return view("admin.test");
+    }
 
 }

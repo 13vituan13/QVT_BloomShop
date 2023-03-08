@@ -27,6 +27,7 @@ Route::get('/services', [USER::class, 'services'])->name('services');
 Route::get('/product_detail', [USER::class, 'product_detail'])->name('product_detail');
 
 
+Route::get('/test', [ADMIN::class, 'test'])->name('test');
 
 Route::prefix('/admin')->group(function() {
     Route::get('login', [ADMIN_LOGIN::class, 'login'])->name('admin.login');
