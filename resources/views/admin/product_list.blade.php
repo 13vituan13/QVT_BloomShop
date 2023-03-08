@@ -29,9 +29,9 @@
                                         <tr>
                                             <td>
                                                 @php
-                                                    $img = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                                                    $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
                                                 @endphp
-                                                <img src="{{ asset("images/products/$item->product_id/{$img}") }}" alt="" />
+                                                <img src="{{ asset("storage/{$path}") }}" alt="" />
                                             </td>
                                             <td>{{ $item->name }}</td>
                                             <td>
@@ -45,7 +45,7 @@
                                             <td>{{ $item->inventory_number }}</td>
                                             <td>{{ "$$item->price" }}</td>
                                             <td>
-                                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed" onclick="goToPage('{{ route('admin.product_detail',['id' => $item->product_id]) }}')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                                 <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             </td>
                                         </tr>
@@ -64,6 +64,10 @@
             </div>
         </div>
     </div>
-    
+    <script>
+        function goToPage(url){
+            window.location.href = url
+        }
+    </script>
 
 @endsection

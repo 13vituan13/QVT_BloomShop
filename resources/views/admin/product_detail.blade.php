@@ -59,13 +59,23 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="review-tab-pro-inner">
-                            <ul id="myTab3" class="tab-review-design">
-                                <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i>
-                                        Sản Phẩm</a></li>
-                                <li><a href="#reviews"><i class="icon nalika-picture" aria-hidden="true"></i> Ảnh</a></li>
-                                <li><a href="#INFORMATION"><i class="icon nalika-chat" aria-hidden="true"></i> Mô Tả</a>
-                                </li>
-                            </ul>
+                            <div style="display:flex">
+                                <ul id="myTab3" class="tab-review-design">
+                                    <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i>
+                                            Sản Phẩm</a></li>
+                                    <li><a href="#reviews"><i class="icon nalika-picture" aria-hidden="true"></i> Ảnh</a></li>
+                                    <li><a href="#INFORMATION"><i class="icon nalika-chat" aria-hidden="true"></i> Mô Tả</a>
+                                    </li>
+                                </ul>
+                                
+                                        <div class="text-center custom-pro-edt-ds">
+                                            <button type="button"
+                                                class="btn btn-ctl-bt waves-effect waves-light m-r-10"
+                                                onclick="save()">Thêm Mới
+                                            </button>
+                                        </div>
+                            </div>
+                            
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 <div class="product-tab-list tab-pane fade active in" id="description">
                                     <div class="row">
@@ -84,8 +94,12 @@
                                                     <option value="">Chọn Loại Sản Phẩm</option>
                                                     @if (count($category_list) > 0)
                                                         @foreach ($category_list as $category)
-                                                            <option value="{{ $category->category_id }}">
-                                                                {{ $category->name }}</option>
+                                                            <option value="{{ $category->category_id }}"
+                                                                @if($products->category_id && $products->category_id == $category->category_id)
+                                                                {{'selected'}}
+                                                                @endif>
+                                                                    {{ $category->name }}
+                                                            </option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -96,7 +110,11 @@
                                                         <option value="">Chọn Trạng Thái</option>
                                                         @if (count($status_list) > 0)
                                                             @foreach ($status_list as $status)
-                                                                <option value="{{ $status->status_id }}">{{ $status->name }}
+                                                                <option value="{{ $status->status_id }}"
+                                                                    @if($products->status_id && $products->status_id == $status->status_id)
+                                                                    {{'selected'}}
+                                                                    @endif
+                                                                    >{{ $status->name }}
                                                                 </option>
                                                             @endforeach
                                                         @endif
@@ -123,19 +141,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="text-center custom-pro-edt-ds">
-                                                <button type="button"
-                                                    class="btn btn-ctl-bt waves-effect waves-light m-r-10"
-                                                    onclick="save()">Save
-                                                </button>
-                                                <button type="button"
-                                                    class="btn btn-ctl-bt waves-effect waves-light">Discard
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <div class="product-tab-list tab-pane fade" id="reviews">
                                     <div class="row">
@@ -196,7 +202,7 @@
                                         <div class="review-content-section">
                                             <div class="card-block">
                                                 <div class="input-group mg-b-15">
-                                                    <textarea id="desc" name="desc"></textarea>
+                                                    <textarea id="desc" name="desc">{{ isset($products) ? $products->description : '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -230,6 +236,7 @@
 
         // ************************ Drag and drop ***************** //
         let dropArea = document.getElementById("drop-area")
+        let fileList = [];
 
         // Prevent default drag behaviors
         ;
@@ -292,10 +299,9 @@
         }
 
         function handleFiles(files) {
-            files = [...files]
-            initializeProgress(files.length)
-            files.forEach(uploadFile)
-            files.forEach(previewFile)
+            fileList.push(...files)
+            initializeProgress(files.length) //load per image upload success
+            fileList.forEach(previewFile) //review image in view
         }
 
         function previewFile(file) {
@@ -308,34 +314,44 @@
             }
         }
 
-        function uploadFile(file, i) {
-            var url = 'https://api.cloudinary.com/v1_1/joezim007/image/upload'
-            var xhr = new XMLHttpRequest()
-            var formData = new FormData()
-            xhr.open('POST', url, true)
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+        // function uploadFile(file, i) {
+        //     var url = 'https://api.cloudinary.com/v1_1/joezim007/image/upload'
+        //     var xhr = new XMLHttpRequest()
+        //     var formData = new FormData()
+        //     xhr.open('POST', url, true)
+        //     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
 
-            // Update progress (can be used to show progress indicator)
-            xhr.upload.addEventListener("progress", function(e) {
-                updateProgress(i, (e.loaded * 100.0 / e.total) || 100)
-            })
+        //     // Update progress (can be used to show progress indicator)
+        //     xhr.upload.addEventListener("progress", function(e) {
+        //         updateProgress(i, (e.loaded * 100.0 / e.total) || 100)
+        //     })
 
-            xhr.addEventListener('readystatechange', function(e) {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    updateProgress(i, 100) // <- Add this
-                } else if (xhr.readyState == 4 && xhr.status != 200) {
-                    // Error. Inform the user
-                }
-            })
+        //     xhr.addEventListener('readystatechange', function(e) {
+        //         if (xhr.readyState == 4 && xhr.status == 200) {
+        //             updateProgress(i, 100) // <- Add this
+        //         } else if (xhr.readyState == 4 && xhr.status != 200) {
+        //             // Error. Inform the user
+        //         }
+        //     })
 
-            formData.append('upload_preset', 'ujpu6gyk')
-            formData.append('file', file)
-            xhr.send(formData)
-        }
+        //     formData.append('upload_preset', 'ujpu6gyk')
+        //     formData.append('file', file)
+        //     xhr.send(formData)
+        // }
 
         function save() {
+            var formData = new FormData();
+            fileList.forEach((file, index) => {
+                formData.append('images_list[]', file)
+                // formData.append('name_' + index, file.name)
+                // formData.append('size_' + index, file.size)
+                // formData.append('type_' + index, file.type)
+                // formData.append('last_modified_' + index, file.lastModified)
+            })
+
+            // console.log([...formData]);
             let description = CKEDITOR.instances.desc.getData();
-            var formData = new FormData()
+           
             formData.append('name', $('#name').val())
             formData.append('inventory_number', $('#inventory_number').val())
             formData.append('price', $('#price').val())

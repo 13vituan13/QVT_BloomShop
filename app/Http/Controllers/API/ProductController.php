@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\API\APIStatusController;
-use Illuminate\Support\Facades\DB;
-use Exception;
+use Illuminate\Http\Request; //using Request Laravel
+use Illuminate\Support\Facades\Validator; //Check Validation Laravel
+use App\Http\Controllers\API\APIStatusController; //Get custom status reponse 
+use Illuminate\Support\Facades\Storage; //Handle File
+use Illuminate\Support\Facades\DB; //Handle DB && Transaction
+use Exception; //Return Msg Error 
 
 use App\Models\Product;
+use App\Models\ProductImage;
 
 
 class ProductController extends APIStatusController
 {   
+    private $PATH_PRODUCT_IMAGE;
+    public function __construct()
+    {
+        $this->PATH_PRODUCT_IMAGE = config('path.PRODUCT_IMAGE');
+
+    }
     private static $Rules = [
         'name' => 'required|string|max:20',
         'price' => 'required|integer',
@@ -32,6 +40,7 @@ class ProductController extends APIStatusController
     
     public function validateInput($input)
     {
+        
         $validator = Validator::make($input, self::$Rules, self::$Messages); // Initialization validator with rules
 
         // Check input request from client
@@ -59,12 +68,40 @@ class ProductController extends APIStatusController
         //Start create
         DB::beginTransaction();
         try {
+            $input['created_at'] = now();
+            $input['updated_at'] = now();
             $product = Product::create($input);
-            $last_id = $product->id; //just apply for Id = auto-incrementing
-            $res = ['id' => $last_id];
+            $product = $product->fresh(); // Fresh product table in Db
+            $last_id = $product->product_id; //Just apply for Id = auto-incrementing
+
+            //handle image product
+            if ($request->hasFile('images_list')) {
+                $images_list = $request->file('images_list');
+                
+                $folder_path = $this->PATH_PRODUCT_IMAGE.$last_id;
+                Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
+
+                foreach ($images_list as $file) {
+                    $file_name = $file->getClientOriginalName();
+
+                    $file_path = $folder_path.'/'.$file_name;
+
+                    $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
+                    
+                    //create ImageProduct row
+                    $product_image = [
+                        'product_id' => $last_id,
+                        'image' => $file_path,
+                    ];
+
+                    ProductImage::create($product_image);
+                }
+            }
+
+            $result = ['id' => $last_id];
             //End create
             DB::commit();
-            return $this->successResponse('Insert successfully created.',  $res);
+            return $this->successResponse('Insert successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
