@@ -12,22 +12,60 @@ use App\Models\Product;
 
 
 class ProductController extends APIStatusController
-{
-    public function store(Request $request)
+{   
+    private static $Rules = [
+        'name' => 'required|string|max:20',
+        'price' => 'required|integer',
+        'inventory_number' => 'required|integer',
+        'category_id' => 'required',
+        'status_id' => 'required',
+    ];
+    private static $Messages = [
+        'name.required' => 'Vui lòng nhập tên sản phẩm',
+        'price.required' => 'Vui lòng nhập giá sản phẩm',
+        'price.integer' => 'Giá sản phẩm phải là số nguyên',
+        'inventory_number.required' => 'Vui lòng nhập số lượng tồn kho',
+        'inventory_number.integer' => 'Số lượng tồn kho phải là số nguyên',
+        'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
+        'status_id.required' => 'Vui lòng chọn trạng thái sản phẩm',
+    ];
+    
+    public function validateInput($input)
     {
+        $validator = Validator::make($input, self::$Rules, self::$Messages); // Initialization validator with rules
+
+        // Check input request from client
+        $result_validator = [
+            'status' => true,
+        ];
+        // If fails
+        if ($validator->fails()) {
+            $result_validator['status'] = false;
+            $result_validator['msg_error'] = $validator->errors();
+        }
+        return $result_validator;
+    }
+
+    public function store(Request $request)
+    {   
         $input = $request->all();
 
+        $result_validator = self::validateInput($input);
 
+        if (!$result_validator['status']) {
+            return response()->json($result_validator['msg_error'], 400);
+        }
 
-        //Start Insert
+        //Start create
         DB::beginTransaction();
         try {
             Product::create($input);
-            // $lastid = Product::getPdo()->lastInsertId();
-            // $res = array('id' => $lastid);
-            //End Insert
+            $product = new Product();
+            $last_id= $product->getConnection()->getPdo()->lastInsertId();
+            $res = array('id' => $last_id);
+            //End create
             DB::commit();
-            return $this->successResponse('Insert successfully created.', 1);
+            return $this->successResponse('Insert successfully created.',  $res);
         } catch (Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
