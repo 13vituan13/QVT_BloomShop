@@ -82,8 +82,7 @@ class ProductController extends APIStatusController
                 Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
 
                 foreach ($images_list as $file) {
-                    $file_name = $file->getClientOriginalName();
-
+                    $file_name = uniqid().'_'.$file->getClientOriginalName();
                     $file_path = $folder_path.'/'.$file_name;
 
                     $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
@@ -109,36 +108,60 @@ class ProductController extends APIStatusController
     }
 
 
-    public function update(Request $request, $Kokyaku_Id)
+    public function update(Request $request)
     {
+        $input = $request->all();
+        $product_id = $input['product_id'];
+        $result_validator = self::validateInput($input);
 
-        // $input = $request->all();
-        // $Kokyaku = MKokyaku::find($Kokyaku_Id);
-        //     $Kokyaku->Kaishamei = $input['Kaishamei'];
-        //     $Kokyaku->KaishameiKana = $input['KaishameiKana'];
-        //     $Kokyaku->YuubinBangou = $input['YuubinBangou'];
-        //     $Kokyaku->Todoufuken = $input['Todoufuken'];
-        //     $Kokyaku->Shozaichi = $input['Shozaichi'];
-        //     $Kokyaku->Tatemonomei = $input['Tatemonomei'];
-        //     $Kokyaku->Tel = $input['Tel'];
-        //     $Kokyaku->Fax = $input['Fax'];
-        //     $Kokyaku->Tantoushamei = $input['Tantoushamei'];
-        //     $Kokyaku->TantoushaMail = $input['TantoushaMail'];
-        //     $Kokyaku->Flg_Kaiyaku = $input['Flg_Kaiyaku'];
+        if (!$result_validator['status']) {
+            return response()->json($result_validator['msg_error'], 400);
+        }
 
-        // //Start update
-        // DB::beginTransaction();
-        // try {
+        //Start create
+        DB::beginTransaction();
+        try {
+            $product = Product::find($product_id);
+            $product->name = $input['name'];
+            $product->description = $input['description'];
+            $product->price = $input['price'];
+            $product->inventory_number = $input['inventory_number'];
+            $product->category_id = $input['category_id'];
+            $product->status_id = $input['status_id'];
+            $product->updated_at = now();
+            $product->save();
 
-        //     $Kokyaku->save();
-        //     //End update
-        //     DB::commit();
-        //     return $this->successResponse('Koguchi successfully updated.', $Kokyaku);
-        // } catch (Exception $e) {
-        //     DB::rollBack();
-        //     throw new Exception($e->getMessage());
-        // }
+            //handle image product
+            if ($request->hasFile('images_list')) {
+                $images_list = $request->file('images_list');
+                ProductImage::find($product_id)->delete();
+                $folder_path = $this->PATH_PRODUCT_IMAGE.$product_id;
+                Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
 
+                foreach ($images_list as $file) {
+                    $file_name = uniqid().'_'.$file->getClientOriginalName();
+                    $file_path = $folder_path.'/'.$file_name;
+
+                    $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
+                    
+                    //create ImageProduct row
+                    $product_image = [
+                        'product_id' => $product_id,
+                        'image' => $file_path,
+                    ];
+
+                    ProductImage::create($product_image);
+                }
+            }
+            
+            $result = ['product_id' => $product_id];
+            //End create
+            DB::commit();
+            return $this->successResponse('Insert successfully created.',  $result);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function destroy($Kokyaku_Id)

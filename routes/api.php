@@ -16,9 +16,8 @@ use App\Http\Controllers\API\ProductController;
 */
 
 Route::prefix('/admin')->group(function() {
-    
     Route::post('product_store', [ProductController::class, 'store'])->name('api.product.store');
-    
+    Route::post('product_update', [ProductController::class, 'update'])->name('api.product.update');
 });
 
 

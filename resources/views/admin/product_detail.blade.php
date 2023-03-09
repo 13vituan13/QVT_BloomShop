@@ -5,9 +5,8 @@
     #drop-area {
         border: 2px dashed #ccc;
         border-radius: 20px;
-        width: 480px;
+        width: 100%;
         font-family: sans-serif;
-        margin: 100px auto;
         padding: 20px;
     }
 
@@ -69,10 +68,18 @@
                                 </ul>
                                 
                                         <div class="text-center custom-pro-edt-ds">
+                                            @if(isset($products->product_id))
+                                            <button type="button"
+                                                class="btn btn-ctl-bt waves-effect waves-light m-r-10"
+                                                onclick="update()">Cập Nhật
+                                            </button>
+                                            @else
                                             <button type="button"
                                                 class="btn btn-ctl-bt waves-effect waves-light m-r-10"
                                                 onclick="save()">Thêm Mới
                                             </button>
+                                            @endif
+
                                         </div>
                             </div>
                             
@@ -206,7 +213,7 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="review-content-section">
                                             <div class="card-block">
-                                                <div class="input-group mg-b-15">
+                                                <div class="input-group mg-b-15" style="width:100%">
                                                     <textarea id="desc" name="desc">{{ isset($products) ? $products->description : '' }}</textarea>
                                                 </div>
                                             </div>
@@ -240,9 +247,11 @@
         
 
         // ************************ Drag and drop ***************** //
-        let dropArea = document.getElementById("drop-area")
-        let fileList = [];
-
+        let dropArea = document.getElementById("drop-area");
+        let fileList = {!! json_encode($products->product_image) !!};
+        let product_id = {!! json_encode($products->product_id) !!};
+        console.log(fileList)
+        
         // Prevent default drag behaviors
         ;
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -305,8 +314,10 @@
 
         function handleFiles(files) {
             fileList.push(...files)
-            initializeProgress(fileList.length) //load per image upload success
-            fileList.forEach(previewFile) //review image in view
+            
+            files = [...files]
+            initializeProgress(files.length) //load per image upload success
+            files.forEach(previewFile) //review image in view
 
             // files = [...files]
             // initializeProgress(files.length)
@@ -371,6 +382,40 @@
             console.log([...formData])
             $.ajax({
                 url: '{{ route('api.product.store') }}',
+                type: 'POST',
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                headers: {
+                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                },
+                beforeSend: function() {},
+                success: function(response) {
+                    console.log(response)
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            }); //end ajax
+        }
+        function update() {
+            var formData = new FormData();
+            fileList.forEach((file, index) => {
+                formData.append('images_list[]', file)
+            })
+            let description = CKEDITOR.instances.desc.getData();
+           
+            formData.append('product_id', product_id)
+            formData.append('name', $('#name').val())
+            formData.append('inventory_number', $('#inventory_number').val())
+            formData.append('price', $('#price').val())
+            formData.append('status_id', $('#status_id').val())
+            formData.append('category_id', $('#category_id').val())
+            formData.append('description', description)
+            console.log([...formData])
+            $.ajax({
+                url: '{{ route('api.product.update')}}',
                 type: 'POST',
                 data: formData,
                 dataType: "json",
