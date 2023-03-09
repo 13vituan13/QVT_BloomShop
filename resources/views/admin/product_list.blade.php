@@ -11,7 +11,7 @@
                     <div class="product-status-wrap">
                         <h4>Danh Sách Sản Phẩm</h4>
                         <div class="add-product">
-                            <a href="{{ route('admin.product_detail') }}">Add Product</a>
+                            <a href="{{ route('admin.product_detail') }}">Thêm mới</a>
                         </div>
                         <table>
                             <thead>
