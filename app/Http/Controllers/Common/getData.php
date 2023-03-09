@@ -1,6 +1,8 @@
 <?php
 use App\Models\Banner;
 use App\Models\Customer;
+use App\Models\Status;
+use App\Models\Category;
 use App\Models\Product;
 
 function getAllCustomer(){
@@ -11,9 +13,17 @@ function getAllBanner(){
     $res = Banner::all();
     return $res;
 }
+function getAllStatus(){
+    $res = Status::all();
+    return $res;
+}
+function getAllCategory(){
+    $res = Category::all();
+    return $res;
+}
 
 function getBestChoiceProduct(){
-    $res = Product::with('productImage')->get();
+    $res = Product::with('product_image')->get();
     return $res;
 }
 function getProductList($inputs)
@@ -24,7 +34,9 @@ function getProductList($inputs)
     $category_id = isset($inputs['category_id']) ? $inputs['category_id'] : null;
     $inventory_number = isset($inputs['inventory_number']) ? $inputs['inventory_number'] : null;
 
-    $query = Product::with('productImage')->with('Category')->with('Status');
+    $query = Product::with('category')
+                    ->with('status')
+                    ->with('product_image');
 
     if ($product_id) {
         $query->where('products.id', '=', $product_id);
@@ -46,8 +58,11 @@ function getProductList($inputs)
         $query->where('products.inventory_number', '=', $inventory_number);
     }
 
-    $res = $query->get();
+    $res = $query->paginate(5);
         
 
     return $res;
+}
+function getProductById($id){
+    return Product::findOrFail($id);
 }

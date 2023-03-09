@@ -27,6 +27,7 @@ Route::get('/services', [USER::class, 'services'])->name('services');
 Route::get('/product_detail', [USER::class, 'product_detail'])->name('product_detail');
 
 
+Route::get('/test', [ADMIN::class, 'test'])->name('test');
 
 Route::prefix('/admin')->group(function() {
     Route::get('login', [ADMIN_LOGIN::class, 'login'])->name('admin.login');
@@ -37,6 +38,7 @@ Route::prefix('/admin')->group(function() {
 
 Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
     Route::get('product', [ADMIN::class, 'product'])->name('admin.product');
+    Route::get('product_detail/{id?}', [ADMIN::class, 'product_detail'])->name('admin.product_detail');
 });
 
 

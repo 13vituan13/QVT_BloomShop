@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\API\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/admin')->group(function() {
+    Route::post('product_store', [ProductController::class, 'store'])->name('api.product.store');
+    Route::post('product_update', [ProductController::class, 'update'])->name('api.product.update');
 });
+
+

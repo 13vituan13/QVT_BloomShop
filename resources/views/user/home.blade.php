@@ -75,7 +75,7 @@
         <div class="row">
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/1/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/1/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
@@ -91,7 +91,7 @@
             </div>
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/2/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/2/product.png') }}">
                         <span class="sale">10%</span>
                         <div class="inner">
                             <p>
@@ -108,7 +108,7 @@
             </div>
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/3/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/3/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
@@ -126,7 +126,7 @@
         <div class="row">
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/4/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/4/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
@@ -142,7 +142,7 @@
             </div>
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/5/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/5/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
@@ -158,7 +158,7 @@
             </div>
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/6/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/6/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
@@ -176,7 +176,7 @@
         <div class="row">
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/7/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/7/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
@@ -192,7 +192,7 @@
             </div>
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/8/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/8/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
@@ -208,7 +208,7 @@
             </div>
             <div class="col-md-4 text-center animate-box">
                 <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/9/product.png') }}">
+                    <div class="product-grid" style="background-image:url({{ asset('storage/images/products/9/product.png') }}">
                         <div class="inner">
                             <p>
                                 <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>

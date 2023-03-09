@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 
 //Custom response using to Ajax JQuery 
-class StatusController extends Controller
+class APIStatusController extends Controller
 {
 	/**
      * Success response method.

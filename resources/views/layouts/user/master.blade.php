@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>@yield('title') | BloomShop</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<link rel="shortcut icon" href="{{ asset('images/logo/Favicons/favicon-60x60.png') }}" type="image/x-icon">
 
@@ -29,6 +29,7 @@
 	<link rel="stylesheet" href="{{ asset('css/user/owl.theme.default.min.css')}}">
 
 	<!-- Theme style  -->
+	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
 	<link rel="stylesheet" href="{{ asset('css/user/style.css') }}">
 
 	<!-- Modernizr JS -->

@@ -11,6 +11,7 @@ class Category extends Model
 		'category_id' => 'int' // dùng để chuyển đổi kiểu dữ liệu vd:cột img là json => array
 	];
     protected $fillable = [
+        'category_id',
         'name',
     ];
 }

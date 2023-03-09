@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Product List | Nalika - Material Admin Template</title>
+    <title>Product List | BloomShop - Admin </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- favicon
 		============================================ -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
@@ -16,6 +17,7 @@
     <!-- Bootstrap CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('css/admin/bootstrap.min.css')}}">
+    
     <!-- Bootstrap CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('css/admin/font-awesome.min.css')}}">
@@ -55,17 +57,25 @@
     <link rel="stylesheet" href="{{ asset('css/admin/calendar/fullcalendar.print.min.css')}}">
     <!-- style CSS
 		============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('css/admin/style.css')}}">
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('css/admin/responsive.css')}}">
+
+    <!-- CKEDITOR JS
+		============================================ -->
+    <script src="//cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
     <!-- modernizr JS
 		============================================ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" href="https://kit.fontawesome.com/c461128840.css" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c461128840.js" crossorigin="anonymous"></script>
     
 
     <script src="{{ asset('js/admin/vendor/modernizr-2.8.3.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -127,6 +137,7 @@
     <!-- main JS
 		============================================ -->
     <script src="{{ asset('js/admin/main.js')}}"></script>
+    
 </body>
 
 </html>

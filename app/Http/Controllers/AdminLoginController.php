@@ -12,6 +12,9 @@ class AdminLoginController extends Controller
 {
     public function login()
     {   
+        if (Auth::guard('admin')->check()) {
+            return redirect()->intended('admin/product');
+        }
         return view("admin.login");
     }
    
