@@ -29,6 +29,7 @@
 	<link rel="stylesheet" href="{{ asset('css/user/owl.theme.default.min.css')}}">
 
 	<!-- Theme style  -->
+	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
 	<link rel="stylesheet" href="{{ asset('css/user/style.css') }}">
 
 	<!-- Modernizr JS -->

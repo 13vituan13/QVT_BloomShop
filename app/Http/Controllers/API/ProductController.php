@@ -96,8 +96,11 @@ class ProductController extends APIStatusController
                     ProductImage::create($product_image);
                 }
             }
-
-            $result = ['id' => $last_id];
+            $file_list = ProductImage::where('product_id','=',$last_id)->get();
+            $result = [
+                'product_id' => $last_id,
+                'file_list'  => $file_list
+            ];
             //End create
             DB::commit();
             return $this->successResponse('Insert successfully created.',  $result);
@@ -132,9 +135,16 @@ class ProductController extends APIStatusController
             $product->save();
 
             //handle image product
+            $arr_remove_image = json_decode($input['arr_remove_image']);
+            if(count($arr_remove_image) > 0){
+                foreach ($arr_remove_image as $remove_item) {
+                    ProductImage::where('image','=',$remove_item)->delete();
+                    Storage::delete('public/'.$remove_item);
+                }
+            }
             if ($request->hasFile('images_list')) {
                 $images_list = $request->file('images_list');
-                ProductImage::find($product_id)->delete();
+
                 $folder_path = $this->PATH_PRODUCT_IMAGE.$product_id;
                 Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
 
@@ -153,11 +163,11 @@ class ProductController extends APIStatusController
                     ProductImage::create($product_image);
                 }
             }
-            
+            //end handle image product
             $result = ['product_id' => $product_id];
             //End create
             DB::commit();
-            return $this->successResponse('Insert successfully created.',  $result);
+            return $this->successResponse('Update successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());

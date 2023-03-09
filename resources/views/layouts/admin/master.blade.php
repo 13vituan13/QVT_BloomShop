@@ -17,6 +17,7 @@
     <!-- Bootstrap CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('css/admin/bootstrap.min.css')}}">
+    
     <!-- Bootstrap CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('css/admin/font-awesome.min.css')}}">
@@ -56,6 +57,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/calendar/fullcalendar.print.min.css')}}">
     <!-- style CSS
 		============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('css/admin/style.css')}}">
     <!-- responsive CSS
 		============================================ -->
@@ -73,6 +75,7 @@
     
 
     <script src="{{ asset('js/admin/vendor/modernizr-2.8.3.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>

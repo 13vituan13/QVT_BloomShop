@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
     // $(document).ready(function() {
     //     // Lấy giá trị thời gian sống của session từ biến PHP $sessionLifetime
