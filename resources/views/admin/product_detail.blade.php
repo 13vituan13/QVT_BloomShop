@@ -95,7 +95,7 @@
                                                     @if (count($category_list) > 0)
                                                         @foreach ($category_list as $category)
                                                             <option value="{{ $category->category_id }}"
-                                                                @if($products->category_id && $products->category_id == $category->category_id)
+                                                                @if(isset($products) && $products->category_id == $category->category_id)
                                                                 {{'selected'}}
                                                                 @endif>
                                                                     {{ $category->name }}
@@ -111,7 +111,7 @@
                                                         @if (count($status_list) > 0)
                                                             @foreach ($status_list as $status)
                                                                 <option value="{{ $status->status_id }}"
-                                                                    @if($products->status_id && $products->status_id == $status->status_id)
+                                                                    @if(isset($products) && $products->status_id == $status->status_id)
                                                                     {{'selected'}}
                                                                     @endif
                                                                     >{{ $status->name }}
@@ -188,9 +188,14 @@
                                                         <label class="button" for="fileElem">Select some files</label>
                                                     </form>
                                                     <progress id="progress-bar" max=100 value=0></progress>
-                                                    <div id="gallery" />
+                                                    <div id="gallery" >
+                                                        @if(isset($products) &&  count($products->product_image) > 0)
+                                                            @foreach ($products->product_image as $item)
+                                                                <img src="{{ asset("storage/{$item->image}") }}" alt="" />  
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
 
                                         </div>
                                     </div>
@@ -300,8 +305,13 @@
 
         function handleFiles(files) {
             fileList.push(...files)
-            initializeProgress(files.length) //load per image upload success
+            initializeProgress(fileList.length) //load per image upload success
             fileList.forEach(previewFile) //review image in view
+
+            // files = [...files]
+            // initializeProgress(files.length)
+            // files.forEach(uploadFile)
+            // files.forEach(previewFile)
         }
 
         function previewFile(file) {

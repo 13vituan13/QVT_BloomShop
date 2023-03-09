@@ -65,6 +65,25 @@
         </div>
     </div>
     <script>
+    var sessionLifetime = {{ $sessionLifetime }};
+    var idleTimeout;
+
+    function resetTimer() {
+        clearTimeout(idleTimeout);
+        idleTimeout = setTimeout(function() {
+            if (confirm("Your session has timed out. Do you want to log in again?")) {
+                window.location.href = "{{ route('admin.login') }}";
+            }
+        }, sessionLifetime);
+    }
+
+    $(document).ready(function() {
+        resetTimer();
+        $(this).mousemove(resetTimer);
+        $(this).keypress(resetTimer);
+    });
+
+
         function goToPage(url){
             window.location.href = url
         }

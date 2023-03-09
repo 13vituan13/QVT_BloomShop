@@ -47,7 +47,8 @@ p {
       <label class="button" for="fileElem">Select some files</label>
     </form>
     <progress id="progress-bar" max=100 value=0></progress>
-    <div id="gallery" /></div>
+    <div id="gallery" />
+  </div>
   </div>
   <script>
     // ************************ Drag and drop ***************** //

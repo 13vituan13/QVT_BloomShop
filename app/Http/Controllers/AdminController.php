@@ -19,6 +19,7 @@ class AdminController extends Controller
     public function product(Request $request)
     {   
         $inputs = $request->all();
+        $sessionLifetime = config('session.lifetime') * 60;
         $dataView = [
             'title' => 'Danh Sách Sản Phẩm',
             'product_list' => getProductList($inputs),
@@ -27,7 +28,7 @@ class AdminController extends Controller
         if ($request->ajax()) {
             $tableHTML = view('admin.partial.product_table', $dataView)->render();
         } else {
-            return view("admin.product_list",$dataView);
+            return view("admin.product_list",$dataView)->with('sessionLifetime',$sessionLifetime);
         }
     }
     public function product_detail($id = null)
