@@ -501,6 +501,7 @@
                     });
                 },
                 error: function(e) {
+                    debugger
                     console.log(e)
                     $.each(e.responseJSON, function(key, err_val) {
                         $('#'+key).addClass('error_input')
