@@ -164,7 +164,11 @@ class ProductController extends APIStatusController
                 }
             }
             //end handle image product
-            $result = ['product_id' => $product_id];
+            $file_list = ProductImage::where('product_id','=',$product_id)->get();
+            $result = [
+                'product_id' => $product_id,
+                'file_list'  => $file_list
+            ];
             //End create
             DB::commit();
             return $this->successResponse('Update successfully created.',  $result);

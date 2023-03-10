@@ -190,7 +190,7 @@
                                             <div class="review-content-section">
                                                 <div id="drop-area">
                                                     <form class="my-form">
-                                                        <p>Chọn hoặc kéo thả các ảnh vào khu vực đứt nét bên dưới.</p>
+                                                        <p>Chọn hoặc kéo thả các ảnh vào khu vực bên dưới.</p>
                                                         <input type="file" id="fileElem" multiple accept="image/*"
                                                             onchange="handleFiles(this.files)">
                                                         <label class="button" for="fileElem">Chọn một số file ảnh</label>
@@ -442,7 +442,7 @@
                         renderImageHTML(fileList)
                         $('.btnSubmit').attr('onclick', 'update()')
                         $('.btnSubmit').html('Cập Nhật')
-                        var newUrl = window.location.pathname+product_id;
+                        var newUrl = window.location.pathname+'/'+product_id;
                         window.history.pushState(null, null, newUrl);
                     });
                     
@@ -497,6 +497,7 @@
                     }).then((result) => {
                         fileList = res.file_list;
                         renderImageHTML(fileList)
+                        arrRemoveImage = [];
                     });
                 },
                 error: function(e) {
