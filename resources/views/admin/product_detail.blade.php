@@ -424,7 +424,7 @@
                 processData: false,
                 contentType: false,
                 headers: {
-                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
                 },
                 beforeSend: function() {
                 },
@@ -460,6 +460,8 @@
 
         function update() {
             var formData = new FormData();
+
+            
             fileList.forEach((file, index) => {
                 formData.append('images_list[]', file)
             })
@@ -482,8 +484,9 @@
                 processData: false,
                 contentType: false,
                 headers: {
-                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
                 },
+
                 beforeSend: function() {
                 },
                 success: function(response) {
@@ -501,7 +504,6 @@
                     });
                 },
                 error: function(e) {
-                    debugger
                     console.log(e)
                     $.each(e.responseJSON, function(key, err_val) {
                         $('#'+key).addClass('error_input')

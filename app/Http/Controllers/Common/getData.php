@@ -4,7 +4,7 @@ use App\Models\Customer;
 use App\Models\Status;
 use App\Models\Category;
 use App\Models\Product;
-
+use App\Models\PersonalAccessToken;
 function getAllCustomer(){
     $res = Customer::all();
     return $res;
@@ -65,4 +65,12 @@ function getProductList($inputs)
 }
 function getProductById($id){
     return Product::findOrFail($id);
+}
+function getLastTokenById($id){
+    $latestToken = PersonalAccessToken::where('tokenable_id', $id)->latest()->first();
+
+    if ($latestToken) {
+        $token = $latestToken->token;
+    }
+    return $token;
 }

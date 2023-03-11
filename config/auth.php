@@ -41,9 +41,16 @@ return [
             'driver' => 'session',
             'provider' => 'user',
         ],
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'api',
+            'hash' => false,
+        ],
     
     ],
-
+    
+    
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -60,13 +67,18 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
         'user' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'api' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\PersonalAccessToken::class,
+            'hash' => false,
+        ],
     ],
+    
     
 
     /*

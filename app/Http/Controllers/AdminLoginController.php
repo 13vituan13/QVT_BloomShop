@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-
+use Session;
 class AdminLoginController extends Controller
 {
     public function login()
@@ -39,6 +39,9 @@ class AdminLoginController extends Controller
         $credentials = $request->only('email', 'password');
         // $remember = $request->has('remember'); // kiểm tra xem người dùng đã chọn "remember me" hay chưa
         if (Auth::guard('admin')->attempt($credentials)) {
+            $user = Auth::guard('admin')->user();
+            $token = $user->createToken('token')->plainTextToken;
+            Session::put('token',$token);
             return redirect()->intended('admin/product');
         }
         else {
