@@ -21,9 +21,15 @@ function getAllCategory(){
     $res = Category::all();
     return $res;
 }
+function getAllProduct(){
+    $res = Product::all();
+    return $res;
+}
 
 function getBestChoiceProduct(){
-    $res = Product::with('product_image')->get();
+    $res = Product::with('product_image')
+                    ->limit(9)
+                    ->get();
     return $res;
 }
 function getProductList($inputs)
@@ -59,8 +65,6 @@ function getProductList($inputs)
     }
 
     $res = $query->paginate(5);
-        
-
     return $res;
 }
 function getProductById($id){

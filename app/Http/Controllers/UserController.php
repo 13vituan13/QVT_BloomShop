@@ -5,10 +5,10 @@ class UserController extends Controller
 {
     public function home()
     {   
-        
         $data = [
             'banners' => getAllBanner(),
             'best_choice' => getBestChoiceProduct(),
+            'count_product' => count(getAllProduct()),
         ];
         
         return view("user.home",$data);
@@ -25,7 +25,7 @@ class UserController extends Controller
     }
 
     public function product()
-    {
+    {   
         return view("user.product");
     }
 
