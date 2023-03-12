@@ -26,7 +26,11 @@ class UserController extends Controller
 
     public function product()
     {   
-        return view("user.product");
+        $inputs = [];
+        $data = [
+            'product_list' => getProductList($inputs,6),
+        ];
+        return view("user.product",$data);
     }
 
     public function services()

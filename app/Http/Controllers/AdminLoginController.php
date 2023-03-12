@@ -18,7 +18,7 @@ class AdminLoginController extends Controller
         return view("admin.login");
     }
    
-    public function postLogin(Request $request)
+    public function post_Login(Request $request)
     {   
         $rules = [
             'email' => 'required',

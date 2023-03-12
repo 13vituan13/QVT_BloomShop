@@ -32,7 +32,7 @@ function getBestChoiceProduct(){
                     ->get();
     return $res;
 }
-function getProductList($inputs)
+function getProductList($inputs,$pagination = null)
 {   
     $product_id = isset($inputs['product_id']) ? $inputs['product_id'] : null;
     $product_name = isset($inputs['product_name']) ? $inputs['product_name'] : null;
@@ -63,8 +63,8 @@ function getProductList($inputs)
     if ($inventory_number) {
         $query->where('products.inventory_number', '=', $inventory_number);
     }
-
-    $res = $query->paginate(5);
+    
+    $res = !$pagination ? $query->get() : $query->paginate($pagination);
     return $res;
 }
 function getProductById($id){

@@ -22,7 +22,7 @@ class AdminController extends Controller
         $sessionLifetime = config('session.lifetime') * 60;
         $dataView = [
             'title' => 'Danh Sách Sản Phẩm',
-            'product_list' => getProductList($inputs),
+            'product_list' => getProductList($inputs,5),
             'icon_title' => 'fa-solid fa-table-list',
         ];
         if ($request->ajax()) {

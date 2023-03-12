@@ -73,7 +73,6 @@
             </div>
         </div>
         <div class="row">
-            
             @if(count($best_choice) > 0)
                 @foreach ($best_choice as $item)
                 <div class="col-md-4 text-center animate-box">
@@ -211,5 +210,5 @@
 </div>
 
 
-@include('user.login')
+
 @endsection

@@ -8,7 +8,7 @@
                 <div class="login-text">
                 <h2>Xin Chào</h2>
                 <p>Tạo tài khoản của bạn.<br>Nó hoàn toàn miễn phí.</p>
-                <a class="btn_reg" href="">Đăng Kí</a>
+                <a class="btn_reg" href="{{ route('sign_up') }}">Đăng Kí</a>
                 </div>
             </div>
             <div class="col-right">
