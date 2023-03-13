@@ -19,6 +19,7 @@ class Customer extends Model
         'phone',
         'email',
         'vip_id',
+        'password',
         'created_at',
         'updated_at',
     ];

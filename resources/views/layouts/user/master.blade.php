@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html class="html">
 
 <head>
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
 </head>
 
 <body>
-	<!-- jQuery -->
+    <!-- jQuery -->
     <script src="{{ asset('js/user/jquery.min.js') }}"></script>
     <!-- jQuery Easing -->
     <script src="{{ asset('js/user/jquery.easing.1.3.js') }}"></script>
@@ -59,23 +59,28 @@
     <script src="{{ asset('js/user/jquery.flexslider-min.js') }}"></script>
     <!-- Main -->
     <script src="{{ asset('js/user/main.js') }}"></script>
+    {{-- Swal Alert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <div class="fh5co-loader"></div>
     <div id="page">
         @include('layouts.user.header')
 
         @yield('content')
+
         @include('user.login')
         @include('layouts.user.footer')
     </div>
-
+    <div id="loading" hidden>
+        <div class="loader">Loading...</div>
+    </div>
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
 
-    
+
     <script>
         $(document).ready(function() {
-            $('.banner').css('height', 'auto');
             // Lấy các phần tử từ HTML
             var modal = $("#myModal");
             var btn = $("#openModalBtn");
@@ -97,8 +102,15 @@
                     modal.css("display", "none");
                 }
             });
-
         });
+
+        function loadStart() {
+            $("#loading").show();
+        }
+
+        function loadEnd() {
+            $("#loading").hide();
+        }
     </script>
 </body>
 

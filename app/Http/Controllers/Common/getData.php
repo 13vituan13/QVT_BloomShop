@@ -78,3 +78,9 @@ function getLastTokenById($id){
     }
     return $token;
 }
+function checkEmailExist($email)
+{
+   return Customer::where('email', $email)->exists();
+}
+
+
