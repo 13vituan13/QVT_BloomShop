@@ -16,7 +16,8 @@
                 <h1>ĐĂNG KÝ</h1>
             </div>
         </div>
-        <form id="form_dangKy" method="POST" action="../Buoi_03/BTVN.php?page=dangky_info.php">
+        <form id="form_dangKy" method="POST" action="{{ route('sign_up.submit') }}">
+            {{ csrf_token() }}
             <div class="row ">
                 <div class="col-sm-6 form-group">
                     <label for="name" class="font--bold">Họ và tên</label>
@@ -253,10 +254,35 @@
         return isValid;
     }
 
+    
     $('form').on('submit', function(e) {
         if (!validated()) {
             e.preventDefault();
         }
+        // form.sumit()
+        // debugger
+        // var formData = new FormData(this)
+        //         console.log([...formData])
+        //         $.ajax({
+        //             url: $(this).attr('action'),
+        //             type: $(this).attr('method'),
+        //             data: formData,
+        //             processData: false,
+        //             contentType: false,
+        //             headers: {
+        //                 'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
+        //             },
+        //             beforeSend: function() {
+        //                 msgVali = ""
+        //             },
+        //             success: function(response) {
+        //                 console.log(response)
+                        
+        //             },
+        //             error: function(e) {
+        //                 console.log(e.responseJSON)
+        //             }
+        //         }); //end ajax
     });
 
     

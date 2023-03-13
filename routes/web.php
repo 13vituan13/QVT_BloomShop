@@ -33,6 +33,7 @@ Route::get('/product_detail', [USER::class, 'product_detail'])->name('product_de
 Route::get('/login', [USER_LOGIN::class, 'login'])->name('login');
 Route::post('login_submit', [USER_LOGIN::class, 'post_Login'])->name('login.submit');
 Route::get('/sign_up', [USER_SIGNUP::class, 'sign_up'])->name('sign_up');
+Route::post('/sign_up_submit', [USER_SIGNUP::class, 'sign_up_submit'])->name('sign_up.submit');
 
 
 //______________________________ ADMIN SITE_______________________________
