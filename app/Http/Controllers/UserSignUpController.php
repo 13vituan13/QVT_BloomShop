@@ -58,7 +58,6 @@ class UserSignUpController extends Controller
     }
     public function sign_up_submit(Request $request){
         $input = $request->all();
-        
         $result_validator = self::validateInput($input);
 
         if (!$result_validator['status']) {

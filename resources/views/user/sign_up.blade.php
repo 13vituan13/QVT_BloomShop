@@ -117,8 +117,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
-        
-
         //API city
         var Parameter = {
             url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
@@ -156,11 +154,8 @@
         var form = document.getElementById('signUpForm');
         var emailInput = form.querySelector('input[name="email"]');
 
-        function validateEmail(email) {
-            var re = /\S+@\S+\.\S+/;
-            return re.test(email);
-        }
         
+
         function setElementBgColor(el, msg, isChange) {
             if (isChange) {
                 el.style.backgroundColor = '#ffc8d2';
@@ -178,6 +173,12 @@
                 }
             }
         }
+
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
         function validated() {
             var isValid = true
             document.querySelectorAll('input.required').forEach(function(element, index) {
@@ -185,19 +186,20 @@
                     let titleName = element.dataset.name ? element.dataset.name : ""
                     let txtErr = titleName + " là trường bắt buộc nhập.";
                     isValid = false
-                    setElementBgColor(element,txtErr,true)
+                    setElementBgColor(element, txtErr, true)
                 } else {
-                    setElementBgColor(element,null,false)
+                    setElementBgColor(element, null, false)
                 }
             });
+
             document.querySelectorAll('select.required').forEach(function(element, index) {
                 if (!element.value || element.value.trim().length === 0) {
                     let titleName = element.dataset.name ? element.dataset.name : ""
                     let txtErr = titleName + " là trường bắt buộc nhập.";
                     isValid = false
-                    setElementBgColor(element,txtErr,true)
+                    setElementBgColor(element, txtErr, true)
                 } else {
-                    setElementBgColor(element,null,false)
+                    setElementBgColor(element, null, false)
                 }
             });
 
@@ -205,9 +207,9 @@
                 // Kiểm tra tính hợp lệ của email
                 if (!validateEmail(emailInput.value)) {
                     isValid = false
-                    setElementBgColor(emailInput,"Email không hợp lệ.",true)
+                    setElementBgColor(emailInput, "Email không hợp lệ.", true)
                 } else {
-                    setElementBgColor(emailInput,null,false)
+                    setElementBgColor(emailInput, null, false)
                 }
 
                 // Kiểm tra tính hợp lệ của Phone
@@ -215,40 +217,44 @@
                 var phoneLenght = $('#phone').val().length
                 if (phoneLenght < 10 || phoneLenght > 11) {
                     isValid = false
-                    setElementBgColor(phoneInput,"Nhập số điện thoại hợp lệ.",true)
+                    setElementBgColor(phoneInput, "Nhập số điện thoại hợp lệ.", true)
                 } else {
-                    setElementBgColor(phoneInput,null,false)
+                    setElementBgColor(phoneInput, null, false)
                 }
+
                 // Kiểm tra tính hợp lệ của PassWord
                 var passInput = form.querySelector('input[name="password"]')
                 var passLenght = $('#password').val().length
-                var passInputConfirm = form.querySelector('input[name="password2"]')
                 if (passLenght < 8) {
                     isValid = false
-                    setElementBgColor(passInput,"Mật khẩu phải có ít nhất 8 ký tự.",true)
+                    setElementBgColor(passInput, "Mật khẩu phải có ít nhất 8 ký tự.", true)
                 } else {
-                    setElementBgColor(passInput,null,false)
+                    setElementBgColor(passInput, null, false)
                 }
 
-                if (passInput.value === passInputConfirm.value) {
+                // Kiểm tra khớp mật khẩu
+                var passInputConfirm = form.querySelector('input[name="password2"]')
+                if (passInput.value !== passInputConfirm.value) {
                     isValid = false
-                    setElementBgColor(passInputConfirm,null,false)
+                    setElementBgColor(passInputConfirm, "Mật khẩu xác nhận không khớp.", true)
                 } else {
-                    setElementBgColor(passInputConfirm,"Mật khẩu xác nhận không khớp.",true)
+                    setElementBgColor(passInputConfirm, null, false)
+
                 }
             }
             return isValid;
         }
 
-        
+
         //submit regist
         $('#signUpForm').on('submit', function(e) {
             e.preventDefault();
             if (!validated()) {
                 return
             }
-            
             var formData = new FormData(this)
+            formData.set("district", $('select[name="district"] option:selected').text());
+            formData.set("city", $('select[name="city"] option:selected').text());
             // console.log([...formData])
             loadStart();
             $.ajax({
@@ -265,14 +271,14 @@
                 },
                 success: function(response) {
                     loadEnd();
-                    if(response.duplicated == 1){
-                        setElementBgColor(emailInput,"Email đã được đăng ký",true)
-                    }else{
+                    if (response.duplicated == 1) {
+                        setElementBgColor(emailInput, "Email đã được đăng ký", true)
+                    } else {
                         Swal.fire({
-                        icon: 'success',
-                        title: 'Đăng Kí Thành Công',
-                        text: 'Tài khoản của bạn đã đăng ký thành công.',
-                        confirmButtonText: 'OK',
+                            icon: 'success',
+                            title: 'Đăng Kí Thành Công',
+                            text: 'Tài khoản của bạn đã đăng ký thành công.',
+                            confirmButtonText: 'OK',
                         }).then((result) => {
                             window.location.href = "{{ route('home') }}"
                         });
