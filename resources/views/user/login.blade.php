@@ -17,14 +17,14 @@
                 <form>
                     <p>
                     <label>Email<span>*</span></label>
-                    <input type="text" placeholder="Email" >
+                    <input type="text" id="email" name="email" placeholder="Email" >
                     </p>
                     <p>
                     <label>Password<span>*</span></label>
-                    <input type="password" placeholder="Password" >
+                    <input type="password" id="password" name="password" placeholder="Password" >
                     </p>
                     <p>
-                    <input type="submit" value="Đăng Nhập" />
+                    <input id="btnSubmit" onclick="login()" value="Đăng Nhập" />
                     </p>
                     <p>
                     <a href="">Quên mật khẩu?</a>

@@ -104,12 +104,55 @@
             });
         });
 
+        function goToPage(url){
+            window.location.href = url
+        }
         function loadStart() {
             $("#loading").show();
         }
 
         function loadEnd() {
             $("#loading").hide();
+        }
+        function login(){
+            // if (!valiLogin()) {
+            //     return
+            // }
+            loadStart();
+            $.ajax({
+                url: "{{ route('login.submit') }}",
+                type: "POST",
+                param: {email:email,password:password},
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    loadEnd();
+                    if (response.duplicated == 1) {
+                        setElementBgColor(emailInput, "Email đã được đăng ký", true)
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Đăng Kí Thành Công',
+                            text: 'Tài khoản của bạn đã đăng ký thành công.',
+                            confirmButtonText: 'OK',
+                        }).then((result) => {
+                            window.location.href = "{{ route('home') }}"
+                        });
+                    }
+                },
+                error: function(e) {
+                    loadEnd();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Đăng Kí Thất Bại',
+                        text: 'vui lòng hãy thử lại!',
+                        confirmButtonText: 'OK',
+                    });
+                }
+            }); //end ajax
         }
     </script>
 </body>

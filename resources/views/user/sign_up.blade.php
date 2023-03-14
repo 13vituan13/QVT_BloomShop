@@ -21,77 +21,27 @@
                 {{ csrf_field() }}
                 <div class="row ">
                     <div class="col-sm-6 form-group">
-                        <label for="name" class="font--bold">Họ và tên</label>
+                        <label for="name" class="font--bold required">Họ và tên</label>
                         <input type="text" class="form-control required" name="name" id="name"
-                            data-name="Họ tên">
+                            data-name="Họ tên" placeholder="VD: Nguyen Van A">
                         <p class="posi--absolute text-danger err-msg"></p>
                     </div>
-
+                    {{-- Phone --}}
                     <div class="col-sm-6 form-group">
-                        <label for="email" class="font--bold">Email</label>
-                        <input type="text" class="form-control required" name="email" id="email" data-name="Email">
-                        <p class="posi--absolute text-danger err-msg"></p>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label for="phone" class="font--bold">Số điện thoại</label>
+                        <label for="phone" class="font--bold required">Số điện thoại</label>
                         <input type="number" class="form-control required" name="phone" id="phone"
-                            data-name="Số điện thoại">
+                            data-name="Số điện thoại" placeholder="VD: 0952123456">
                         <p class="posi--absolute text-danger err-msg"></p>
                     </div>
-
+                   
+                    
+                    {{-- Giới Tính --}}
                     <div class="col-sm-6 form-group">
-                        <label for="password" class="font--bold">Mật Khẩu</label>
-                        <input type="Password" name="password" class="form-control required" id="password"
-                            data-name="Mật khẩu">
-                        <p class="posi--absolute text-danger err-msg"></p>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label for="birthday" class="font--bold">Ngày sinh</label>
-                        <input type="Date" name="birthday" class="form-control required" id="birthday"
-                            data-name="Ngày sinh" max="{{ date('Y-m-d') }}">
-                        <p class="posi--absolute text-danger err-msg"></p>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label for="password2" class="font--bold">Nhập lại mật khẩu</label>
-                        <input type="Password" name="password2" class="form-control required" id="password2"
-                            data-name="Mật khẩu xác nhận">
-                        <p class="posi--absolute text-danger err-msg"></p>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label for="address" class="font--bold">Địa Chỉ</label>
-                        <input type="text" class="form-control required" name="address" id="address"
-                            data-name="Địa Chỉ">
-                        <p class="posi--absolute text-danger err-msg"></p>
-                    </div>
-
-                    <div class="col-sm-3 form-group">
-                        <label for="city" class="font--bold">Chọn tỉnh thành</label>
-                        <select onchange="getDistrict()" id="city_cbb" name="city"
-                            class="form-control browser-default custom-select required" data-name="Tỉnh Thành">
-                            <option value="" selected>Chọn Tỉnh</option>
-                        </select>
-                        <p class="posi--absolute text-danger err-msg"></p>
-                    </div>
-
-                    <div class="col-sm-3 form-group">
-                        <label for="district" class="font--bold">Chọn Quận</label>
-                        <select id="district_cbb" name="district"
-                            class="form-control browser-default custom-select required" data-name="Quận Huyện">
-                            <option value="" selected>Chọn Quận</option>
-                        </select>
-                        <p class="posi--absolute text-danger err-msg"></p>
-                    </div>
-
-                    <div class="col-sm-6  form-group ">
                         <div class="gender_details">
                             <input type="radio" name="gender" id="dot-1" value="Nam" checked>
                             <input type="radio" name="gender" id="dot-2" value="Nữ">
                             <input type="radio" name="gender" id="dot-3" value="Khác">
-                            <label for="address" class="font--bold">Giới Tính</label>
+                            <label for="address" class="font--bold">Giới tính</label>
                             <div class="category">
                                 <label for="dot-1">
                                     <span class="dot one"></span>
@@ -108,9 +58,70 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 form-group mb-4 mt-4 text-center">
-                        <button id="btnSubmit" class="btn btn-primary">Submit</button>
+                    {{-- BirthDay --}}
+                    <div class="col-sm-6 form-group">
+                        <label for="birthday" class="font--bold required">Ngày sinh</label>
+                        <input type="Date" name="birthday" class="form-control required" id="birthday"
+                            data-name="Ngày sinh" max="{{ date('Y-m-d') }}">
+                        <p class="posi--absolute text-danger err-msg"></p>
                     </div>
+                    
+                    {{-- Address --}}
+                    <div class="col-sm-6 form-group">
+                        <label for="address" class="font--bold required">Địa Chỉ</label>
+                        <input type="text" class="form-control required" name="address" id="address"
+                            data-name="Địa Chỉ" placeholder="VD: 199/A Tan Quy">
+                        <p class="posi--absolute text-danger err-msg"></p>
+                    </div>
+                    {{-- City --}}
+                    <div class="col-sm-3 form-group">
+                        <label for="city" class="font--bold required">Chọn tỉnh thành</label>
+                        <select onchange="getDistrict()" id="city_cbb" name="city"
+                            class="form-control browser-default custom-select required" data-name="Tỉnh Thành">
+                            <option value="" selected>Chọn Tỉnh</option>
+                        </select>
+                        <p class="posi--absolute text-danger err-msg"></p>
+                    </div>
+                    {{-- District --}}
+                    <div class="col-sm-3 form-group">
+                        <label for="district" class="font--bold required">Chọn quận</label>
+                        <select id="district_cbb" name="district"
+                            class="form-control browser-default custom-select required" data-name="Quận Huyện">
+                            <option value="" selected>Chọn Quận</option>
+                        </select>
+                        <p class="posi--absolute text-danger err-msg"></p>
+                    </div>
+                    {{-- Email --}}
+                    <div class="col-sm-6 form-group">
+                        <label for="email" class="font--bold required">Email</label>
+                        <input type="text" class="form-control required" name="email" id="email" data-name="Email" 
+                               placeholder="VD: example@gmail.com">
+                        <p class="posi--absolute text-danger err-msg"></p>
+                    </div>
+                    {{-- PassConfirm --}}
+                    <div class="col-sm-6 form-group">
+                        <label for="password2" class="font--bold required">Nhập lại mật khẩu</label>
+                        <input type="Password" name="password2" class="form-control required" id="password2"
+                            data-name="Mật khẩu xác nhận">
+                        <p class="posi--absolute text-danger err-msg"></p>
+                    </div>
+                    {{-- Pass --}}
+                    <div class="col-sm-6 form-group">
+                        <label for="password" class="font--bold required">Mật Khẩu</label>
+                        <input type="Password" name="password" class="form-control required" id="password"
+                            data-name="Mật khẩu">
+                        <p class="posi--absolute text-danger err-msg"></p>    
+                        <p class="help-block" style="margin-top: 20px">Mật khẩu phải có ít nhất 8 ký tự, bao gồm ít nhất một ký tự đặc biệt và một chữ cái viết hoa và số.</p>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="col-sm-12 form-group mb-4 mt-4 text-center">
+                    <button id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
     </div>
@@ -153,8 +164,10 @@
         }
         var form = document.getElementById('signUpForm');
         var emailInput = form.querySelector('input[name="email"]');
-
-        
+        var phoneInput = form.querySelector('input[name="phone"]')
+        var passInput = form.querySelector('input[name="password"]')
+        var passInputConfirm = form.querySelector('input[name="password2"]')
+        var nameInput = form.querySelector('input[name="name"]');
 
         function setElementBgColor(el, msg, isChange) {
             if (isChange) {
@@ -173,14 +186,66 @@
                 }
             }
         }
+        function validateName(name) {
+            let checker = true
+            setElementBgColor(nameInput,null,false)
+
+            const regexName = /^[a-zA-Z ]+$/;
+            if (!regexName.test(name)) {
+                checker = false
+                setElementBgColor(nameInput, "Tên không chứa kí tự đặc biệt.", true)
+            }
+            return checker;
+        }
 
         function validateEmail(email) {
-            var re = /\S+@\S+\.\S+/;
-            return re.test(email);
+            let checker = true
+            setElementBgColor(emailInput,null,false)
+
+            const emailRegex = /\S+@\S+\.\S+/;
+            if(!emailRegex.test(email)){
+                checker = false
+                setElementBgColor(emailInput, "Email không hợp lệ.", true)
+            }
+            return checker;
+        }
+
+        function validatePass(password,password2){
+            let checker = true
+            setElementBgColor(passInput,null,false)
+            setElementBgColor(passInputConfirm,null,false)
+
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])\S{8,}$/;
+            if(!passwordRegex.test(password)){ 
+                checker =false
+                setElementBgColor(passInput, "Mật khẩu không thỏa yêu cầu bảo mật.", true)
+            }
+            // Kiểm tra khớp mật khẩu
+            if (password !== password2) {
+                checker = false
+                setElementBgColor(passInputConfirm, "Mật khẩu xác nhận không khớp.", true)
+            }
+            return checker;
+        }
+
+        function validatePhone(number) {
+            const viettelPattern = /(03[2-9]|05[6-8]|07[0|6-9]|08[1-9]|09[0-9])[0-9]{7}/;  
+            const mobiPattern = /(09[6-8]|09[0-3]|07[7-9]|07[0-6]|05[89]|05[0-3]|03[9]|03[1-4])[0-9]{7}/;
+            const vinaphonePattern = /(08[6-8]|08[1-5]|09[1-5])[0-9]{7}/;
+            var checker = true
+
+            setElementBgColor(phoneInput, null, false)
+            if (!number.match(viettelPattern) && !number.match(mobiPattern) && !number.match(vinaphonePattern)) {
+                checker = false;
+                setElementBgColor(phoneInput, "Số điện thoại chưa đúng định dạng.", true)
+            }
+
+            return checker;
         }
 
         function validated() {
             var isValid = true
+            // check Required
             document.querySelectorAll('input.required').forEach(function(element, index) {
                 if (!element.value || element.value.trim().length === 0) {
                     let titleName = element.dataset.name ? element.dataset.name : ""
@@ -202,44 +267,25 @@
                     setElementBgColor(element, null, false)
                 }
             });
-
             if (isValid == true) {
-                // Kiểm tra tính hợp lệ của email
+                // check Email
+                if (!validateName(nameInput.value)) {
+                    isValid = false
+                } 
+
+                // check Email
                 if (!validateEmail(emailInput.value)) {
                     isValid = false
-                    setElementBgColor(emailInput, "Email không hợp lệ.", true)
-                } else {
-                    setElementBgColor(emailInput, null, false)
+                } 
+
+                // ckeck Phone
+                if (!validatePhone(phoneInput.value)) {
+                    isValid = false
                 }
 
-                // Kiểm tra tính hợp lệ của Phone
-                var phoneInput = form.querySelector('input[name="phone"]')
-                var phoneLenght = $('#phone').val().length
-                if (phoneLenght < 10 || phoneLenght > 11) {
+                // check PassWord
+                if (!validatePass(passInput.value,passInputConfirm.value)) {
                     isValid = false
-                    setElementBgColor(phoneInput, "Nhập số điện thoại hợp lệ.", true)
-                } else {
-                    setElementBgColor(phoneInput, null, false)
-                }
-
-                // Kiểm tra tính hợp lệ của PassWord
-                var passInput = form.querySelector('input[name="password"]')
-                var passLenght = $('#password').val().length
-                if (passLenght < 8) {
-                    isValid = false
-                    setElementBgColor(passInput, "Mật khẩu phải có ít nhất 8 ký tự.", true)
-                } else {
-                    setElementBgColor(passInput, null, false)
-                }
-
-                // Kiểm tra khớp mật khẩu
-                var passInputConfirm = form.querySelector('input[name="password2"]')
-                if (passInput.value !== passInputConfirm.value) {
-                    isValid = false
-                    setElementBgColor(passInputConfirm, "Mật khẩu xác nhận không khớp.", true)
-                } else {
-                    setElementBgColor(passInputConfirm, null, false)
-
                 }
             }
             return isValid;

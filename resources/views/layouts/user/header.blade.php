@@ -26,7 +26,7 @@
                 </ul>
                 <div class="ButtonUserGroup row">
                     <button id="openModalBtn" class="ButtonUserGroup__login">ĐĂNG NHẬP</button>
-                    <button class="ButtonUserGroup__regist"><a href="{{ route('sign_up') }}">ĐĂNG KÍ</a></button>
+                    <button class="ButtonUserGroup__regist" onclick="goToPage('{{route('sign_up')}}')">ĐĂNG KÍ</button>
                 </div>
             </div>
             <div class="col-md-3 col-xs-3 text-right hidden-xs menu-2">

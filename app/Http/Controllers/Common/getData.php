@@ -1,39 +1,47 @@
 <?php
+
 use App\Models\Banner;
 use App\Models\Customer;
 use App\Models\Status;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\PersonalAccessToken;
-function getAllCustomer(){
+
+function getAllCustomer()
+{
     $res = Customer::all();
     return $res;
 }
-function getAllBanner(){
+function getAllBanner()
+{
     $res = Banner::all();
     return $res;
 }
-function getAllStatus(){
+function getAllStatus()
+{
     $res = Status::all();
     return $res;
 }
-function getAllCategory(){
+function getAllCategory()
+{
     $res = Category::all();
     return $res;
 }
-function getAllProduct(){
+function getAllProduct()
+{
     $res = Product::all();
     return $res;
 }
 
-function getBestChoiceProduct(){
+function getBestChoiceProduct()
+{
     $res = Product::with('product_image')
-                    ->limit(9)
-                    ->get();
+        ->limit(9)
+        ->get();
     return $res;
 }
-function getProductList($inputs,$pagination = null)
-{   
+function getProductList($inputs, $pagination = null)
+{
     $product_id = isset($inputs['product_id']) ? $inputs['product_id'] : null;
     $product_name = isset($inputs['product_name']) ? $inputs['product_name'] : null;
     $price = isset($inputs['price']) ? $inputs['price'] : null;
@@ -41,8 +49,8 @@ function getProductList($inputs,$pagination = null)
     $inventory_number = isset($inputs['inventory_number']) ? $inputs['inventory_number'] : null;
 
     $query = Product::with('category')
-                    ->with('status')
-                    ->with('product_image');
+        ->with('status')
+        ->with('product_image');
 
     if ($product_id) {
         $query->where('products.id', '=', $product_id);
@@ -63,14 +71,16 @@ function getProductList($inputs,$pagination = null)
     if ($inventory_number) {
         $query->where('products.inventory_number', '=', $inventory_number);
     }
-    
+
     $res = !$pagination ? $query->get() : $query->paginate($pagination);
     return $res;
 }
-function getProductById($id){
+function getProductById($id)
+{
     return Product::findOrFail($id);
 }
-function getLastTokenById($id){
+function getLastTokenById($id)
+{
     $latestToken = PersonalAccessToken::where('tokenable_id', $id)->latest()->first();
 
     if ($latestToken) {
@@ -80,7 +90,13 @@ function getLastTokenById($id){
 }
 function checkEmailExist($email)
 {
-   return Customer::where('email', $email)->exists();
+    return Customer::where('email', $email)->exists();
 }
-
-
+function checkCustomerLogin($email, $password)
+{
+    return Customer::where('email', $email)->where('password', hash('sha256', $password))->exist();
+}
+function getCustomerLogin($email)
+{
+    return Customer::where('email', $email)->get();
+}
