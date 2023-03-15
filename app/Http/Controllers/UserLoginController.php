@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Customer;
 use Session;
@@ -33,21 +32,21 @@ class UserLoginController extends Controller
         $email = $request->get('email');
         $password = $request->get('password');
         
-        
-        if (!checkCustomerLogin($email,$password)) {
+        if (checkCustomerLogin($email,$password)) {
             $customer = getCustomerLogin($email);
             Session::put('customer',$customer);
-            return redirect()->intended('home');
+            
+            return response()->json(['message' => 'Đăng nhập thành công!', 'data' => $customer], 200);
         }
         else {
-            return back()->withErrors(['loginfail' => 'Thông tin đăng nhập không đúng']);
+            return response()->json(['message' => 'đăng nhập thất bại'],400);
         }
     }
     
 
     public function logout()
     {
-        Auth::guard('admin')->logout();
-        return redirect('/admin/login');
+        Session::forget('customer');
+        return redirect('/');
     }
 }

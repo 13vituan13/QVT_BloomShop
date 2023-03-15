@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\Banner;
 use App\Models\Customer;
@@ -93,10 +94,14 @@ function checkEmailExist($email)
     return Customer::where('email', $email)->exists();
 }
 function checkCustomerLogin($email, $password)
-{
-    return Customer::where('email', $email)->where('password', hash('sha256', $password))->exist();
+{   
+    $customer = Customer::where('email', $email)->first();
+    if ($customer) {
+        return Hash::check($password, $customer->password);
+    }
+    return false;
 }
 function getCustomerLogin($email)
 {
-    return Customer::where('email', $email)->get();
+    return Customer::where('email', $email)->first();
 }

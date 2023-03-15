@@ -136,7 +136,7 @@ h1, h2, h3, h4, h5, h6, figure {
   outline: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.fh5co-nav .menu-2 li button {
+.fh5co-nav .menu-2 li button:not(.btn-user) {
   margin-top: 4px;
   padding: 5px;
   background: transparent;
@@ -145,14 +145,14 @@ h1, h2, h3, h4, h5, h6, figure {
 .fh5co-nav .menu-2 li button i {
   color: rgba(0, 0, 0, 0.5);
 }
-.fh5co-nav .menu-2 li button:hover, .fh5co-nav .menu-2 li button:focus {
+.fh5co-nav .menu-2 li button:hover:not(.btn-user), .fh5co-nav .menu-2 li button:focus:not(.btn-user) {
   background: transparent !important;
 }
 .fh5co-nav .menu-2 li button:hover i, .fh5co-nav .menu-2 li button:focus i {
   color: black;
 }
 .fh5co-nav .menu-2 li.shopping-cart {
-  float: right;
+  /* float: right; */
 }
 .fh5co-nav .menu-2 li a.cart {
   color: black;
@@ -185,7 +185,7 @@ h1, h2, h3, h4, h5, h6, figure {
   display: inline-block;
   font-family: "Montserrat", Arial, sans-serif;
 }
-.fh5co-nav ul li a {
+.fh5co-nav ul li a:not(.avt-link) {
   font-size: 13px;
   padding: 30px 10px;
   text-transform: uppercase;
@@ -195,7 +195,7 @@ h1, h2, h3, h4, h5, h6, figure {
   transition: 0.5s;
 }
 @media screen and (min-width:1260px) {
-  .fh5co-nav ul li a {
+  .fh5co-nav ul li a:not(.avt-link) {
     font-size: 16px;
   }
 }
@@ -1596,24 +1596,26 @@ h1, h2, h3, h4, h5, h6, figure {
   background: #f0ad4e;
   color: #fff;
 }
+
 .ButtonUserGroup button {
-  cursor: pointer;
-  border: 0;
+  
   border-radius: 4px;
   font-weight: 600;
-  margin: 0 10px;
-  width: 160px;
-  padding: 10px 0;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  margin: 0px 10px;
+  width: 120px;
+  padding: 3px 0;
+  box-shadow: 0 0 20px rgb(0 0 0 / 20%);
   transition: 0.4s;
-  margin-top: 35px;
+  font-size: 16px;
 }
+
 .ButtonUserGroup__login {
   color: rgb(0, 0, 0,1);
   background-color: rgba(255, 255, 255, 1);
   border: 1px solid rgb(0, 0, 0,1)!important;
 }
 .ButtonUserGroup__regist {
+  border: 0!important;
   color: rgba(255, 255, 255, 1);
   background-color: rgba(0, 0, 0, 1);
 }

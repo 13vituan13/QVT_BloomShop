@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="{{ asset('css/user/icomoon.css') }}">
 
     <!-- Bootstrap  -->
+    
     <link rel="stylesheet" href="{{ asset('css/user/bootstrap.css') }}">
+    
 
 
     <!-- Flexslider  -->
@@ -61,6 +63,8 @@
     <script src="{{ asset('js/user/main.js') }}"></script>
     {{-- Swal Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
     <div class="fh5co-loader"></div>
     <div id="page">
@@ -77,84 +81,7 @@
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
-
-
-    <script>
-        $(document).ready(function() {
-            // Lấy các phần tử từ HTML
-            var modal = $("#myModal");
-            var btn = $("#openModalBtn");
-            var span = $(".close")[0];
-
-            // Khi người dùng nhấn nút mở modal, hiển thị modal
-            btn.on("click", function() {
-                modal.css("display", "block");
-            });
-
-            // Khi người dùng nhấn vào nút đóng, ẩn modal
-            $(span).on("click", function() {
-                modal.css("display", "none");
-            });
-
-            // Khi người dùng nhấn ra ngoài modal, ẩn modal
-            $(window).on("click", function(event) {
-                if (event.target == modal[0]) {
-                    modal.css("display", "none");
-                }
-            });
-        });
-
-        function goToPage(url){
-            window.location.href = url
-        }
-        function loadStart() {
-            $("#loading").show();
-        }
-
-        function loadEnd() {
-            $("#loading").hide();
-        }
-        function login(){
-            // if (!valiLogin()) {
-            //     return
-            // }
-            loadStart();
-            $.ajax({
-                url: "{{ route('login.submit') }}",
-                type: "POST",
-                param: {email:email,password:password},
-                processData: false,
-                contentType: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    loadEnd();
-                    if (response.duplicated == 1) {
-                        setElementBgColor(emailInput, "Email đã được đăng ký", true)
-                    } else {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Đăng Kí Thành Công',
-                            text: 'Tài khoản của bạn đã đăng ký thành công.',
-                            confirmButtonText: 'OK',
-                        }).then((result) => {
-                            window.location.href = "{{ route('home') }}"
-                        });
-                    }
-                },
-                error: function(e) {
-                    loadEnd();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Đăng Kí Thất Bại',
-                        text: 'vui lòng hãy thử lại!',
-                        confirmButtonText: 'OK',
-                    });
-                }
-            }); //end ajax
-        }
-    </script>
+    <script src="{{ asset('js/user/usersite.js') }}"></script>
 </body>
 
 </html>
