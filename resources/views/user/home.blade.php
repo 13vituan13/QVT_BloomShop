@@ -80,7 +80,7 @@
                         @php
                             $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
                         @endphp
-                        <div class="product-grid" style="background-image:url({{ asset("storage/{$path}") }}">
+                        <div class="product-grid" style="background-image:url({{ asset("storage/{$path}") }})">
                             <span class="sale">10%</span>
                             <div class="inner">
                                 <p>

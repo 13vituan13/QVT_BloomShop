@@ -14,7 +14,7 @@ class ProductImageSeeder extends Seeder
         for ($i = 1; $i < 10; $i++) {
             ProductImage::insert([
                 'product_id' => $i,
-                'image' => "public/images/products/$i/product.png",
+                'image' => "images/products/$i/product.png",
             ]);
         }
     }
