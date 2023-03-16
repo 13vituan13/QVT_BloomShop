@@ -18,6 +18,10 @@ class UserController extends Controller
     {
         return view("user.about");
     }
+    public function cart()
+    {
+        return view("user.cart");
+    }
 
     public function contact()
     {

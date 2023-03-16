@@ -28,6 +28,7 @@ Route::get('/contact', [User::class, 'contact'])->name('contact');
 Route::get('/product', [User::class, 'product'])->name('product');
 Route::get('/services', [User::class, 'services'])->name('services');
 Route::get('/product_detail', [User::class, 'product_detail'])->name('product_detail');
+Route::get('/cart', [User::class, 'cart'])->name('cart');
 
 // ****** LOGIN -- SIGNUP ******
 Route::get('/login', [UserLogin::class, 'login'])->name('login');

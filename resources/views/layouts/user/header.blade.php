@@ -9,8 +9,29 @@
         vertical-align: middle;
         margin-left: 20px;
     }
+
+    .fh5co-nav_fix {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        background-color: #fff;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .fh5co-nav_fix.scrolled {
+        transform: translateY(-100%);
+    }
+
+    /* Add padding to the body to make up for the space taken up by the fixed header */
+    /* body {
+        padding-top: 80px;
+    } */
 </style>
-<nav class="fh5co-nav" role="navigation">
+
+<nav id="header-nav" class="fh5co-nav" role="navigation">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-xs-12 logo">
@@ -162,3 +183,27 @@
         </div>
     </header>
 @endif
+<script>
+    var lastScrollTop = 0;
+
+    window.addEventListener("scroll", function() {
+        var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScroll === 0) {
+            // at top of page , keep header menu at top page
+            setTimeout(function() {
+                $('#header-nav').removeClass("fh5co-nav_fix");
+                $('#header-nav').removeClass("scrolled");
+            }, 500); // add delay before removing classes
+        } else if (currentScroll > lastScrollTop) {
+            // scrolling down, visible header menu
+            $('#header-nav').addClass("fh5co-nav_fix");
+            $('#header-nav').addClass("scrolled");
+        } else {
+            // scrolling up, show header menu
+            $('#header-nav').addClass("fh5co-nav_fix");
+            $('#header-nav').removeClass("scrolled");
+        }
+        lastScrollTop = currentScroll;
+    });
+</script>
