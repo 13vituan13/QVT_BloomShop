@@ -1,3 +1,15 @@
+<style>
+    .CustomerInfo {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .shopping-cart {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 20px;
+    }
+</style>
 <nav class="fh5co-nav" role="navigation">
     <div class="container-fluid">
         <div class="row">
@@ -22,13 +34,9 @@
                     </li>
                     <li><a href="{{ route('services') }}">Hoa Kể Chuyện</a></li>
                     <li><a href="{{ route('contact') }}">Liên Lạc</a></li>
-                    
                 </ul>
-                <div class="ButtonUserGroup row">
-                    <button id="openModalBtn" class="ButtonUserGroup__login">ĐĂNG NHẬP</button>
-                    <button class="ButtonUserGroup__regist">ĐĂNG KÍ</button>
-                </div>
             </div>
+
             <div class="col-md-3 col-xs-3 text-right hidden-xs menu-2">
                 <ul>
                     {{-- <li class="search">
@@ -39,8 +47,95 @@
                             </span>
                         </div>
                     </li> --}}
-                    <li class="shopping-cart"><a href="#" class="cart"><span><small>0</small><i
-                                    class="icon-shopping-cart"></i></span></a></li>
+                    @if (!\Session::has('customer'))
+                        <li>
+                            <div class="ButtonUserGroup">
+                                <button id="openModalBtn" onclick="showLogin()"
+                                    class="btn-user ButtonUserGroup__login">ĐĂNG NHẬP</button>
+                                <button class="btn-user ButtonUserGroup__regist"
+                                    onclick="goToPage('{{ route('sign_up') }}')">ĐĂNG KÍ</button>
+                            </div>
+                        </li>
+                    @endif
+                    <li class="shopping-cart"
+                        @if (\Session::has('customer')) style="margin-top: 20px!important;" @endif>
+                        <a href="#" class="cart">
+                            <span>
+                                <small>10</small>
+                                <i class="fa-solid fa-cart-shopping fz--25"></i>
+                            </span>
+                        </a>
+                    </li>
+                    @if (\Session::has('customer'))
+                        <li class="CustomerInfo">
+                            <ul class="list-unstyled">
+                                <li class="dropdown ms-2">
+
+                                    <a class="avt-link rounded-circle " href="#" role="button" id="dropdownUser"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="avatar avatar-md avatar-indicators avatar-online">
+                                            <img alt="avatar" src="https://via.placeholder.com/40x40"
+                                                class="rounded-circle">
+                                        </div>
+                                    </a>
+
+                                    <div class="dropdown-menu pb-2" aria-labelledby="dropdownUser">
+                                        <div class="dropdown-item">
+                                            <div class="d-flex py-2">
+                                                <div class="avatar avatar-md avatar-indicators avatar-online">
+                                                    <img alt="avatar" src="https://via.placeholder.com/40x40"
+                                                        class="rounded-circle">
+                                                </div>
+                                                <div class="ms-3 lh-1">
+                                                    <h5 class="mb-0">{{ Session::get('customer')->name }}</h5>
+                                                    <p class="mb-0">{{ Session::get('customer')->email }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="">
+                                            <ul class="list-unstyled">
+                                                <li style="width:100%">
+                                                    <a class="avt-link dropdown-item"
+                                                        href="@@webRoot/pages/profile-edit.html">
+                                                        <span class="me-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12"
+                                                                height="12" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-user">
+                                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2">
+                                                                </path>
+                                                                <circle cx="12" cy="7" r="4">
+                                                                </circle>
+                                                            </svg>
+                                                        </span>Profile
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <ul class="list-unstyled">
+                                            <li style="width:100%">
+                                                <a class="avt-link dropdown-item" href="{{ route('logout') }}">
+                                                    <span class="me-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14"
+                                                            height="14" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-power">
+                                                            <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                                                            <line x1="12" y1="2" x2="12"
+                                                                y2="12"></line>
+                                                        </svg></span>Sign Out
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -48,7 +143,7 @@
     </div>
 </nav>
 
-@if (!Request::routeIs('home'))
+@if (!Request::routeIs('home') && !Request::routeIs('sign_up'))
     <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner"
         style="background-image:url(images/img_bg_2.jpg);">
         <div class="overlay"></div>

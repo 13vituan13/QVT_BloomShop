@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-class UserController extends StatusController
+class UserController extends Controller
 {
     public function home()
     {   
-        
         $data = [
             'banners' => getAllBanner(),
             'best_choice' => getBestChoiceProduct(),
+            'count_product' => count(getAllProduct()),
         ];
         
         return view("user.home",$data);
@@ -25,8 +25,12 @@ class UserController extends StatusController
     }
 
     public function product()
-    {
-        return view("user.product");
+    {   
+        $inputs = [];
+        $data = [
+            'product_list' => getProductList($inputs,6),
+        ];
+        return view("user.product",$data);
     }
 
     public function services()

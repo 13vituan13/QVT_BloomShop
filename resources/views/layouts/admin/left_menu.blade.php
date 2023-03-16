@@ -40,7 +40,7 @@
                             <span class="mini-click-non">Danh Mục</span>
                         </a>
                         <ul class="submenu-angle" aria-expanded="false">
-                            <li><a title="Inbox" href="mailbox.html"><span class="mini-sub-pro">Sản Phẩm</span></a>
+                            <li><a title="Inbox" href="{{ route('admin.product') }}"><span class="mini-sub-pro">Sản Phẩm</span></a>
                             </li>
                             <li><a title="View Mail" href="mailbox-view.html"><span class="mini-sub-pro">Loại Sản
                                         Phẩm</span></a></li>

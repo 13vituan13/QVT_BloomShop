@@ -11,7 +11,7 @@
                     <div class="product-status-wrap">
                         <h4>Danh Sách Sản Phẩm</h4>
                         <div class="add-product">
-                            <a href="product-edit.html">Add Product</a>
+                            <a href="{{ route('admin.product_detail') }}">Thêm mới</a>
                         </div>
                         <table>
                             <thead>
@@ -28,18 +28,10 @@
                                     @foreach ($product_list as $item)
                                         <tr>
                                             <td>
-                                                {{-- @php
-                                                    // $img = isset($item->product_image) ? $item->product_image[0]['image'] : '';
-                                                    // echo $item->product_image;
-                                                    $img = $item->product_image[0]['image'];
-                                                @endphp --}}
-                                                {{-- @if(count($item->product_image) > 0)
-                                                    @foreach ($item->product_image as $v)
-                                                    {{ $v->image }}
-                                                    @endforeach
-                                                @endif --}}
-                                                
-                                                {{-- <img src="{{ asset("images/products/1/{$item->product_image[0]['image']}") }}" alt="" /> --}}
+                                                @php
+                                                    $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                                                @endphp
+                                                <img src="{{ asset("storage/{$path}") }}" alt="" />
                                             </td>
                                             <td>{{ $item->name }}</td>
                                             <td>
@@ -50,10 +42,10 @@
                                                 @endif
                                             </td>
                                             <td>{{ isset($item->category) ? $item->category['name'] : ''}}</td>
-                                            <td>{{ $item->Inventory_number }}</td>
+                                            <td>{{ $item->inventory_number }}</td>
                                             <td>{{ "$$item->price" }}</td>
                                             <td>
-                                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed" onclick="goToPage('{{ route('admin.product_detail',['id' => $item->product_id]) }}')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                                 <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             </td>
                                         </tr>
@@ -62,19 +54,48 @@
                             </tbody>
                         </table>
                         <div class="custom-pagination">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
+                            {{ $product_list->links('admin.partial.pagination') }}
                         </div>
+                        
+                            
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
+    <script>
+    // $(document).ready(function() {
+    //     // Lấy giá trị thời gian sống của session từ biến PHP $sessionLifetime
+    //     var sessionLifetime = {{ $sessionLifetime }};
+        
+    //     // Lấy thời điểm cuối cùng mà session đã được sử dụng từ localStorage
+    //     var lastActivity = localStorage.getItem('last_activity');
+        
+    //     // Nếu session đã hết hạn
+    //     if ("{{ session_id() }}" === "" || (lastActivity && (new Date().getTime() - lastActivity > sessionLifetime))) {
+    //         // Hiển thị popup thông báo
+    //         Swal.fire({
+    //             title: 'Phiên làm việc đã hết hạn',
+    //             text: 'Vui lòng đăng nhập lại để tiếp tục sử dụng hệ thống.',
+    //             type: 'warning',
+    //             showCancelButton: false,
+    //             confirmButtonColor: '#3085d6',
+    //             confirmButtonText: 'OK'
+    //         }, function() {
+    //             // Chuyển hướng đến trang đăng nhập khi người dùng nhấp vào nút OK
+    //             window.location.href = '{{ route('admin.login') }}';
+    //         });
+    //     }
+        
+    //     // Lưu thời điểm hiện tại vào localStorage để sử dụng cho lần sau
+    //     localStorage.setItem('last_activity', new Date().getTime());
+    // });
+
+        function goToPage(url){
+            window.location.href = url
+        }
+    </script>
 
 @endsection

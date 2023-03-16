@@ -15,9 +15,13 @@ return new class extends Migration
             $table->increments('customer_id');
             $table->string('name');
             $table->string('address');
-            $table->string('phone');
+            $table->string('district');
+            $table->string('city');
+            $table->dateTime('birthday');
+            $table->string('phone')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->nullable();
             $table->integer('vip_id')->unsigned()->nullable();
             $table->timestamps();
         });

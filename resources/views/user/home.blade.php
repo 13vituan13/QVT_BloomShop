@@ -73,155 +73,30 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/1/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
+            @if(count($best_choice) > 0)
+                @foreach ($best_choice as $item)
+                <div class="col-md-4 text-center animate-box">
+                    <div class="product">
+                        @php
+                            $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                        @endphp
+                        <div class="product-grid" style="background-image:url({{ asset("storage/{$path}") }})">
+                            <span class="sale">10%</span>
+                            <div class="inner">
+                                <p>
+                                    <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+                                    <a target="_blank" href="{{ asset("storage/{$path}") }}" class="icon"><i class="icon-eye"></i></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="desc">
+                            <h3><a href="single.html">{{ $item->name }}</a></h3>
+                            <span class="price">${{$item->price}}</span>
                         </div>
                     </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Hauteville Concrete Rocking Chair</a></h3>
-                        <span class="price">$350</span>
-                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/2/product.png') }}">
-                        <span class="sale">10%</span>
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Pavilion Speaker</a></h3>
-                        <span class="price">$600</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/3/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Ligomancer</a></h3>
-                        <span class="price">$780</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/4/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Alato Cabinet</a></h3>
-                        <span class="price">$800</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/5/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Earing Wireless</a></h3>
-                        <span class="price">$100</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/6/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Sculptural Coffee Table</a></h3>
-                        <span class="price">$960</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/7/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Alato Cabinet</a></h3>
-                        <span class="price">$800</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/8/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Earing Wireless</a></h3>
-                        <span class="price">$100</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-center animate-box">
-                <div class="product">
-                    <div class="product-grid" style="background-image:url({{ asset('images/products/9/product.png') }}">
-                        <div class="inner">
-                            <p>
-                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="desc">
-                        <h3><a href="single.html">Sculptural Coffee Table</a></h3>
-                        <span class="price">$960</span>
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </div>
@@ -313,7 +188,7 @@
                             <span class="icon">
                                 <i class="icon-shop"></i>
                             </span>
-                            <span class="counter js-counter" data-from="0" data-to="700" data-speed="5000" data-refresh-interval="50">1</span>
+                            <span class="counter js-counter" data-from="0" data-to="{{ $count_product }}" data-speed="5000" data-refresh-interval="50">1</span>
                             <span class="counter-label">All Products</span>
                         </div>
                     </div>
@@ -335,5 +210,5 @@
 </div>
 
 
-@include('user.login')
+
 @endsection

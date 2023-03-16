@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'admin',
         'passwords' => 'users',
     ],
 
@@ -41,14 +41,16 @@ return [
             'driver' => 'session',
             'provider' => 'user',
         ],
-    
-        'user' => [
-            'driver' => 'session',
-            'provider' => 'customer',
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'api',
+            'hash' => false,
         ],
     
     ],
-
+    
+    
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -65,18 +67,18 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
         'user' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-    
-        'customer' => [
+        'api' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Customer::class,
+            'model' => App\Models\PersonalAccessToken::class,
+            'hash' => false,
         ],
     ],
+    
     
 
     /*

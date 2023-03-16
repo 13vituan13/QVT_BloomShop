@@ -19,8 +19,6 @@ class VIPSeeder extends Seeder
             VipMember::insert([
                 'name' => $key,
                 'offer' => $value,
-                'created_at' => now(),
-                'updated_at' => now()
             ]);
         }
     }
