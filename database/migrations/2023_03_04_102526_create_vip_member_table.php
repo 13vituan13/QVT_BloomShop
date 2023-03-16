@@ -15,7 +15,6 @@ return new class extends Migration
             $table->increments('vip_id');
             $table->string('name');
             $table->integer('offer');
-            $table->timestamps();
         });
         
     }
