@@ -40,16 +40,16 @@ Route::post('/check_email_exist', [UserSignUp::class, 'check_email_exist'])->nam
 //______________________________ ADMIN SITE_______________________________
 Route::get('/test', [Admin::class, 'test'])->name('test');
 
-Route::prefix('/Admin')->group(function() {
-    Route::get('login', [AdminLogin::class, 'login'])->name('Admin.login');
-    Route::get('logout', [AdminLogin::class, 'logout'])->name('Admin.logout');
+Route::prefix('/admin')->group(function() {
+    Route::get('login', [AdminLogin::class, 'login'])->name('admin.login');
+    Route::get('logout', [AdminLogin::class, 'logout'])->name('admin.logout');
 
-    Route::post('login_submit', [AdminLogin::class, 'post_Login'])->name('Admin.login.submit');
+    Route::post('login_submit', [AdminLogin::class, 'post_Login'])->name('admin.login.submit');
 });
 
-Route::prefix('/Admin')->middleware(['Admin.session'])->group(function() {
-    Route::get('product', [Admin::class, 'product'])->name('Admin.product');
-    Route::get('product_detail/{id?}', [Admin::class, 'product_detail'])->name('Admin.product_detail');
+Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
+    Route::get('product', [Admin::class, 'product'])->name('admin.product');
+    Route::get('product_detail/{id?}', [Admin::class, 'product_detail'])->name('admin.product_detail');
 });
 
 
