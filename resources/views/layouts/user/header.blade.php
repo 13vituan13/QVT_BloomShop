@@ -26,12 +26,12 @@
     }
 
     /* Add padding to the body to make up for the space taken up by the fixed header */
-    /* body {
+    body {
         padding-top: 80px;
-    } */
+    }
 </style>
 
-<nav id="header-nav" class="fh5co-nav" role="navigation">
+<nav id="header-nav" class="fh5co-nav fh5co-nav_fix" role="navigation">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-xs-12 logo">
@@ -43,9 +43,9 @@
             </div>
             <div class="col-md-6 col-xs-8 text-center menu-1">
                 <ul>
-                    <li><a href="{{ route('home') }}">Trang Chủ</a></li>
-                    <li><a href="{{ route('about') }}">Giới Thiệu</a></li>
-                    <li class="has-dropdown">
+                    <li class="@if(Request::routeIs('home')) active @endif"><a href="{{ route('home') }}" >Trang Chủ</a></li>
+                    <li class="@if(Request::routeIs('about')) active @endif"><a href="{{ route('about') }}">Giới Thiệu</a></li>
+                    <li class="has-dropdown @if(Request::routeIs('product')) active @endif">
                         <a href="{{ route('product') }}">Sản Phẩm</a>
                         <ul class="dropdown">
                             @foreach ($categories as $category)
@@ -53,8 +53,8 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li><a href="{{ route('services') }}">Hoa Kể Chuyện</a></li>
-                    <li><a href="{{ route('contact') }}">Liên Lạc</a></li>
+                    <li class="@if(Request::routeIs('services')) active @endif"><a href="{{ route('services') }}">Hoa Kể Chuyện</a></li>
+                    <li class="@if(Request::routeIs('contact')) active @endif"><a href="{{ route('contact') }}">Liên Lạc</a></li>
                 </ul>
             </div>
 
@@ -164,38 +164,14 @@
     </div>
 </nav>
 
-@if (!Request::routeIs('home') && !Request::routeIs('sign_up'))
-    <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner"
-        style="background-image:url(images/img_bg_2.jpg);">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    <div class="display-t">
-                        <div class="display-tc animate-box" data-animate-effect="fadeIn">
-                            <h1>Contact Us</h1>
-                            <h2>Free html5 templates Made by <a href="http://freehtml5.co"
-                                    target="_blank">freehtml5.co</a></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-@endif
+
 <script>
     var lastScrollTop = 0;
 
     window.addEventListener("scroll", function() {
         var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-        if (currentScroll === 0) {
-            // at top of page , keep header menu at top page
-            setTimeout(function() {
-                $('#header-nav').removeClass("fh5co-nav_fix");
-                $('#header-nav').removeClass("scrolled");
-            }, 500); // add delay before removing classes
-        } else if (currentScroll > lastScrollTop) {
+        if (currentScroll > lastScrollTop) {
             // scrolling down, visible header menu
             $('#header-nav').addClass("fh5co-nav_fix");
             $('#header-nav').addClass("scrolled");
@@ -204,6 +180,7 @@
             $('#header-nav').addClass("fh5co-nav_fix");
             $('#header-nav').removeClass("scrolled");
         }
+
         lastScrollTop = currentScroll;
     });
 </script>

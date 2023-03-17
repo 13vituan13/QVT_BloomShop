@@ -1,6 +1,28 @@
 @extends('layouts.user.master')
 @section('title', 'Product')
 @section('content')
+<style>
+    .product_banner{
+        background-position: left!important;
+        background-size: cover;
+        transform: rotateY(180deg);
+    }
+    
+</style>
+<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm product_banner" role="banner"
+        style="background-image:url({{asset('/images/html/product_banner.png')}});">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="display-t">
+                        <div class="display-tc animate-box" data-animate-effect="fadeIn">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</header>
 <div id="fh5co-product">
     <div class="container">
         <div class="row animate-box">

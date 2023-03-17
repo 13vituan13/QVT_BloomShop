@@ -31,10 +31,11 @@
             <div class="col-md-4 col-sm-4 text-center">
                 <div class="feature-center animate-box" data-animate-effect="fadeIn">
                     <span class="icon">
-                        <i class="icon-credit-card"></i>
+                        <i class="fa-solid fa-users"></i>
                     </span>
-                    <h3>Credit Card</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove</p>
+                    <h3>Chăm Sóc Khách Hàng</h3>
+                    <p class="text-start">Chăm sóc khách hàng là một trong những yếu tố quan trọng nhất trong kinh doanh, đặc biệt là với các cửa hàng bán hoa. Tại đây, việc tạo ra trải nghiệm mua sắm tuyệt vời và đáp ứng nhu cầu của khách hàng là điều cần thiết.
+                    Cửa hàng bán hoa nên luôn sẵn sàng lắng nghe ý kiến phản hồi của khách hàng, nâng cao chất lượng sản phẩm.</p>
                     <p><a href="#" class="btn btn-primary btn-outline">Learn More</a></p>
                 </div>
             </div>
@@ -43,8 +44,8 @@
                     <span class="icon">
                         <i class="icon-wallet"></i>
                     </span>
-                    <h3>Save Money</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove</p>
+                    <h3>Tiết Kiệm Chi Phí</h3>
+                    <p class="text-start">Chúng tôi thường áp dụng nhiều biện pháp tiết kiệm chi phí như tối ưu hóa quy trình sản xuất, sử dụng nguồn vật tư và nhân lực hiệu quả, đàm phán giá với các nhà cung cấp để giảm giá thành sản phẩm. Ngoài ra, chúng tôi cũng sử dụng các công nghệ và ứng dụng quản lý chi phí hiện đại để theo dõi và kiểm soát chi phí một cách chặt chẽ.</p>
                     <p><a href="#" class="btn btn-primary btn-outline">Learn More</a></p>
                 </div>
             </div>
@@ -53,8 +54,8 @@
                     <span class="icon">
                         <i class="icon-paper-plane"></i>
                     </span>
-                    <h3>Free Delivery</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove</p>
+                    <h3>Giao Hàng Miễn Phí</h3>
+                    <p class="text-start">Shop bán hoa của chúng tôi rất hân hạnh được cung cấp dịch vụ giao hàng miễn phí cho khách hàng. Chúng tôi hiểu rằng khách hàng rất quan tâm đến thời gian và chất lượng của sản phẩm mình đặt mua, vì vậy chúng tôi cam kết cung cấp dịch vụ giao hàng nhanh chóng và đảm bảo sản phẩm được vận chuyển an toàn đến tay khách hàng.</p>
                     <p><a href="#" class="btn btn-primary btn-outline">Learn More</a></p>
                 </div>
             </div>
