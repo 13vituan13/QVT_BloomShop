@@ -5,10 +5,22 @@ class UserController extends Controller
 {
     public function home()
     {   
+        $banner = getAllBanner();
+        $product_banner = getBestChoiceProduct(count(getAllBanner()));
+        $best_choice = getBestChoiceProduct(9);
+        foreach($banner as $key => $value){
+            foreach($product_banner as $k => $v){
+                if($key == $k){
+                    $value['product'] = $v;
+                }
+            }
+        }
+        
         $data = [
-            'banners' => getAllBanner(),
-            'best_choice' => getBestChoiceProduct(),
+            'banners' => $banner,
+            'best_choice' => $best_choice,
             'count_product' => count(getAllProduct()),
+            'count_client' => count(getAllCustomer()),
         ];
         
         return view("user.home",$data);

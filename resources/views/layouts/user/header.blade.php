@@ -3,6 +3,7 @@
         display: inline-block;
         vertical-align: middle;
     }
+    
 
     .shopping-cart {
         display: inline-block;
@@ -29,10 +30,12 @@
     body {
         padding-top: 80px;
     }
+    
+
 </style>
 
-<nav id="header-nav" class="fh5co-nav fh5co-nav_fix" role="navigation">
-    <div class="container-fluid">
+<nav id="header-nav" class="fh5co-nav fh5co-nav_fix " role="navigation">
+    <div class="container-fluid ">
         <div class="row">
             <div class="col-md-3 col-xs-12 logo">
                 <div id="fh5co-logo">
@@ -43,9 +46,11 @@
             </div>
             <div class="col-md-6 col-xs-8 text-center menu-1">
                 <ul>
-                    <li class="@if(Request::routeIs('home')) active @endif"><a href="{{ route('home') }}" >Trang Chủ</a></li>
-                    <li class="@if(Request::routeIs('about')) active @endif"><a href="{{ route('about') }}">Giới Thiệu</a></li>
-                    <li class="has-dropdown @if(Request::routeIs('product')) active @endif">
+                    <li class="@if (Request::routeIs('home')) active @endif"><a href="{{ route('home') }}">Trang
+                            Chủ</a></li>
+                    <li class="@if (Request::routeIs('about')) active @endif"><a href="{{ route('about') }}">Giới
+                            Thiệu</a></li>
+                    <li class="has-dropdown @if (Request::routeIs('product')) active @endif">
                         <a href="{{ route('product') }}">Sản Phẩm</a>
                         <ul class="dropdown">
                             @foreach ($categories as $category)
@@ -53,21 +58,15 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li class="@if(Request::routeIs('services')) active @endif"><a href="{{ route('services') }}">Hoa Kể Chuyện</a></li>
-                    <li class="@if(Request::routeIs('contact')) active @endif"><a href="{{ route('contact') }}">Liên Lạc</a></li>
+                    <li class="@if (Request::routeIs('services')) active @endif"><a href="{{ route('services') }}">Hoa Kể
+                            Chuyện</a></li>
+                    <li class="@if (Request::routeIs('contact')) active @endif"><a href="{{ route('contact') }}">Liên
+                            Lạc</a></li>
                 </ul>
             </div>
 
-            <div class="col-md-3 col-xs-3 text-right hidden-xs menu-2">
+            <div class="col-md-3 col-xs-3 text-right hidden-xs menu-2 destContainer">
                 <ul>
-                    {{-- <li class="search">
-                        <div class="input-group">
-                            <input type="text" placeholder="Search..">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button"><i class="icon-search"></i></button>
-                            </span>
-                        </div>
-                    </li> --}}
                     @if (!\Session::has('customer'))
                         <li>
                             <div class="ButtonUserGroup">

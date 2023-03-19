@@ -34,10 +34,10 @@ function getAllProduct()
     return $res;
 }
 
-function getBestChoiceProduct()
+function getBestChoiceProduct($limit)
 {
     $res = Product::with('product_image')
-        ->limit(9)
+        ->limit($limit)
         ->get();
     return $res;
 }

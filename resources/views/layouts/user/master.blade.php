@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="{{ asset('css/user/icomoon.css') }}">
 
     <!-- Bootstrap  -->
-    
+
     <link rel="stylesheet" href="{{ asset('css/user/bootstrap.css') }}">
-    
+
 
 
     <!-- Flexslider  -->
@@ -40,10 +40,11 @@
 
     <link rel="stylesheet" href="https://kit.fontawesome.com/c461128840.css" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c461128840.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
-    rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
     <style>
         body {
             font-family: "Playfair Display", serif;
@@ -53,9 +54,10 @@
             color: #828282;
             background: #fff;
         }
-        .offcanvas{
-            position: unset!important;
-            visibility: unset!important;
+
+        .offcanvas {
+            position: unset !important;
+            visibility: unset !important;
         }
     </style>
 </head>
@@ -79,7 +81,7 @@
     <script src="{{ asset('js/user/main.js') }}"></script>
     {{-- Swal Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
 
     <div class="fh5co-loader"></div>
     <div id="page">
@@ -93,9 +95,59 @@
     <div id="loading" hidden>
         <div class="loader">Loading...</div>
     </div>
+    <style>
+        .float-cart {
+            position: fixed;
+            width: 52px;
+            height: 52px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #d1c286;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 2px 2px 3px #999;
+        }
+
+        .float-cart span {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .float-cart i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 25px;
+            color: #fff;
+        }
+
+        .float-cart small {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #000;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+    </style>
+    <a class="float-cart" href="{{ route('cart') }}">
+        <span>
+            <small>10</small>
+            <i class="fa-solid fa-cart-shopping fz--25"></i>
+        </span>
+    </a>
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
+
+
     <script src="{{ asset('js/user/usersite.js') }}"></script>
 </body>
 
