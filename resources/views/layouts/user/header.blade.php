@@ -3,13 +3,6 @@
         display: inline-block;
         vertical-align: middle;
     }
-    
-
-    .shopping-cart {
-        display: inline-block;
-        vertical-align: middle;
-        margin-left: 20px;
-    }
 
     .fh5co-nav_fix {
         position: fixed;
@@ -77,15 +70,6 @@
                             </div>
                         </li>
                     @endif
-                    <li class="shopping-cart"
-                        @if (\Session::has('customer')) style="margin-top: 20px!important;" @endif>
-                        <a href="#" class="cart">
-                            <span>
-                                <small>10</small>
-                                <i class="fa-solid fa-cart-shopping fz--25"></i>
-                            </span>
-                        </a>
-                    </li>
                     @if (\Session::has('customer'))
                         <li class="CustomerInfo">
                             <ul class="list-unstyled">
