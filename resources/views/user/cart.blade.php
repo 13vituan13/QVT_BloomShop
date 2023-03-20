@@ -153,52 +153,47 @@ a:hover{
 </style>
     <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;">
         <div class="container">
-            <div class="row animate-box">
-                <div class="col-md-8 col-md-offset-2 text-center fh5co-heading" style="margin-bottom: 3em">
-                    <h1>ĐĂNG KÝ</h1>
-                </div>
-            </div>
             <div class="card">
                 <div class="row">
                     <div class="col-md-8 cart">
                         <div class="title">
                             <div class="row">
-                                <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                                <div class="col align-self-center text-right text-muted">3 items</div>
+                                <div class="col"><h4><b>Giỏ Hàng</b></h4></div>
+                                <div class="col align-self-center text-right text-muted">3 sản phẩm</div>
                             </div>
                         </div>    
                         <div class="row border-top border-bottom">
                             <div class="row main align-items-center">
-                                <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
+                                <div class="col-2"><img class="img-fluid" src="{{ asset("storage/images/products/2/product.png") }}"></div>
                                 <div class="col">
-                                    <div class="row text-muted">Shirt</div>
-                                    <div class="row">Cotton T-shirt</div>
+                                    <div class="row text-muted">Hoa</div>
+                                    <div class="row">Bó Hoa</div>
                                 </div>
                                 <div class="col">
                                     <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
                                 </div>
-                                <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                                <div class="col">&dollar; 44.00 <span class="close">&#10005;</span></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="row main align-items-center">
-                                <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg"></div>
+                                <div class="col-2"><img class="img-fluid" src="{{ asset("storage/images/products/2/product.png") }}"></div>
                                 <div class="col">
-                                    <div class="row text-muted">Shirt</div>
-                                    <div class="row">Cotton T-shirt</div>
+                                    <div class="row text-muted">Hoa 2</div>
+                                    <div class="row">Bó Hoa</div>
                                 </div>
                                 <div class="col">
                                     <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
                                 </div>
-                                <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                                <div class="col">&dollar; 44.00 <span class="close">&#10005;</span></div>
                             </div>
                         </div>
                         <div class="row border-top border-bottom">
                             <div class="row main align-items-center">
-                                <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg"></div>
+                                <div class="col-2"><img class="img-fluid" src="{{ asset("storage/images/products/2/product.png") }}"></div>
                                 <div class="col">
-                                    <div class="row text-muted">Shirt</div>
-                                    <div class="row">Cotton T-shirt</div>
+                                    <div class="row text-muted">Hoa 3</div>
+                                    <div class="row">Bó Hoa</div>
                                 </div>
                                 <div class="col">
                                     <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
@@ -206,26 +201,26 @@ a:hover{
                                 <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
                             </div>
                         </div>
-                        <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                        <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Quay lại</span></div>
                     </div>
                     <div class="col-md-4 summary">
-                        <div><h5><b>Summary</b></h5></div>
+                        <div><h5><b>TỔNG KẾT</b></h5></div>
                         <hr>
                         <div class="row">
-                            <div class="col" style="padding-left:0;">ITEMS 3</div>
-                            <div class="col text-right">&euro; 132.00</div>
+                            <div class="col" style="padding-left:0;">3 SẢN PHẨM</div>
+                            <div class="col text-right">&dollar; 132.00</div>
                         </div>
-                        <form>
-                            <p>SHIPPING</p>
-                            <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
-                            <p>GIVE CODE</p>
+                        {{-- <form>
+                            <p>Phí Giao Hàng</p>
+                            <select><option class="text-muted">&dollar;5.00</option></select>
+                            <p>Mã Giảm Giá</p>
                             <input id="code" placeholder="Enter your code">
-                        </form>
+                        </form> --}}
                         <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                            <div class="col">TOTAL PRICE</div>
-                            <div class="col text-right">&euro; 137.00</div>
+                            <div class="col">Thành Tiền</div>
+                            <div class="col text-right">&dollar; 137.00</div>
                         </div>
-                        <button class="btn">CHECKOUT</button>
+                        <button class="btn">THANH TOÁN</button>
                     </div>
                 </div>
                 
