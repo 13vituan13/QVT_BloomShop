@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Providers\Cart;
@@ -6,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function cart(Request $request, Cart $cart)
+    public function cart(Cart $cart)
     {
         $items = $cart->content();
         $total = $items->sum(function ($item) {

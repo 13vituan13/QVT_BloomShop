@@ -30,6 +30,7 @@ class Cart
             $this->items->put($id, $item);
         }
     }
+
     public function update($id, $quantity)
     {
         $item = $this->items->get($id);
@@ -39,6 +40,7 @@ class Cart
             $this->items->put($id, $item);
         }
     }
+
     public function remove($id)
     {
         $this->items->forget($id);
@@ -51,6 +53,6 @@ class Cart
 
     public function content()
     {
-        return $this->items;
+        return $this->items->values();
     }
 }
