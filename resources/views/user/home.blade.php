@@ -169,7 +169,11 @@
                                 <div class="image">
                                     <img class="img-fluid" src="{{ asset("storage/{$path}") }}" />
                                     <span class="sale">10%</span>
-                                    <div class="add_to_cart">
+                                    <div class="add_to_cart" 
+                                        data-productId="{{$item->product_id}}"
+                                        data-productName="{{$item->name}}"
+                                        data-productPrice="{{$item->price}}"
+                                        >
                                         <i class="icon-shopping-cart"></i>
                                         <a target="_blank" href="{{ asset("storage/{$path}") }}" class="eye">
                                             <i class="icon-eye"></i>

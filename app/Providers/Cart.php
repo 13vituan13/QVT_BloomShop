@@ -13,37 +13,37 @@ class Cart
         $this->items = collect();
     }
 
-    public function add($id, $name, $price, $quantity)
+    public function add($product_id, $name, $price, $quantity)
     {
-        $item = $this->items->get($id);
+        $item = $this->items->get($product_id);
 
         if ($item) {
             $item['quantity'] += $quantity;
         } else {
             $item = collect([
-                'id' => $id,
+                'product_id' => $product_id,
                 'name' => $name,
                 'price' => $price,
                 'quantity' => $quantity,
             ]);
 
-            $this->items->put($id, $item);
+            $this->items->put($product_id, $item);
         }
     }
 
-    public function update($id, $quantity)
+    public function update($product_id, $quantity)
     {
-        $item = $this->items->get($id);
+        $item = $this->items->get($product_id);
 
         if ($item) {
             $item['quantity'] = $quantity;
-            $this->items->put($id, $item);
+            $this->items->put($product_id, $item);
         }
     }
 
-    public function remove($id)
+    public function remove($product_id)
     {
-        $this->items->forget($id);
+        $this->items->forget($product_id);
     }
 
     public function count()

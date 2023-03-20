@@ -30,6 +30,7 @@ Route::get('/product', [UserController::class, 'product'])->name('product');
 Route::get('/services', [UserController::class, 'services'])->name('services');
 Route::get('/product_detail', [UserController::class, 'product_detail'])->name('product_detail');
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::post('/cart_store', [CartController::class, 'store'])->name('cart.store');
 
 // ****** LOGIN ******
 Route::get('/login', [UserLoginController::class, 'login'])->name('login');

@@ -147,8 +147,99 @@
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
 
+    <script>
+        // Lấy các phần tử từ HTML
+        var modal = $("#myModal");
+        var span = $(".close")[0];
+        $(document).ready(function() {
+            // Khi người dùng nhấn vào nút đóng, ẩn modal
+            $(span).on("click", function() {
+                modal.css("display", "none");
+            });
 
-    <script src="{{ asset('js/user/usersite.js') }}"></script>
+            // Khi người dùng nhấn ra ngoài modal, ẩn modal
+            $(window).on("click", function(event) {
+                if (event.target == modal[0]) {
+                    modal.css("display", "none");
+                }
+            });
+            //Cart click
+            $(document).on('click', '.add_to_cart', function(e) {
+                const p = $(this).parent()
+                console.log({
+                    p
+                });
+                const c = p.find('.img-fluid').clone();
+                c.css({
+                    position: 'absolute',
+                    top: p.offset().top,
+                    left: p.offset().left,
+                    width: p.width(),
+                    height: p.height(),
+                    zIndex: 99999
+                });
+                const dest = $('.float-cart');
+                const destTop = dest.offset().top + dest.height() / 2;
+                const destLeft = dest.offset().left + dest.width() / 2;
+                const destRight = $(document).width() - dest.offset().left - dest.width() / 2;
+                $('.container_product').append(c);
+                c.animate({
+                        top: destTop,
+                        left: destLeft,
+                        right: destRight,
+                        width: 0,
+                        height: 0,
+                        opacity: 0
+                    },
+                    600,
+                    function() {
+                        c.remove();
+                    });
+                var productId = $(this).attr('data-productId');
+                var productName = $(this).attr('data-productName');
+                var productPrice = $(this).attr('data-productPrice');
+                var formData = new FormData()
+                formData.append("product_id", productId);
+                formData.append("name", productName);
+                formData.append("price", productPrice);
+                $.ajax({
+                    url: "{{ route('cart.store') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    beforeSend: function() {
+                        msgVali = ""
+                    },
+                    success: function(response) {
+                        console(response)
+                    },
+                    error: function(e) {
+                        console(e)
+                    }
+                }); //end ajax   
+            });
+        });
+
+        function showLogin() {
+            modal.css("display", "block");
+        }
+
+        function goToPage(url) {
+            window.location.href = url
+        }
+
+        function loadStart() {
+            $("#loading").show();
+        }
+
+        function loadEnd() {
+            $("#loading").hide();
+        }
+    </script>
 </body>
 
 </html>

@@ -18,10 +18,14 @@ class CartController extends Controller
     }
 
     public function store(Request $request, Cart $cart)
-    {
-        $cart->add($request->input('id'), $request->input('name'), $request->input('price'), $request->input('quantity'));
-
-        return redirect()->route('cart.index')->with('success', 'Item added to cart successfully!');
+    {   
+        $cart->add( 
+                    $request->input('product_id'), 
+                    $request->input('name'), 
+                    $request->input('price'), 
+                    1
+                );
+        return response()->json('success', 200);
     }
 
     public function update(Request $request, Cart $cart)
@@ -30,13 +34,13 @@ class CartController extends Controller
             $cart->update($id, $quantity);
         }
 
-        return redirect()->route('cart.index')->with('success', 'Cart updated successfully!');
+        return redirect()->route('user.cart')->with('success', 'Cart updated successfully!');
     }
 
     public function destroy($id, Cart $cart)
     {
         $cart->remove($id);
 
-        return redirect()->route('cart.index')->with('success', 'Item removed from cart successfully!');
+        return redirect()->route('user.cart')->with('success', 'Item removed from cart successfully!');
     }
 }
