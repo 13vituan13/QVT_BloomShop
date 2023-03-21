@@ -161,46 +161,29 @@ a:hover{
                                 <div class="col"><h4><b>Giỏ Hàng</b></h4></div>
                                 <div class="col align-self-center text-right text-muted">3 sản phẩm</div>
                             </div>
-                        </div>    
-                        <div class="row border-top border-bottom">
-                            <div class="row main align-items-center">
-                                <div class="col-2"><img class="img-fluid" src="{{ asset("storage/images/products/2/product.png") }}"></div>
-                                <div class="col">
-                                    <div class="row text-muted">Hoa</div>
-                                    <div class="row">Bó Hoa</div>
-                                </div>
-                                <div class="col">
-                                    <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                                </div>
-                                <div class="col">&dollar; 44.00 <span class="close">&#10005;</span></div>
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="row main align-items-center">
-                                <div class="col-2"><img class="img-fluid" src="{{ asset("storage/images/products/2/product.png") }}"></div>
-                                <div class="col">
-                                    <div class="row text-muted">Hoa 2</div>
-                                    <div class="row">Bó Hoa</div>
+                        
+                        @if(count($cart) > 0)
+                            @foreach ($cart as $key => $item)
+                                <div class="row border-top border-bottom">
+                                    <div class="row main align-items-center">
+                                        <div class="col-2"><img class="img-fluid" src="{{ asset("storage/{$item['image']}") }}"></div>
+                                        <div class="col">
+                                            <div class="row text-muted">{{ $item['name'] }}</div>
+                                            <div class="row">{{ $item['category_name'] }}</div>
+                                        </div>
+                                        <div class="col">
+                                            <a href="#">-</a><a href="#" class="border">{{ $item['quantity'] }}</a><a href="#">+</a>
+                                        </div>
+                                        <div class="col">&dollar; {{ $item['price'] }} <span class="close">&#10005;</span></div>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                                </div>
-                                <div class="col">&dollar; 44.00 <span class="close">&#10005;</span></div>
-                            </div>
-                        </div>
-                        <div class="row border-top border-bottom">
-                            <div class="row main align-items-center">
-                                <div class="col-2"><img class="img-fluid" src="{{ asset("storage/images/products/2/product.png") }}"></div>
-                                <div class="col">
-                                    <div class="row text-muted">Hoa 3</div>
-                                    <div class="row">Bó Hoa</div>
-                                </div>
-                                <div class="col">
-                                    <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                                </div>
-                                <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                            </div>
-                        </div>
+                            @endforeach
+                        @else
+                            Không có gì trong giỏ hàng
+                        @endif
+                        
+                        
                         <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Quay lại</span></div>
                     </div>
                     <div class="col-md-4 summary">

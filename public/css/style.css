@@ -246,3 +246,45 @@ form .gender_details .category {
     display: table;
 }
 /* end avatar */
+/* start cart floating */
+.float-cart {
+    position: fixed;
+    width: 52px;
+    height: 52px;
+    bottom: 20px;
+    right: 20px;
+    background-color: #d1c286;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.float-cart span {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.float-cart i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    color: #fff;
+}
+
+.float-cart small {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    z-index: 1;
+}
+/* end cart floating*/

@@ -170,9 +170,11 @@
                                     <img class="img-fluid" src="{{ asset("storage/{$path}") }}" />
                                     <span class="sale">10%</span>
                                     <div class="add_to_cart" 
-                                        data-productId="{{$item->product_id}}"
-                                        data-productName="{{$item->name}}"
-                                        data-productPrice="{{$item->price}}"
+                                            data-productId="{{$item->product_id}}"
+                                            data-productName="{{$item->name}}"
+                                            data-productPrice="{{$item->price}}"
+                                            data-productImage="{{$item->product_image[0]['image']}}"
+                                            data-productCategory="{{$item->category['name']}}"
                                         >
                                         <i class="icon-shopping-cart"></i>
                                         <a target="_blank" href="{{ asset("storage/{$path}") }}" class="eye">

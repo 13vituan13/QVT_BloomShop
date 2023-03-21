@@ -85,68 +85,34 @@
 
     <div class="fh5co-loader"></div>
     <div id="page">
+        {{-- HEADER --}}
         @include('layouts.user.header')
 
+        {{-- CONTENT --}}
         @yield('content')
 
+        {{-- MODEL LOGIN --}}
         @include('user.login')
+
+        {{-- FOOTER --}}
         @include('layouts.user.footer')
     </div>
+    {{-- LOADING --}}
     <div id="loading" hidden>
         <div class="loader">Loading...</div>
     </div>
-    <style>
-        .float-cart {
-            position: fixed;
-            width: 52px;
-            height: 52px;
-            bottom: 20px;
-            right: 20px;
-            background-color: #d1c286;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            box-shadow: 2px 2px 3px #999;
-        }
-
-        .float-cart span {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .float-cart i {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 25px;
-            color: #fff;
-        }
-
-        .float-cart small {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: #000;
-            color: #fff;
-            font-size: 12px;
-            padding: 2px 5px;
-            border-radius: 50%;
-            z-index: 1;
-        }
-    </style>
+     {{-- SHOPPING CART FLOAT --}}
     <a class="float-cart" href="{{ route('cart') }}">
         <span>
-            <small>10</small>
+            <small id="cart__couter">{{ $cartCounter }}</small>
             <i class="fa-solid fa-cart-shopping fz--25"></i>
         </span>
     </a>
+    {{-- GO TO TOP PAGE --}}
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
-
+    <script src="{{ asset('js/user/usersite.js') }}"></script>
     <script>
         // Lấy các phần tử từ HTML
         var modal = $("#myModal");
@@ -190,18 +156,22 @@
                         width: 0,
                         height: 0,
                         opacity: 0
-                    },
-                    600,
+                    }, 600,
                     function() {
                         c.remove();
-                    });
+                    }
+                );
                 var productId = $(this).attr('data-productId');
                 var productName = $(this).attr('data-productName');
                 var productPrice = $(this).attr('data-productPrice');
+                var productImage = $(this).attr('data-productImage');
+                var productCategory = $(this).attr('data-productCategory');
                 var formData = new FormData()
                 formData.append("product_id", productId);
                 formData.append("name", productName);
                 formData.append("price", productPrice);
+                formData.append("image", productImage);
+                formData.append("category_name", productCategory);
                 $.ajax({
                     url: "{{ route('cart.store') }}",
                     type: "POST",
@@ -215,7 +185,9 @@
                         msgVali = ""
                     },
                     success: function(response) {
-                        console(response)
+                        console.log(response.cartCounter)
+                        $('#cart__couter').html(response.cartCounter)
+
                     },
                     error: function(e) {
                         console(e)
@@ -223,22 +195,6 @@
                 }); //end ajax   
             });
         });
-
-        function showLogin() {
-            modal.css("display", "block");
-        }
-
-        function goToPage(url) {
-            window.location.href = url
-        }
-
-        function loadStart() {
-            $("#loading").show();
-        }
-
-        function loadEnd() {
-            $("#loading").hide();
-        }
     </script>
 </body>
 

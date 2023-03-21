@@ -36,7 +36,7 @@ function getAllProduct()
 
 function getBestChoiceProduct($limit)
 {
-    $res = Product::with('product_image')
+    $res = Product::with('category')->with('product_image')
         ->limit($limit)
         ->get();
     return $res;

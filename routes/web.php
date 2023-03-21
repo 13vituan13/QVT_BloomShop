@@ -29,8 +29,12 @@ Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 Route::get('/product', [UserController::class, 'product'])->name('product');
 Route::get('/services', [UserController::class, 'services'])->name('services');
 Route::get('/product_detail', [UserController::class, 'product_detail'])->name('product_detail');
+
+// ****** CART ******
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::post('/cart_store', [CartController::class, 'store'])->name('cart.store');
+Route::post('/cart_update', [CartController::class, 'update'])->name('cart.update');
+Route::get('/cart_remove/{product_id}', [CartController::class, 'remove'])->name('cart.remove');
 
 // ****** LOGIN ******
 Route::get('/login', [UserLoginController::class, 'login'])->name('login');

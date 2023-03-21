@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use Session;
+use Illuminate\Support\Facades\Session;
 class AdminLoginController extends Controller
 {
     public function login()
