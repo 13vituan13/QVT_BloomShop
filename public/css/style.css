@@ -279,8 +279,9 @@ form .gender_details .category {
 .float-cart small {
     position: absolute;
     top: 0;
-    right: 0;
-    background-color: #000;
+    right: -3px;
+    background-color: #fd715ee6;
+    width: 23px;
     color: #fff;
     font-size: 12px;
     padding: 2px 5px;

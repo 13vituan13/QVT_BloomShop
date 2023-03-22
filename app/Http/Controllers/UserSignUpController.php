@@ -54,7 +54,11 @@ class UserSignUpController extends Controller
 
     public function sign_up()
     {   
-        return view("user.sign_up");
+        $dataView = [
+            'citys_list' => getAllCity(),
+            'districts_list' => getAllDistrict(),
+        ];
+        return view("user.sign_up",$dataView);
     }
     public function sign_up_submit(Request $request){
         $input = $request->all();

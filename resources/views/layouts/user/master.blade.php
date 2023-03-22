@@ -101,10 +101,18 @@
     <div id="loading" hidden>
         <div class="loader">Loading...</div>
     </div>
-     {{-- SHOPPING CART FLOAT --}}
+
+    {{-- SHOPPING CART FLOAT --}}
+    @php
+        $cart = Session::get('cart', []);
+        $cart_counter = 0;
+        foreach($cart as $key => $item){
+            $cart_counter += $item['quantity'];
+        }
+    @endphp
     <a class="float-cart" href="{{ route('cart') }}">
         <span>
-            <small id="cart__couter">{{ $cartCounter }}</small>
+            <small id="cart__couter">{{ $cart_counter }}</small>
             <i class="fa-solid fa-cart-shopping fz--25"></i>
         </span>
     </a>

@@ -2,12 +2,50 @@
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Banner;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Ward;
 use App\Models\Customer;
 use App\Models\Status;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\PersonalAccessToken;
+use Illuminate\Support\Facades\Session;
 
+function cartCounter(){
+    // lấy số lượng sản phẩm trong giỏ hàng
+    $cart = Session::get('cart', []);
+    $cart_counter = 0;
+    foreach($cart as $key => $item){
+        $cart_counter += $item['quantity'];
+    }
+    return $cart_counter;
+}
+function cartTotalMoney(){
+    // lấy số lượng sản phẩm trong giỏ hàng
+    $cart = Session::get('cart', []);
+    $total_money = 0;
+    foreach($cart as $key => $item){
+        $total_money += (int) $item['price'] * (int) $item['quantity'];
+    }
+    return $total_money;
+}
+
+function getAllCity()
+{
+    $res = City::all();
+    return $res;
+}
+function getAllDistrict()
+{
+    $res = District::all();
+    return $res;
+}
+function getAllWard()
+{
+    $res = Ward::all();
+    return $res;
+}
 function getAllCustomer()
 {
     $res = Customer::all();

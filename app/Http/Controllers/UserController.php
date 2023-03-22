@@ -21,6 +21,7 @@ class UserController extends Controller
             'best_choice' => $best_choice,
             'count_product' => count(getAllProduct()),
             'count_client' => count(getAllCustomer()),
+            'cartCounter'  => cartCounter()
         ];
         
         return view("user.home",$data);

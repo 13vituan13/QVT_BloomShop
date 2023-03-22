@@ -128,39 +128,26 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
-        //API city
-        var Parameter = {
-            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-            method: "GET",
-            responseType: "application/json",
-        };
-        var promise = axios(Parameter);
-
-        promise.then(function(response) {
-            var result = response.data
-            let html = ""
-            result.forEach(item => {
-                html += `<option value="` + item.Id + `">` + item.Name + `</option>`
+        const citysList = @json($citys_list);
+        const districtsList = @json($districts_list);
+        $(document).ready(function() {
+            let cityHTML = ""
+            citysList.forEach(item => {
+                cityHTML += `<option value="` + item.id + `">` + item.name + `</option>`
             });
-            $('#city_cbb').append(html);
+            $('#city_cbb').append(cityHTML);
         });
 
         function getDistrict() {
+            
             let cityValue = $('#city_cbb').val()
-            let promise = axios(Parameter);
-            promise.then(function(response) {
-                var result = response.data
-                let html = ""
-                result.forEach(item => {
-                    if (item.Id == cityValue) {
-                        item.Districts.forEach(district => {
-                            html += `<option value="` + district.Id + `">` + district.Name +
-                                `</option>`
-                        });
-                    }
-                });
-                $('#district_cbb').html(html);
+            let districtHTML = ""
+            districtsList.forEach(item => {
+                if (item.city_id == cityValue) {
+                    districtHTML += `<option value="` + item.id + `">` + item.name + `</option>`
+                }
             });
+            $('#district_cbb').html(districtHTML);
         }
         var form = document.getElementById('signUpForm');
         var emailInput = form.querySelector('input[name="email"]');
@@ -299,8 +286,8 @@
                 return
             }
             var formData = new FormData(this)
-            formData.set("district", $('select[name="district"] option:selected').text());
-            formData.set("city", $('select[name="city"] option:selected').text());
+            formData.set("district", $('select[name="district"] option:selected').val());
+            formData.set("city", $('select[name="city"] option:selected').val());
             // console.log([...formData])
             loadStart();
             $.ajax({
