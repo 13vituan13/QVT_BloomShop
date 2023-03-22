@@ -5,7 +5,7 @@
                 <h3><a href="{{ route('home') }}">
                     <img width="120" height="85" class="logo__image_ft" src="{{ asset('images/logo/logo.png') }}" alt="brand">
                 </a></h3>
-                <p>Hoa hướng dương là một loài hoa thường xuất hiện trong các bức tranh và hình ảnh đại diện cho mùa hè và ánh nắng. Với những đóa hoa lớn và tròn, màu vàng tươi sáng, hoa hướng dương mang đến sự rực rỡ và đầy năng lượng cho bất kỳ không gian nào nó được trồng.</p>
+                <p>Chào mừng đến với Blooms - nơi mà hoa nở rộ và tình yêu được thể hiện một cách tuyệt vời nhất. Với đội ngũ chuyên nghiệp, Blooms cung cấp cho khách hàng những bó hoa tươi đẹp và độc đáo nhất. Chúng tôi tận tâm và chăm sóc mỗi chi tiết để đảm bảo rằng từng bó hoa đều đẹp như giấc mơ của khách hàng. Từ các buổi cầu hôn lãng mạn đến các dịp kỷ niệm quan trọng, hãy để Blooms giúp bạn tạo ra những khoảnh khắc đáng nhớ với những bông hoa đầy ý nghĩa.</p>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                 <ul class="fh5co-footer-links">

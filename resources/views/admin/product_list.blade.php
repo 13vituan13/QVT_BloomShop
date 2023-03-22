@@ -66,33 +66,6 @@
     </div>
     
     <script>
-    // $(document).ready(function() {
-    //     // Lấy giá trị thời gian sống của session từ biến PHP $sessionLifetime
-    //     var sessionLifetime = {{ $sessionLifetime }};
-        
-    //     // Lấy thời điểm cuối cùng mà session đã được sử dụng từ localStorage
-    //     var lastActivity = localStorage.getItem('last_activity');
-        
-    //     // Nếu session đã hết hạn
-    //     if ("{{ session_id() }}" === "" || (lastActivity && (new Date().getTime() - lastActivity > sessionLifetime))) {
-    //         // Hiển thị popup thông báo
-    //         Swal.fire({
-    //             title: 'Phiên làm việc đã hết hạn',
-    //             text: 'Vui lòng đăng nhập lại để tiếp tục sử dụng hệ thống.',
-    //             type: 'warning',
-    //             showCancelButton: false,
-    //             confirmButtonColor: '#3085d6',
-    //             confirmButtonText: 'OK'
-    //         }, function() {
-    //             // Chuyển hướng đến trang đăng nhập khi người dùng nhấp vào nút OK
-    //             window.location.href = '{{ route('admin.login') }}';
-    //         });
-    //     }
-        
-    //     // Lưu thời điểm hiện tại vào localStorage để sử dụng cho lần sau
-    //     localStorage.setItem('last_activity', new Date().getTime());
-    // });
-
         function goToPage(url){
             window.location.href = url
         }

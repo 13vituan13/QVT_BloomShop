@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\UserController AS User;
-use App\Http\Controllers\UserLoginController AS UserLogin;
-use App\Http\Controllers\UserSignUpController AS UserSignUp;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\UserSignUpController;
+use App\Http\Controllers\CartController;
 
 
-use App\Http\Controllers\AdminController AS Admin;
-use App\Http\Controllers\AdminLoginController AS AdminLogin;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,34 +23,51 @@ use App\Http\Controllers\AdminLoginController AS AdminLogin;
 */
 
 //______________________________ USER SITE_______________________________
-Route::get('/', [User::class, 'home'])->name('home');
-Route::get('/about', [User::class, 'about'])->name('about');
-Route::get('/contact', [User::class, 'contact'])->name('contact');
-Route::get('/product', [User::class, 'product'])->name('product');
-Route::get('/services', [User::class, 'services'])->name('services');
-Route::get('/product_detail', [User::class, 'product_detail'])->name('product_detail');
+Route::get('/', [UserController::class, 'home'])->name('home');
+Route::get('/about', [UserController::class, 'about'])->name('about');
+Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+Route::get('/product', [UserController::class, 'product'])->name('product');
+Route::get('/services', [UserController::class, 'services'])->name('services');
+Route::get('/product_detail', [UserController::class, 'product_detail'])->name('product_detail');
 
-// ****** LOGIN -- SIGNUP ******
-Route::get('/login', [UserLogin::class, 'login'])->name('login');
-Route::get('/logout', [UserLogin::class, 'logout'])->name('logout');
-Route::post('login_submit', [UserLogin::class, 'post_Login'])->name('login.submit');
-Route::get('/sign_up', [UserSignUp::class, 'sign_up'])->name('sign_up');
-Route::post('/sign_up_submit', [UserSignUp::class, 'sign_up_submit'])->name('sign_up.submit');
-Route::post('/check_email_exist', [UserSignUp::class, 'check_email_exist'])->name('check.email');
+// ****** CART ******
+Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::post('/cart_store', [CartController::class, 'store'])->name('cart.store');
+Route::post('/cart_update', [CartController::class, 'update'])->name('cart.update');
+Route::get('/cart_remove/{product_id}', [CartController::class, 'remove'])->name('cart.remove');
+
+// ****** LOGIN ******
+Route::get('/login', [UserLoginController::class, 'login'])->name('login');
+Route::post('login_submit', [UserLoginController::class, 'post_Login'])->name('login.submit');
+Route::get('/logout', [UserLoginController::class, 'logout'])->name('logout');
+
+// ****** SIGNUP ******
+Route::get('/sign_up', [UserSignUpController::class, 'sign_up'])->name('sign_up');
+Route::post('/sign_up_submit', [UserSignUpController::class, 'sign_up_submit'])->name('sign_up.submit');
+Route::post('/check_email_exist', [UserSignUpController::class, 'check_email_exist'])->name('check.email');
+
+/*
+|
+|
+|-------------------------------------------------------------------------
+| 
+| 
+*/
 
 //______________________________ ADMIN SITE_______________________________
-Route::get('/test', [Admin::class, 'test'])->name('test');
+Route::get('/test', [AdminController::class, 'test'])->name('test');
 
-Route::prefix('/Admin')->group(function() {
-    Route::get('login', [AdminLogin::class, 'login'])->name('Admin.login');
-    Route::get('logout', [AdminLogin::class, 'logout'])->name('Admin.logout');
-
-    Route::post('login_submit', [AdminLogin::class, 'post_Login'])->name('Admin.login.submit');
+Route::prefix('/admin')->group(function() {
+    // ****** LOGIN ******
+    Route::get('login', [AdminLoginController::class, 'login'])->name('admin.login');
+    Route::post('login_submit', [AdminLoginController::class, 'post_Login'])->name('admin.login.submit');
+    Route::get('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
-Route::prefix('/Admin')->middleware(['Admin.session'])->group(function() {
-    Route::get('product', [Admin::class, 'product'])->name('Admin.product');
-    Route::get('product_detail/{id?}', [Admin::class, 'product_detail'])->name('Admin.product_detail');
+Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
+    // ****** PRODUCT ******
+    Route::get('product', [AdminController::class, 'product'])->name('admin.product');
+    Route::get('product_detail/{id?}', [AdminController::class, 'product_detail'])->name('admin.product_detail');
 });
 
 

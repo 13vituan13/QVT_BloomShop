@@ -1,156 +1,238 @@
-<style>
-    #drop-area {
-  border: 2px dashed #ccc;
-  border-radius: 20px;
-  width: 480px;
-  font-family: sans-serif;
-  margin: 100px auto;
-  padding: 20px;
-}
-#drop-area.highlight {
-  border-color: purple;
-}
-p {
-  margin-top: 0;
-}
-.my-form {
-  margin-bottom: 10px;
-}
-#gallery {
-  margin-top: 10px;
-}
-#gallery img {
-  width: 150px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-.button {
-  display: inline-block;
-  padding: 10px;
-  background: #ccc;
-  cursor: pointer;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.button:hover {
-  background: #ddd;
-}
-#fileElem {
-  display: none;
-}
-</style>
-<div id="drop-area">
-    <form class="my-form">
-      <p>Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
-      <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
-      <label class="button" for="fileElem">Select some files</label>
-    </form>
-    <progress id="progress-bar" max=100 value=0></progress>
-    <div id="gallery" />
-  </div>
-  </div>
-  <script>
-    // ************************ Drag and drop ***************** //
-let dropArea = document.getElementById("drop-area")
+<!DOCTYPE HTML>
+<html class="html">
 
-// Prevent default drag behaviors
-;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-  dropArea.addEventListener(eventName, preventDefaults, false)   
-  document.body.addEventListener(eventName, preventDefaults, false)
-})
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@yield('title') | BloomShop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-// Highlight drop area when item is dragged over it
-;['dragenter', 'dragover'].forEach(eventName => {
-  dropArea.addEventListener(eventName, highlight, false)
-})
+    <link rel="shortcut icon" href="{{ asset('images/logo/Favicons/favicon-60x60.png') }}" type="image/x-icon">
 
-;['dragleave', 'drop'].forEach(eventName => {
-  dropArea.addEventListener(eventName, unhighlight, false)
-})
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i" rel="stylesheet"> -->
 
-// Handle dropped files
-dropArea.addEventListener('drop', handleDrop, false)
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="{{ asset('css/user/animate.css') }}">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="{{ asset('css/user/icomoon.css') }}">
 
-function preventDefaults (e) {
-  e.preventDefault()
-  e.stopPropagation()
-}
+    <!-- Bootstrap  -->
 
-function highlight(e) {
-  dropArea.classList.add('highlight')
-}
+    <link rel="stylesheet" href="{{ asset('css/user/bootstrap.css') }}">
 
-function unhighlight(e) {
-  dropArea.classList.remove('active')
-}
 
-function handleDrop(e) {
-  var dt = e.dataTransfer
-  var files = dt.files
 
-  handleFiles(files)
-}
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="{{ asset('css/user/flexslider.css') }}">
 
-let uploadProgress = []
-let progressBar = document.getElementById('progress-bar')
+    <!-- Owl Carousel  -->
+    <link rel="stylesheet" href="{{ asset('css/user/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user/owl.theme.default.min.css') }}">
 
-function initializeProgress(numFiles) {
-  progressBar.value = 0
-  uploadProgress = []
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user/style.css') }}">
 
-  for(let i = numFiles; i > 0; i--) {
-    uploadProgress.push(0)
-  }
-}
+    <!-- Modernizr JS -->
+    <script src="{{ asset('js/user/modernizr-2.6.2.min.js') }}"></script>
 
-function updateProgress(fileNumber, percent) {
-  uploadProgress[fileNumber] = percent
-  let total = uploadProgress.reduce((tot, curr) => tot + curr, 0) / uploadProgress.length
-  console.debug('update', fileNumber, percent, total)
-  progressBar.value = total
-}
+    <link rel="stylesheet" href="https://kit.fontawesome.com/c461128840.css" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c461128840.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+    <style>
+        .img-fluid {
+            width: 100%;
+            height: 350px;
+        }
 
-function handleFiles(files) {
-  files = [...files]
-  initializeProgress(files.length)
-  files.forEach(uploadFile)
-  files.forEach(previewFile)
-}
+        header {
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 20px;
+        }
 
-function previewFile(file) {
-  let reader = new FileReader()
-  reader.readAsDataURL(file)
-  reader.onloadend = function() {
-    let img = document.createElement('img')
-    img.src = reader.result
-    document.getElementById('gallery').appendChild(img)
-  }
-}
+        .product {
+            margin-bottom: 2em;
+        }
 
-function uploadFile(file, i) {
-  var url = 'https://api.cloudinary.com/v1_1/joezim007/image/upload'
-  var xhr = new XMLHttpRequest()
-  var formData = new FormData()
-  xhr.open('POST', url, true)
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+        .product .image {
+            position: relative;
+        }
 
-  // Update progress (can be used to show progress indicator)
-  xhr.upload.addEventListener("progress", function(e) {
-    updateProgress(i, (e.loaded * 100.0 / e.total) || 100)
-  })
+        .product .add_to_cart {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            font-size: 2em;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0;
 
-  xhr.addEventListener('readystatechange', function(e) {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      updateProgress(i, 100) // <- Add this
-    }
-    else if (xhr.readyState == 4 && xhr.status != 200) {
-      // Error. Inform the user
-    }
-  })
+        }
 
-  formData.append('upload_preset', 'ujpu6gyk')
-  formData.append('file', file)
-  xhr.send(formData)
-}
-  </script>
+        .product .add_to_cart:hover {
+
+            opacity: 1;
+        }
+
+        .product .add_to_cart:active {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .product .add_to_cart .icon-shopping-cart {
+            padding: 10px 10px;
+            color: #fff;
+            background: #d1c286;
+            font-size: 16px;
+        }
+
+        .product .add_to_cart .icon-shopping-cart:hover,
+        .product .add_to_cart .icon-shopping-cart:focus {
+            color: #d1c286;
+            background: #fff;
+        }
+
+        .product .add_to_cart .eye {
+            padding: 7px 10px;
+            color: #fff;
+            background: #d1c286;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .product .add_to_cart .eye:hover,
+        .product .add_to_cart .eye:focus {
+            color: #d1c286;
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- jQuery -->
+    <script src="{{ asset('js/user/jquery.min.js') }}"></script>
+    <!-- jQuery Easing -->
+    <script src="{{ asset('js/user/jquery.easing.1.3.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('js/user/bootstrap.min.js') }}"></script>
+    <!-- Waypoints -->
+    <script src="{{ asset('js/user/jquery.waypoints.min.js') }}"></script>
+    <!-- Carousel -->
+    <script src="{{ asset('js/user/owl.carousel.min.js') }}"></script>
+    <!-- countTo -->
+    <script src="{{ asset('js/user/jquery.countTo.js') }}"></script>
+    <!-- Flexslider -->
+    <script src="{{ asset('js/user/jquery.flexslider-min.js') }}"></script>
+    <!-- Main -->
+    <script src="{{ asset('js/user/main.js') }}"></script>
+    {{-- Swal Alert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+
+
+    <header>
+        <nav class="navbar navbar-light">
+            <div class="navbar-brand title">
+                <div class="header">Brand</div>
+            </div>
+            <div class="navbar-nav panier">
+                <div class="nav-item"><a class="nav-link" id="panier" href="javascript:void(0)"><i
+                            class="fa fa-shopping-cart mr-1"></i><span>Cart</span></a></div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 text-center animate-box fadeInUp animated-fast">
+                <div class="product">
+                    <div class="image">
+                        <img class="img-fluid" src="http://192.168.1.13:8000/storage/images/products/4/product.png" />
+                        <span class="sale">10%</span>
+                        <div class="add_to_cart">
+                            <i class="icon-shopping-cart"></i>
+                            <a target="_blank" href="http://192.168.1.13:8000/storage/images/products/4/product.png"
+                                class="eye">
+                                <i class="icon-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="desc mt-4">
+                        <h3><a href="single.html">Sincere Gift</a></h3>
+                        <span class="price">$350</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center animate-box fadeInUp animated-fast">
+                <div class="product">
+                    <div class="product-grid"
+                        style="background-image:url(http://192.168.1.13:8000/storage/images/products/4/product.png)">
+                        <span class="sale">10%</span>
+                        <div class="inner">
+                            <div>
+                                <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+                                <a target="_blank" href="http://192.168.1.13:8000/storage/images/products/4/product.png"
+                                    class="icon"><i class="icon-eye"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="desc">
+                        <h3><a href="single.html">Sincere Gift</a></h3>
+                        <span class="price">$350</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function() {
+        console.clear();
+
+        $(document).on('click', '.add_to_cart', function(e) {
+            const p = $(this).parent().parent();
+            console.log({
+                p
+            });
+            const c = p.find('.img-fluid').clone();
+            c.css({
+                position: 'absolute',
+                top: p.offset().top,
+                left: p.offset().left,
+                width: p.width(),
+                height: p.height(),
+                zIndex: 99999
+            });
+
+            const dest = $('#panier');
+            $('.container').append(c);
+            c.animate({
+                    top: dest.offset().top + dest.height() / 2,
+                    left: dest.offset().left + dest.width() / 2,
+                    width: 0,
+                    height: 0,
+                    opacity: 0
+                },
+                600,
+                function() {
+                    c.remove();
+                });
+        });
+    });
+</script>
+
+</html>

@@ -4,14 +4,31 @@
         vertical-align: middle;
     }
 
-    .shopping-cart {
-        display: inline-block;
-        vertical-align: middle;
-        margin-left: 20px;
+    .fh5co-nav_fix {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        background-color: #fff;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
     }
+
+    .fh5co-nav_fix.scrolled {
+        transform: translateY(-100%);
+    }
+
+    /* Add padding to the body to make up for the space taken up by the fixed header */
+    body {
+        padding-top: 80px;
+    }
+    
+
 </style>
-<nav class="fh5co-nav" role="navigation">
-    <div class="container-fluid">
+
+<nav id="header-nav" class="fh5co-nav fh5co-nav_fix " role="navigation">
+    <div class="container-fluid ">
         <div class="row">
             <div class="col-md-3 col-xs-12 logo">
                 <div id="fh5co-logo">
@@ -22,9 +39,11 @@
             </div>
             <div class="col-md-6 col-xs-8 text-center menu-1">
                 <ul>
-                    <li><a href="{{ route('home') }}">Trang Chủ</a></li>
-                    <li><a href="{{ route('about') }}">Giới Thiệu</a></li>
-                    <li class="has-dropdown">
+                    <li class="@if (Request::routeIs('home')) active @endif"><a href="{{ route('home') }}">Trang
+                            Chủ</a></li>
+                    <li class="@if (Request::routeIs('about')) active @endif"><a href="{{ route('about') }}">Giới
+                            Thiệu</a></li>
+                    <li class="has-dropdown @if (Request::routeIs('product')) active @endif">
                         <a href="{{ route('product') }}">Sản Phẩm</a>
                         <ul class="dropdown">
                             @foreach ($categories as $category)
@@ -32,21 +51,15 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li><a href="{{ route('services') }}">Hoa Kể Chuyện</a></li>
-                    <li><a href="{{ route('contact') }}">Liên Lạc</a></li>
+                    <li class="@if (Request::routeIs('services')) active @endif"><a href="{{ route('services') }}">Hoa Kể
+                            Chuyện</a></li>
+                    <li class="@if (Request::routeIs('contact')) active @endif"><a href="{{ route('contact') }}">Liên
+                            Lạc</a></li>
                 </ul>
             </div>
 
-            <div class="col-md-3 col-xs-3 text-right hidden-xs menu-2">
+            <div class="col-md-3 col-xs-3 text-right hidden-xs menu-2 destContainer">
                 <ul>
-                    {{-- <li class="search">
-                        <div class="input-group">
-                            <input type="text" placeholder="Search..">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button"><i class="icon-search"></i></button>
-                            </span>
-                        </div>
-                    </li> --}}
                     @if (!\Session::has('customer'))
                         <li>
                             <div class="ButtonUserGroup">
@@ -57,15 +70,6 @@
                             </div>
                         </li>
                     @endif
-                    <li class="shopping-cart"
-                        @if (\Session::has('customer')) style="margin-top: 20px!important;" @endif>
-                        <a href="#" class="cart">
-                            <span>
-                                <small>10</small>
-                                <i class="fa-solid fa-cart-shopping fz--25"></i>
-                            </span>
-                        </a>
-                    </li>
                     @if (\Session::has('customer'))
                         <li class="CustomerInfo">
                             <ul class="list-unstyled">
@@ -143,22 +147,23 @@
     </div>
 </nav>
 
-@if (!Request::routeIs('home') && !Request::routeIs('sign_up'))
-    <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner"
-        style="background-image:url(images/img_bg_2.jpg);">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    <div class="display-t">
-                        <div class="display-tc animate-box" data-animate-effect="fadeIn">
-                            <h1>Contact Us</h1>
-                            <h2>Free html5 templates Made by <a href="http://freehtml5.co"
-                                    target="_blank">freehtml5.co</a></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-@endif
+
+<script>
+    var lastScrollTop = 0;
+
+    window.addEventListener("scroll", function() {
+        var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScroll > lastScrollTop) {
+            // scrolling down, visible header menu
+            $('#header-nav').addClass("fh5co-nav_fix");
+            $('#header-nav').addClass("scrolled");
+        } else {
+            // scrolling up, show header menu
+            $('#header-nav').addClass("fh5co-nav_fix");
+            $('#header-nav').removeClass("scrolled");
+        }
+
+        lastScrollTop = currentScroll;
+    });
+</script>
