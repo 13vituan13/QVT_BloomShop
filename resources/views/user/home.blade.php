@@ -174,7 +174,7 @@
                                             data-productName="{{$item->name}}"
                                             data-productPrice="{{$item->price}}"
                                             data-productImage="{{$item->product_image[0]['image']}}"
-                                            data-productCategory="{{$item->category['name']}}"
+                                            data-productCategory="{{isset($item->category['name']) ? $item->category['name'] : ''}}"
                                         >
                                         <i class="icon-shopping-cart"></i>
                                         <a target="_blank" href="{{ asset("storage/{$path}") }}" class="eye">
