@@ -30,16 +30,5 @@ class AppServiceProvider extends ServiceProvider
             // truyền danh sách vào view
             $view->with('categories', $categories);
         });
-
-        View::composer('layouts.user.master', function ($view) {
-            // lấy số lượng sản phẩm trong giỏ hàng
-            $cart = Session::get('cart', []);
-            $cartCounter = 0;
-            foreach($cart as $key => $item){
-                $cartCounter += $item['quantity'];
-            }
-            // truyền danh sách vào view
-            $view->with('cartCounter', $cartCounter);
-        });
     }
 }

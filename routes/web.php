@@ -34,7 +34,7 @@ Route::get('/product_detail', [UserController::class, 'product_detail'])->name('
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::post('/cart_store', [CartController::class, 'store'])->name('cart.store');
 Route::post('/cart_update', [CartController::class, 'update'])->name('cart.update');
-Route::get('/cart_remove/{product_id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart_remove', [CartController::class, 'remove'])->name('cart.remove');
 
 // ****** LOGIN ******
 Route::get('/login', [UserLoginController::class, 'login'])->name('login');

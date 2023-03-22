@@ -11,9 +11,15 @@ class CartController extends Controller
     {
         // Get current cart from session
         $cart = Session::get('cart', []);
-
+        $cartCounter = cartCounter();
+        $totalMoney = cartTotalMoney();
+        $dataCart = [
+            'cart' => $cart,
+            'cartCounter' => $cartCounter,
+            'totalMoney' => $totalMoney,
+        ];
         // Render view to display cart
-        return view('user.cart', ['cart' => $cart]);
+        return view('user.cart', $dataCart);
     }
     public function store(Request $request)
     {
@@ -36,7 +42,7 @@ class CartController extends Controller
             } else {
                 // Add new item to cart
                 $cart[$product_id] = [
-                    'id' => $product_id,
+                    'product_id' => $product_id,
                     'name' => $name,
                     'price' => $price,
                     'image' => $image,
@@ -49,10 +55,7 @@ class CartController extends Controller
             Session::put('cart', $cart);
 
             // Get cart couter
-            $cartCounter = 0;
-            foreach($cart as $key => $item){
-                $cartCounter += $item['quantity'];
-            }
+            $cartCounter = cartCounter();
             $response = [
                 'msg' => 'success',
                 'cartCounter' => $cartCounter,
@@ -66,24 +69,33 @@ class CartController extends Controller
     }
 
     public function update(Request $request)
-    {
+    {   
         // Get current cart from session
         $cart = Session::get('cart', []);
 
         // Get the product ID and updated quantity from the request
-        $product_id = $request->input('product_id');
-        $quantity = $request->input('quantity');
+        $inputs = $request->all();
+        $product_id = isset($inputs['product_id']) ? $inputs['product_id'] : null;
+        $quantity = isset($inputs['quantity']) ? $inputs['quantity'] : null;
 
         // Check if item already exists in cart
         if (isset($cart[$product_id])) {
             // Update the quantity
             $cart[$product_id]['quantity'] = $quantity;
-
             // Save updated cart back to session
             Session::put('cart', $cart);
 
+            // Get cart couter
+            $cartCounter = cartCounter();
+            $totalMoney = cartTotalMoney();
+            $response = [
+                'msg' => 'success',
+                'cartCounter' => $cartCounter,
+                'totalMoney' => $totalMoney,
+            ];
+
             // Return success response for ajax call
-            return response()->json('success', 200);
+            return response()->json($response, 200);
         } else {
             // If item does not exist in cart, return error response
             return response()->json('error', 404);
@@ -91,14 +103,14 @@ class CartController extends Controller
     }
 
 
-    public function remove($product_id)
+    public function remove(Request $request)
     {   
-        Session::forget('cart');
-        return response()->json('success', 200);
         try {
             // Get current cart from session
             $cart = Session::get('cart', []);
-
+            // Get the product ID and updated quantity from the request
+            $inputs = $request->all();
+            $product_id = isset($inputs['product_id']) ? $inputs['product_id'] : null;
             // Check if item exists in cart
             if (!isset($cart[$product_id])) {
                 return response()->json(['error' => 'Item not found in cart'], 400);
@@ -110,11 +122,20 @@ class CartController extends Controller
             // Save updated cart back to session
             Session::put('cart', $cart);
 
+            // Get cart couter
+            $cartCounter = cartCounter();
+            $totalMoney = cartTotalMoney();
+            $response = [
+                'msg' => 'success',
+                'cartCounter' => $cartCounter,
+                'totalMoney' => $totalMoney,
+            ];
             // Return success response for ajax call
-            return response()->json('success', 200);
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             // Return error response for ajax call
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
+    
 }
