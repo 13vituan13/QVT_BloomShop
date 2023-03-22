@@ -2,6 +2,9 @@
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Banner;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Ward;
 use App\Models\Customer;
 use App\Models\Status;
 use App\Models\Category;
@@ -28,6 +31,21 @@ function cartTotalMoney(){
     return $total_money;
 }
 
+function getAllCity()
+{
+    $res = City::all();
+    return $res;
+}
+function getAllDistrict()
+{
+    $res = District::all();
+    return $res;
+}
+function getAllWard()
+{
+    $res = Ward::all();
+    return $res;
+}
 function getAllCustomer()
 {
     $res = Customer::all();

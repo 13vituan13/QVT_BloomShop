@@ -7,19 +7,20 @@
             min-height: 100vh;
             vertical-align: middle;
             display: flex;
-            font-family: sans-serif;
-            font-size: 0.8rem;
-            font-weight: bold;
+            font-family: "Playfair Display", serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #828282;
+            font-weight: 400;
         }
-
         .title {
             margin-bottom: 5vh;
         }
 
         .card {
             margin: auto;
-            max-width: 950px;
-            width: 90%;
+            max-width: 1200px;
+            width: 100%;
             box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             border-radius: 1rem;
             border: transparent;
@@ -88,9 +89,6 @@
             padding: 0 1vh;
         }
 
-        a {
-            padding: 0 1vh;
-        }
 
         .close {
             margin-left: auto;
@@ -98,7 +96,7 @@
         }
 
         img {
-            width: 3.5rem;
+            /* width: 3.5rem; */
         }
 
         .back-to-shop {
@@ -144,7 +142,7 @@
             border-color: #000;
             color: white;
             width: 100%;
-            font-size: 0.7rem;
+            font-size: 1rem;
             margin-top: 4vh;
             padding: 1vh;
             border-radius: 0;
@@ -161,7 +159,8 @@
         }
 
         .btn:hover {
-            color: white;
+            border: 1px solid black;
+            color: black;
         }
 
         a {
@@ -182,7 +181,8 @@
 
         .CartGroupQuantity__input {
             background-color: #fff;
-            width: 40px;
+            width: 50px;
+            height: 30px;
         }
 
         .CartGroupQuantity .CartGroupQuantity__minus,
@@ -190,9 +190,9 @@
             cursor: pointer;
             text-align: center;
             transition: all 0.3s ease-in-out;
-            /* Add a transition effect to the box-shadow property */
             width: 13px;
             height: 13px;
+            font-size: 18px;
         }
 
         .CartGroupQuantity .CartGroupQuantity__minus {
@@ -206,29 +206,33 @@
         .cartIcon__remove {
             cursor: pointer;
             color: #dc3545;
+            font-size: 22px;
         }
 
         .CartGroupQuantity .CartGroupQuantity__minus:hover {
             border-radius: 50%;
             box-shadow: 0px 0px 8px 4px rgba(241, 105, 14, 0.7);
+            background: #f4b184;
             height: 8px;
         }
 
         .CartGroupQuantity .CartGroupQuantity__plus:hover {
             border-radius: 50%;
             box-shadow: 0px 0px 8px 4px rgba(40, 167, 69, 0.7);
+            background: #4fd36f;
             height: 8px;
         }
 
         .cartIcon__remove:hover {
             border-radius: 50%;
             box-shadow: 0px 0px 8px 4px rgba(220, 53, 69, 0.7);
+            background: #f5a3aa;
             height: 8px;
         }
     </style>
     <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;">
         <div class="container">
-            <div class="card">
+            <div class="card mt-4">
                 <div class="row">
                     <div class="col-md-8 cart">
                         <div class="title">
@@ -253,11 +257,11 @@
                                         <div class="col-3 CartGroupQuantity">
                                             <i class="fa fa-minus-circle CartGroupQuantity__minus me-2"
                                                 onclick="cartMinus(this)"></i>
-                                            <input class="CartGroupQuantity__input border mb-0 text-center"
+                                            <input class="CartGroupQuantity__input border mb-0 text-center me-1"
                                                 data-productId="{{$item['product_id']}}"
                                                 value="{{ $item['quantity'] }}" 
                                                 onchange="changeDetectedCart(this)">
-                                            <i class="fa fa-plus-circle CartGroupQuantity__plus ms-2"
+                                            <i class="fa fa-plus-circle CartGroupQuantity__plus"
                                                 onclick="cartPlus(this)"></i>
                                         </div>
                                         <div id="price_{{$item['product_id']}}" class="col-2 text-center">${{ $item['price'] }}</div>
@@ -272,7 +276,7 @@
                         @endif
 
 
-                        <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Quay lại</span>
+                        <div class="back-to-shop"><a href="{{ url()->previous() }}">&leftarrow;<span style="padding: 0 1vh;" class="text-muted">Quay lại</span></a>
                         </div>
                     </div>
                     <div class="col-md-4 summary">

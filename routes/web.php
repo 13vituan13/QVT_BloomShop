@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserSignUpController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckOutController;
 
 
 use App\Http\Controllers\AdminController;
@@ -35,6 +36,7 @@ Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::post('/cart_store', [CartController::class, 'store'])->name('cart.store');
 Route::post('/cart_update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart_remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/checkout', [CheckOutController::class, 'checkout'])->name('checkout');
 
 // ****** LOGIN ******
 Route::get('/login', [UserLoginController::class, 'login'])->name('login');
