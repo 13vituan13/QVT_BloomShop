@@ -14,30 +14,45 @@
         box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease-in-out;
     }
-
-    .fh5co-nav_fix.scrolled {
+    .humberger__menu{
+        z-index: 99999;
+        position: fixed;
+    }
+    .fh5co-nav_fix.scrolled,
+    .humberger__menu.scrolled {
         transform: translateY(-100%);
     }
-
+    
     /* Add padding to the body to make up for the space taken up by the fixed header */
     body {
         padding-top: 80px;
     }
-    
+    @media only screen and (min-width: 768px) and (max-width: 991px) { 
+        .ButtonLoginGroup{
+            text-align: center;
+            margin-top: 5px;
+        }
+    }
+    @media only screen and (min-width: 992px) and (max-width: 1200px) { 
+        #fh5co-logo{
+            text-align: center;
+        }
+    }
+
 
 </style>
 
-<nav id="header-nav" class="fh5co-nav fh5co-nav_fix " role="navigation">
+<nav id="header-nav" class="fh5co-nav fh5co-nav_fix" role="navigation">
     <div class="container-fluid ">
         <div class="row">
-            <div class="col-md-3 col-xs-12 logo">
+            <div class="col-md-12 col-lg-12 col-xl-2 logo">
                 <div id="fh5co-logo">
                     <a href="{{ route('home') }}">
                         <img class="logo__image" src="{{ asset('images/logo/logo.png') }}" alt="brand">
                     </a>
                 </div>
             </div>
-            <div class="col-md-6 col-xs-8 text-center menu-1">
+            <div class="col-md-12 col-lg-7 col-xl-7 text-center menu-1">
                 <ul>
                     <li class="@if (Request::routeIs('home')) active @endif"><a href="{{ route('home') }}">Trang
                             Chủ</a></li>
@@ -58,7 +73,7 @@
                 </ul>
             </div>
 
-            <div class="col-md-3 col-xs-3 text-right hidden-xs menu-2 destContainer">
+            <div class="ButtonLoginGroup col-md-12 col-lg-5 col-xl-3 text-right hidden-xs menu-2 destContainer">
                 <ul>
                     @if (!\Session::has('customer'))
                         <li>
@@ -158,10 +173,13 @@
             // scrolling down, visible header menu
             $('#header-nav').addClass("fh5co-nav_fix");
             $('#header-nav').addClass("scrolled");
+            $('#humbergerMenu').addClass("scrolled");
+            
         } else {
             // scrolling up, show header menu
             $('#header-nav').addClass("fh5co-nav_fix");
             $('#header-nav').removeClass("scrolled");
+            $('#humbergerMenu').removeClass("scrolled");
         }
 
         lastScrollTop = currentScroll;

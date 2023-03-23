@@ -16,7 +16,6 @@
         .title {
             margin-bottom: 5vh;
         }
-
         .card {
             margin: auto;
             max-width: 1200px;
@@ -298,7 +297,7 @@
                             <div class="col">Thành Tiền</div>
                             <div id="totalMoney" class="col text-right">${{ $totalMoney }}</div>
                         </div>
-                        <button class="btn">THANH TOÁN</button>
+                        <button class="btn">TIẾP TỤC THANH TOÁN</button>
                     </div>
                 </div>
 

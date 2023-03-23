@@ -21,6 +21,13 @@
 
 
     <style>
+        
+        label.required::after {
+            content: "*";
+            color: red;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -91,9 +98,9 @@
                     <h4 class="mb-3">Địa chỉ thanh toán</h4>
                     <form class="needs-validation" novalidate>
                         <div class="row g-3">
+                            {{-- Name --}}
                             <div class="col-sm-6">
-
-                                <label for="firstName" class="form-label"><i class="fa fa-user"></i> Họ và tên</label>
+                                <label for="firstName" class="form-label required"><i class="fa fa-user"></i> Họ và tên</label>
                                 <input type="text" class="form-control required" data-name="Họ tên"
                                     id="customer_name" name="customer_name" placeholder="VD: Quach Vi Tuan"
                                     value="" required>
@@ -101,27 +108,32 @@
                                     Vui lòng nhập họ tên.
                                 </div>
                             </div>
-
+                            {{-- PhoneNumber --}}
                             <div class="col-sm-6">
-                                <label for="lastName" class="form-label"><i class="fa fa-phone"></i> Số điện
+                                <label for="lastName" class="form-label required"><i class="fa fa-phone"></i> Số điện
                                     thoại</label>
-                                <input type="text" class="form-control required" id="customer_phone"
-                                    name="customer_phone" placeholder="0903123456" value="" required>
+                                <input type="tel" class="form-control required" id="customer_phone"
+                                    name="customer_phone" placeholder="0903123456" value="" required
+                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
                                 <div class="invalid-feedback">
                                     Vui lòng nhập số điện thoại.
                                 </div>
                             </div>
+                            {{-- Email --}}
                             <div class="col-12">
-                                <label for="address" class="form-label"><i class="fa fa-envelope"></i> Email</label>
-                                <input type="text" class="form-control required" id="customer_email"
-                                    name="customer_email" placeholder="you@example.com" value="" required>
+                                <label for="address" class="form-label required"><i class="fa fa-envelope"></i> Email</label>
+                                <input type="email" class="form-control required" id="customer_email"
+                                    name="customer_email" placeholder="you@example.com" value="" required
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                    data-valid-error="Please enter a valid email address">
                                 <div class="invalid-feedback">
                                     Vui lòng nhập Email.
                                 </div>
                             </div>
 
+                            {{-- Address --}}
                             <div class="col-12">
-                                <label for="address" class="form-label"><i class="fa fa-address-card-o"></i> Địa
+                                <label for="address" class="form-label required"><i class="fa fa-address-card-o"></i> Địa
                                     chỉ</label>
                                 <input type="text" class="form-control required" id="customer_email"
                                     name="customer_email" placeholder="100/A" value="" required>
@@ -129,10 +141,11 @@
                                     Vui lòng nhập Địa chỉ.
                                 </div>
                             </div>
-                            
+
                             {{-- City --}}
                             <div class="col-md-4">
-                                <label for="city" class="form-label required">Chọn tỉnh thành</label>
+                                <label for="city" class="form-label required"><i class="fa fa-institution"></i> Chọn
+                                    tỉnh thành</label>
                                 <select class="form-select required" onchange="getDistrict()" id="city_cbb"
                                     name="city" required>
                                     <option value="" selected>Chọn tỉnh</option>
@@ -154,7 +167,7 @@
                             </div>
 
                             <div class="col-md-3">
-                                <label for="zip" class="form-label">Zip</label>
+                                <label for="zip" class="form-label required">Zip</label>
                                 <input type="text" class="form-control" id="zip" placeholder="" required>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập mã zip.
@@ -167,75 +180,80 @@
                         <hr class="my-4">
 
                         <h4 class="mb-3">Payment</h4>
-
                         <div class="my-3">
                             <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
+                                <input onclick="paymentClose()" id="cash" name="paymentMethod" type="radio" class="form-check-input"
                                     checked required>
-                                <label class="form-check-label" for="credit">Credit card</label>
+                                <label class="form-check-label" for="credit">Thanh toán tiền mặt (khi nhận hàng).</label>
                             </div>
                             <div class="form-check">
-                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
+                                <input onclick="paymentShow()" id="creditCard" name="paymentMethod" type="radio" class="form-check-input"
                                     required>
-                                <label class="form-check-label" for="debit">Debit card</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                    required>
-                                <label class="form-check-label" for="paypal">PayPal</label>
+                                <label class="form-check-label" for="debit">Thanh toán bằng thẻ.</label>
                             </div>
                         </div>
-
-                        <div class="row gy-3">
+                        
+                        <div id="creditCardGroup" class="row gy-3" hidden>
+                            <div class="col-md-12">
+                                <label for="fname">Thẻ được chấp nhận</label>
+                                <div class="icon-container" style="font-size: 30px;">
+                                    <i class="fa fa-cc-paypal" style="color:#141e41;"></i>
+                                    <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                    <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                    <i class="fa fa-cc-discover" style="color:orange;"></i>
+                                </div>
+                            </div>
                             <div class="col-md-6">
-                                <label for="cc-name" class="form-label">Name on card</label>
+                                <label for="cc-name" class="form-label required">Tên trên thẻ</label>
                                 <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                <small class="text-muted">Full name as displayed on card</small>
+                                <small class="text-muted">Tên đầy đủ hiển thị trên thẻ.</small>
                                 <div class="invalid-feedback">
-                                    Name on card is required
+                                    Tên trên thẻ tín dụng là bắt buộc.
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="cc-number" class="form-label">Credit card number</label>
+                                <label for="cc-number" class="form-label required">Số thẻ tín dụng</label>
                                 <input type="text" class="form-control" id="cc-number" placeholder="" required>
                                 <div class="invalid-feedback">
-                                    Credit card number is required
+                                    Số thẻ tín dụng là bắt buộc.
                                 </div>
                             </div>
 
                             <div class="col-md-3">
-                                <label for="cc-expiration" class="form-label">Expiration</label>
+                                <label for="cc-expiration" class="form-label required">Hạn thẻ</label>
                                 <input type="text" class="form-control" id="cc-expiration" placeholder=""
                                     required>
                                 <div class="invalid-feedback">
-                                    Expiration date required
+                                    Hạn thẻ tín dụng là bắt buộc.
                                 </div>
                             </div>
 
                             <div class="col-md-3">
-                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <label for="cc-cvv" class="form-label required">CVV</label>
                                 <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
                                 <div class="invalid-feedback">
-                                    Security code required
+                                    Mã bảo mật tín dụng là bắt buộc.
                                 </div>
                             </div>
                         </div>
 
                         <hr class="my-4">
 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">THANH TOÁN</button>
                     </form>
                 </div>
             </div>
         </main>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">&copy; 2017–2021 Company Name</p>
+            <small class="block">&copy; 2022 BloomShop. Đã đăng ký Bản quyền.</small> 
+            <small class="block">Designed by <a href="#" target="_blank">Q.V.T</a> Demo Images: <a href="#" target="_blank">Bloom</a> &amp; <a href="" target="_blank">Shop</a></small>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Privacy</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Support</a></li>
+                <li class="list-inline-item"><a href="#">Chính sách</a></li>
+                <li class="list-inline-item"><a href="#">Bảo mật</a></li>
+                <li class="list-inline-item"><a href="#">Hỗ trợ</a></li>
             </ul>
         </footer>
     </div>
@@ -247,6 +265,18 @@
     <script>
         const citysList = @json($citys_list);
         const districtsList = @json($districts_list);
+        const cash = $('#cash');
+        const creditCard = $('#creditCard');
+        const creditCardGroup = $('#creditCardGroup');
+
+        function paymentShow(){
+            creditCardGroup.removeAttr("hidden");
+        }
+        function paymentClose(){
+            creditCardGroup.attr("hidden", "hidden");
+        }
+
+        
         $(document).ready(function() {
             let cityHTML = ""
             citysList.forEach(item => {
@@ -266,6 +296,7 @@
             });
             $('#district_cbb').html(districtHTML);
         }
+
     </script>
 </body>
 
