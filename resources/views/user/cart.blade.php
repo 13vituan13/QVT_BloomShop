@@ -243,7 +243,7 @@
                             </div>
                         </div>
 
-                        @if (count($cart) > 0)
+                        @if ($cartCounter > 0)
                             @foreach ($cart as $key => $item)
                                 <div id="cartItem_{{$item['product_id']}}" class="row border-top border-bottom">
                                     <div class="row main align-items-center">
@@ -297,7 +297,7 @@
                             <div class="col">Thành Tiền</div>
                             <div id="totalMoney" class="col text-right">${{ $totalMoney }}</div>
                         </div>
-                        <button class="btn">TIẾP TỤC THANH TOÁN</button>
+                        <button class="btn" onclick="goToPage('{{ route('checkout') }}')" @if($cartCounter <= 0){{ 'disabled' }}@endif>TIẾP TỤC THANH TOÁN</button>
                     </div>
                 </div>
 

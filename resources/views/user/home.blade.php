@@ -161,13 +161,13 @@
             <div class="row">
                 @if (count($best_choice) > 0)
                     @foreach ($best_choice as $item)
-                        <div class="col-sm-4 text-center animate-box fadeInUp animated-fast">
+                        <div class="col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
                             <div class="product">
                                 @php
                                     $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
                                 @endphp
                                 <div class="image">
-                                    <img class="img-fluid" src="{{ asset("storage/{$path}") }}" />
+                                    <img class="img-fluid animate-box" data-animate-effect="fadeIn" src="{{ asset("storage/{$path}") }}" />
                                     <span class="sale">10%</span>
                                     <div class="add_to_cart" 
                                             data-productId="{{$item->product_id}}"

@@ -21,13 +21,13 @@
 
 
     <style>
-        
         label.required::after {
             content: "*";
             color: red;
             margin-left: 5px;
             vertical-align: middle;
         }
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -77,9 +77,9 @@
                         <li class="list-group-item d-flex justify-content-between bg-light">
                             <div class="text-success">
                                 <h6 class="my-0">Khuyến mãi</h6>
-                                <small>BLOOM99</small>
+                                <small id="promoCodeTxt"></small>
                             </div>
-                            <span class="text-success">−$5</span>
+                            <span id="promoApply" class="text-success">−$0</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Tổng tiền (USD)</span>
@@ -89,9 +89,10 @@
 
                     <form class="card p-2">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Promo code">
-                            <button type="submit" class="btn btn-secondary">Redeem</button>
+                            <input id="promoCode" type="text" class="form-control" placeholder="Mã khuyến mãi">
+                            <button type="button" class="btn btn-secondary" onclick="checkPromoCode()">Áp dụng</button>
                         </div>
+                        <div id="promoMsg" class=""></div>
                     </form>
                 </div>
                 <div class="col-md-7 col-lg-8">
@@ -100,7 +101,8 @@
                         <div class="row g-3">
                             {{-- Name --}}
                             <div class="col-sm-6">
-                                <label for="firstName" class="form-label required"><i class="fa fa-user"></i> Họ và tên</label>
+                                <label for="firstName" class="form-label required"><i class="fa fa-user"></i> Họ và
+                                    tên</label>
                                 <input type="text" class="form-control required" data-name="Họ tên"
                                     id="customer_name" name="customer_name" placeholder="VD: Quach Vi Tuan"
                                     value="" required>
@@ -112,28 +114,29 @@
                             <div class="col-sm-6">
                                 <label for="lastName" class="form-label required"><i class="fa fa-phone"></i> Số điện
                                     thoại</label>
-                                <input type="tel" class="form-control required" id="customer_phone"
+                                <input type="text" class="form-control required" id="customer_phone"
                                     name="customer_phone" placeholder="0903123456" value="" required
-                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                                    pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
                                 <div class="invalid-feedback">
-                                    Vui lòng nhập số điện thoại.
+                                    Vui lòng cung cấp một số điện thoại hợp lệ.
                                 </div>
                             </div>
                             {{-- Email --}}
                             <div class="col-12">
-                                <label for="address" class="form-label required"><i class="fa fa-envelope"></i> Email</label>
-                                <input type="email" class="form-control required" id="customer_email"
+                                <label for="address" class="form-label required"><i class="fa fa-envelope"></i>
+                                    Email</label>
+                                <input type="text" class="form-control required" id="customer_email"
                                     name="customer_email" placeholder="you@example.com" value="" required
-                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                                    data-valid-error="Please enter a valid email address">
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                 <div class="invalid-feedback">
-                                    Vui lòng nhập Email.
+                                    Vui lòng cung cấp một email hợp lệ.
                                 </div>
                             </div>
 
                             {{-- Address --}}
                             <div class="col-12">
-                                <label for="address" class="form-label required"><i class="fa fa-address-card-o"></i> Địa
+                                <label for="address" class="form-label required"><i class="fa fa-address-card-o"></i>
+                                    Địa
                                     chỉ</label>
                                 <input type="text" class="form-control required" id="customer_email"
                                     name="customer_email" placeholder="100/A" value="" required>
@@ -182,19 +185,54 @@
                         <h4 class="mb-3">Payment</h4>
                         <div class="my-3">
                             <div class="form-check">
-                                <input onclick="paymentClose()" id="cash" name="paymentMethod" type="radio" class="form-check-input"
-                                    checked required>
-                                <label class="form-check-label" for="credit">Thanh toán tiền mặt (khi nhận hàng).</label>
+                                <input onclick="paymentClose()" id="cash" name="paymentMethod" type="radio"
+                                    class="form-check-input" checked required>
+                                <label class="form-check-label" for="credit">Thanh toán tiền mặt (khi nhận
+                                    hàng).</label>
                             </div>
                             <div class="form-check">
-                                <input onclick="paymentShow()" id="creditCard" name="paymentMethod" type="radio" class="form-check-input"
-                                    required>
+                                <input onclick="paymentShow()" id="creditCard" name="paymentMethod" type="radio"
+                                    class="form-check-input" required>
                                 <label class="form-check-label" for="debit">Thanh toán bằng thẻ.</label>
                             </div>
                         </div>
-                        
+
                         <div id="creditCardGroup" class="row gy-3" hidden>
-                            <div class="col-md-12">
+                            
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">THANH TOÁN</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <small class="block">&copy; 2022 BloomShop. Đã đăng ký Bản quyền.</small>
+            <small class="block">Designed by <a href="#" target="_blank">Q.V.T</a> Demo Images: <a
+                    href="#" target="_blank">Bloom</a> &amp; <a href=""
+                    target="_blank">Shop</a></small>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Chính sách</a></li>
+                <li class="list-inline-item"><a href="#">Bảo mật</a></li>
+                <li class="list-inline-item"><a href="#">Hỗ trợ</a></li>
+            </ul>
+        </footer>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ asset('js/user/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/user/checkout/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/user/checkout/form-validation.js') }}"></script>
+    <script>
+        const citysList = @json($citys_list);
+        const districtsList = @json($districts_list);
+        const cash = $('#cash');
+        const creditCard = $('#creditCard');
+        const creditCardGroup = $('#creditCardGroup');
+        const creditCardGroupHTML = `<div class="col-md-12">
                                 <label for="fname">Thẻ được chấp nhận</label>
                                 <div class="icon-container" style="font-size: 30px;">
                                     <i class="fa fa-cc-paypal" style="color:#141e41;"></i>
@@ -236,48 +274,32 @@
                                 <div class="invalid-feedback">
                                     Mã bảo mật tín dụng là bắt buộc.
                                 </div>
-                            </div>
-                        </div>
-
-                        <hr class="my-4">
-
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">THANH TOÁN</button>
-                    </form>
-                </div>
-            </div>
-        </main>
-
-        <footer class="my-5 pt-5 text-muted text-center text-small">
-            <small class="block">&copy; 2022 BloomShop. Đã đăng ký Bản quyền.</small> 
-            <small class="block">Designed by <a href="#" target="_blank">Q.V.T</a> Demo Images: <a href="#" target="_blank">Bloom</a> &amp; <a href="" target="_blank">Shop</a></small>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Chính sách</a></li>
-                <li class="list-inline-item"><a href="#">Bảo mật</a></li>
-                <li class="list-inline-item"><a href="#">Hỗ trợ</a></li>
-            </ul>
-        </footer>
-    </div>
-
-    <!-- jQuery -->
-    <script src="{{ asset('js/user/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/user/checkout/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/user/checkout/form-validation.js') }}"></script>
-    <script>
-        const citysList = @json($citys_list);
-        const districtsList = @json($districts_list);
-        const cash = $('#cash');
-        const creditCard = $('#creditCard');
-        const creditCardGroup = $('#creditCardGroup');
-
-        function paymentShow(){
+                            </div>`
+        function paymentShow() {
             creditCardGroup.removeAttr("hidden");
-        }
-        function paymentClose(){
-            creditCardGroup.attr("hidden", "hidden");
+            creditCardGroup.append(creditCardGroupHTML)           
         }
 
-        
+        function paymentClose() {
+            creditCardGroup.attr("hidden", "hidden");
+            creditCardGroup.html('')  
+        }
+
+
         $(document).ready(function() {
+            // Get the input field element
+            const customer_phone = $('#customer_phone');
+
+            // Listen for input events on the input field
+            customer_phone.on('input', function(event) {
+                // Remove any non-numeric characters and update the input value
+                $(this).val(function(index, value) {
+                    return value.replace(/\D/g, '');
+                });
+            });
+
+
+
             let cityHTML = ""
             citysList.forEach(item => {
                 cityHTML += `<option value="` + item.id + `">` + item.name + `</option>`
@@ -296,7 +318,22 @@
             });
             $('#district_cbb').html(districtHTML);
         }
-
+        function checkPromoCode(){
+            let promoCode = $('#promoCode').val()
+            if(promoCode == "BLOOM99"){
+                $('#promoCodeTxt').html('BLOOM99')
+                $('#promoApply').html('−$10')
+                $('#promoMsg').addClass('text-success')
+                $('#promoMsg').removeClass('text-danger')
+                $('#promoMsg').html('Mã khuyến mãi đã được áp dụng.')
+            }else{
+                $('#promoCodeTxt').html('')
+                $('#promoApply').html('-$0')
+                $('#promoMsg').addClass('text-danger')
+                $('#promoMsg').removeClass('text-success')
+                $('#promoMsg').html('Mã khuyến mãi không đúng.')
+            }
+        }
     </script>
 </body>
 
