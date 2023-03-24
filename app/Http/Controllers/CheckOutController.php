@@ -59,7 +59,7 @@ class CheckOutController extends Controller
                 $item['order_id'] = $order_id;
                 OrderDetail::create($item);
             }
-
+            Session::forget('cart');
             $NewOrder = getOrderById($order_id);
             Mail::to($input['customer_email'])->send(new SendMail($NewOrder));
             DB::commit();

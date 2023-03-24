@@ -23,8 +23,8 @@
             </div>
         </div>
 </header>
-<div id="fh5co-product">
-    <div class="container">
+<div id="fh5co-product container_product">
+    <div class="container container_product">
         <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
                 <span>Cool Stuff</span>
@@ -35,23 +35,30 @@
         <div class="row">
             @if(count($product_list) > 0)
                 @foreach ($product_list as $item)
-                <div class="col-md-4 text-center animate-box">
+                <div class="col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
                     <div class="product">
                         @php
                             $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
                         @endphp
-                        <div class="product-grid" style="background-image:url({{ asset("storage/{$path}") }}">
+                        <div class="image">
+                            <img class="img-fluid animate-box" data-animate-effect="fadeIn" src="{{ asset("storage/{$path}") }}" />
                             <span class="sale">10%</span>
-                            <div class="inner">
-                                <p>
-                                    <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                    <a target="_blank" href="{{ asset("storage/{$path}") }}" class="icon"><i class="icon-eye"></i></a>
-                                </p>
+                            <div class="add_to_cart" 
+                                    data-productId="{{$item->product_id}}"
+                                    data-productName="{{$item->name}}"
+                                    data-productPrice="{{$item->price}}"
+                                    data-productImage="{{$item->product_image[0]['image']}}"
+                                    data-productCategory="{{isset($item->category['name']) ? $item->category['name'] : ''}}"
+                                >
+                                <i class="icon-shopping-cart"></i>
+                                <a target="_blank" href="{{ asset("storage/{$path}") }}" class="eye">
+                                    <i class="icon-eye"></i>
+                                </a>
                             </div>
                         </div>
-                        <div class="desc">
+                        <div class="desc mt-4">
                             <h3><a href="single.html">{{ $item->name }}</a></h3>
-                            <span class="price">${{$item->price}}</span>
+                            <span class="price">${{ $item->price }}</span>
                         </div>
                     </div>
                 </div>

@@ -11,68 +11,6 @@
             border-bottom: 1px solid lightgray;
             margin-bottom: 20px;
         }
-
-        .product {
-            margin-bottom: 2em;
-        }
-
-        .product .image {
-            position: relative;
-        }
-
-        .product .add_to_cart {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            font-size: 2em;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            opacity: 0;
-
-        }
-
-        .product .add_to_cart:hover {
-
-            opacity: 1;
-        }
-
-        .product .add_to_cart:active {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .product .add_to_cart .icon-shopping-cart {
-            padding: 9px 10px;
-            color: #fff;
-            background: #d1c286;
-            font-size: 16px;
-        }
-
-        .product .add_to_cart .icon-shopping-cart:hover,
-        .product .add_to_cart .icon-shopping-cart:focus {
-            color: #d1c286;
-            background: #fff;
-        }
-
-        .product .add_to_cart .eye {
-            padding: 4px 10px;
-            color: #fff;
-            background: #d1c286;
-            font-size: 16px;
-            margin-left: 10px;
-        }
-
-        .product .add_to_cart .eye:hover,
-        .product .add_to_cart .eye:focus {
-            color: #d1c286;
-            background: #fff;
-        }
     </style>
     <aside id="fh5co-hero" style="height: auto;">
         <div class="flexslider " style="height: auto;">
@@ -309,7 +247,4 @@
             </div>
         </div>
     </div>
-
-
-
 @endsection
