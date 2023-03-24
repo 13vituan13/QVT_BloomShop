@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -8,6 +9,9 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Carbon\Carbon;
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\Mail;
+
 use Exception;
 
 class CheckOutController extends Controller
@@ -55,12 +59,25 @@ class CheckOutController extends Controller
                 $item['order_id'] = $order_id;
                 OrderDetail::create($item);
             }
+
+            $order = getOrderById($order_id);
+
+            Mail::to('nguyenhangaptx4869@gmail.com')->send(new SendMail($order));
+
+            // Mail::to('nguoidung@example.com')
+            // ->cc('nguoidungkhac@example.com')
+            // ->bcc('nguoigui@example.com')
+            // ->subject('Chào mừng đến với trang web của chúng tôi')
+            // ->attach($pathToFile, ['as' => $name])
+            // ->send(new WelcomeEmail($user));
+
+
             DB::commit();
-            return response()->json(['message' => 'Tạo mới khách hàng thành công!', 'data' => $order_id], 200);
+            return response()->json(['message' => 'Success!', 'data' => $order_id], 200);
         } catch (Exception $e) {
             DB::rollBack();
             Log::error($e);
-            return response()->json(['message' => 'Có lỗi xảy ra trong quá trình tạo mới khách hàng!', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Fail!', 'error' => $e->getMessage()], 500);
         }
     }
 

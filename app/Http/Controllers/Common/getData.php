@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Status;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\PersonalAccessToken;
 use Illuminate\Support\Facades\Session;
 
@@ -80,6 +81,10 @@ function getCustomerById($id){
                     'vip_member.name AS vip_name')
                     ->first();
 
+    return $res;
+}
+function getOrderById($id){
+    $res = Order::where('order_id', $id)->first();
     return $res;
 }
 function getBestChoiceProduct($limit)
