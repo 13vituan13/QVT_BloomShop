@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('zipcode');
             $table->string('address');
-            $table->string('district');
-            $table->string('city');
+            $table->string('district_id');
+            $table->string('city_id');
             $table->dateTime('birthday');
             $table->string('phone')->nullable();
             $table->string('email')->unique();

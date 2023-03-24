@@ -97,7 +97,9 @@
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Địa chỉ thanh toán</h4>
-                    <form class="needs-validation" novalidate>
+                    <form class="needs-validation" novalidate
+                        method="POST" action="{{ route('checkout.submit') }}">
+                        <input hidden id="promo" value="0">
                         <div class="row g-3">
                             {{-- Name --}}
                             <div class="col-sm-6">
@@ -105,7 +107,8 @@
                                     tên</label>
                                 <input type="text" class="form-control required" data-name="Họ tên"
                                     id="customer_name" name="customer_name" placeholder="VD: Quach Vi Tuan"
-                                    value="" required>
+                                    value="@if($customer_info){{$customer_info->name}}@endif" 
+                                    required>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập họ tên.
                                 </div>
@@ -115,8 +118,9 @@
                                 <label for="lastName" class="form-label required"><i class="fa fa-phone"></i> Số điện
                                     thoại</label>
                                 <input type="text" class="form-control required" id="customer_phone"
-                                    name="customer_phone" placeholder="0903123456" value="" required
-                                    pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
+                                    name="customer_phone" placeholder="0903123456" 
+                                    value="@if($customer_info){{$customer_info->phone}}@endif" 
+                                    required pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
                                 <div class="invalid-feedback">
                                     Vui lòng cung cấp một số điện thoại hợp lệ.
                                 </div>
@@ -126,8 +130,9 @@
                                 <label for="address" class="form-label required"><i class="fa fa-envelope"></i>
                                     Email</label>
                                 <input type="text" class="form-control required" id="customer_email"
-                                    name="customer_email" placeholder="you@example.com" value="" required
-                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                    name="customer_email" placeholder="you@example.com" 
+                                    value="@if($customer_info){{$customer_info->email}}@endif" 
+                                    required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                 <div class="invalid-feedback">
                                     Vui lòng cung cấp một email hợp lệ.
                                 </div>
@@ -138,8 +143,10 @@
                                 <label for="address" class="form-label required"><i class="fa fa-address-card-o"></i>
                                     Địa
                                     chỉ</label>
-                                <input type="text" class="form-control required" id="customer_email"
-                                    name="customer_email" placeholder="100/A" value="" required>
+                                <input type="text" class="form-control required" id="customer_address"
+                                    name="customer_address" placeholder="100/A" 
+                                    value="@if($customer_info){{$customer_info->address}}@endif" 
+                                    required>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập Địa chỉ.
                                 </div>
@@ -149,9 +156,9 @@
                             <div class="col-md-4">
                                 <label for="city" class="form-label required"><i class="fa fa-institution"></i> Chọn
                                     tỉnh thành</label>
-                                <select class="form-select required" onchange="getDistrict()" id="city_cbb"
-                                    name="city" required>
-                                    <option value="" selected>Chọn tỉnh</option>
+                                <select class="form-select required"  id="city_cbb" name="city"
+                                        onchange="getDistrict()" required>
+                                        <option value="" selected>Chọn tỉnh</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Vui lòng chọn tỉnh thành.
@@ -161,7 +168,8 @@
                             {{-- District --}}
                             <div class="col-md-5">
                                 <label for="district" class="form-label required">Chọn quận</label>
-                                <select class="form-select required" id="district_cbb" name="district" required>
+                                <select class="form-select required" id="district_cbb" name="district" 
+                                    required>
                                     <option value="" selected>Chọn Quận</option>
                                 </select>
                                 <div class="invalid-feedback">
@@ -171,15 +179,14 @@
 
                             <div class="col-md-3">
                                 <label for="zip" class="form-label required">Zip</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" required>
+                                <input type="text" class="form-control" placeholder="VD: 70000"
+                                id="zipcode" name="zipcode" required
+                                value="@if($customer_info){{$customer_info->zipcode}}@endif" >
                                 <div class="invalid-feedback">
                                     Vui lòng nhập mã zip.
                                 </div>
                             </div>
                         </div>
-
-
-
                         <hr class="my-4">
 
                         <h4 class="mb-3">Payment</h4>
@@ -223,10 +230,13 @@
     </div>
 
     <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/user/usersite.js') }}"></script>
     <script src="{{ asset('js/user/jquery.min.js') }}"></script>
     <script src="{{ asset('js/user/checkout/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/user/checkout/form-validation.js') }}"></script>
     <script>
+        const customerInfo = {!! isset($customer_info) ? json_encode($customer_info) : 'null' !!};
         const citysList = @json($citys_list);
         const districtsList = @json($districts_list);
         const cash = $('#cash');
@@ -234,7 +244,7 @@
         const creditCardGroup = $('#creditCardGroup');
         const creditCardGroupHTML = `<div class="col-md-12">
                                 <label for="fname">Thẻ được chấp nhận</label>
-                                <div class="icon-container" style="font-size: 30px;">
+                                <div class="icon-container" style="font-size: 50px;">
                                     <i class="fa fa-cc-paypal" style="color:#141e41;"></i>
                                     <i class="fa fa-cc-visa" style="color:navy;"></i>
                                     <i class="fa fa-cc-amex" style="color:blue;"></i>
@@ -302,18 +312,26 @@
 
             let cityHTML = ""
             citysList.forEach(item => {
-                cityHTML += `<option value="` + item.id + `">` + item.name + `</option>`
+                if(customerInfo && customerInfo.city_id == item.id){
+                    cityHTML += `<option value="` + item.id + `" selected>` + item.name + `</option>`
+                    getDistrict(item.id)
+                }else{
+                    cityHTML += `<option value="` + item.id + `">` + item.name + `</option>`
+                }
             });
             $('#city_cbb').append(cityHTML);
         });
 
-        function getDistrict() {
-
-            let cityValue = $('#city_cbb').val()
+        function getDistrict(city_id = null) {
+            let cityValue = city_id ? city_id : $('#city_cbb').val()
             let districtHTML = ""
             districtsList.forEach(item => {
                 if (item.city_id == cityValue) {
-                    districtHTML += `<option value="` + item.id + `">` + item.name + `</option>`
+                    if(customerInfo && customerInfo.district_id == item.id){
+                        districtHTML += `<option value="` + item.id + `" selected>` + item.name + `</option>`
+                    }else{
+                        districtHTML += `<option value="` + item.id + `">` + item.name + `</option>`
+                    }
                 }
             });
             $('#district_cbb').html(districtHTML);
@@ -321,12 +339,14 @@
         function checkPromoCode(){
             let promoCode = $('#promoCode').val()
             if(promoCode == "BLOOM99"){
+                $('#promo').val(10)
                 $('#promoCodeTxt').html('BLOOM99')
                 $('#promoApply').html('−$10')
                 $('#promoMsg').addClass('text-success')
                 $('#promoMsg').removeClass('text-danger')
                 $('#promoMsg').html('Mã khuyến mãi đã được áp dụng.')
             }else{
+                $('#promo').val(0)
                 $('#promoCodeTxt').html('')
                 $('#promoApply').html('-$0')
                 $('#promoMsg').addClass('text-danger')

@@ -17,7 +17,7 @@ class Order extends Model
         'date',
         'customer_name',
         'customer_email',
-        'customer_zipcode',
+        'zipcode',
         'customer_address',
         'customer_phone',
         'status_id',

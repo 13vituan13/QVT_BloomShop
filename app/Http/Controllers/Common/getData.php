@@ -71,7 +71,10 @@ function getAllProduct()
     $res = Product::all();
     return $res;
 }
-
+//Get by id
+function getCustomerById($id){
+    return  Customer::where('customer_id', $id)->first();
+}
 function getBestChoiceProduct($limit)
 {
     $res = Product::with('category')->with('product_image')

@@ -18,7 +18,7 @@ class OrderSeeder extends Seeder
                 'date' => $faker->dateTimeBetween('-1 month', 'now'),
                 'customer_name' => $faker->name,
                 'customer_email' => $faker->email,
-                'customer_zipcode' => $faker->postcode,
+                'zipcode' => $faker->postcode,
                 'customer_address' => $faker->address.$faker->city,
                 'customer_phone' => $faker->phoneNumber,
                 'status_id' => rand(1, 3),

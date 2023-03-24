@@ -1,5 +1,5 @@
 @extends('layouts.user.master')
-@section('title', 'Single')
+@section('title', 'Sign Up')
 @section('content')
     <style>
         .form-group {
@@ -9,8 +9,12 @@
         form input[type="radio"] {
             display: none;
         }
+        ::placeholder {
+            color: #c3c3c3!important; 
+        }
+
     </style>
-    <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;">
+    <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;background:#c3c3c3;color:#525151">
         <div class="container">
             <div class="row animate-box">
                 <div class="col-md-8 col-md-offset-2 text-center fh5co-heading" style="margin-bottom: 3em">
@@ -91,6 +95,7 @@
                         </select>
                         <p class="posi--absolute text-danger err-msg"></p>
                     </div>
+
                     {{-- Email --}}
                     <div class="col-sm-6 form-group">
                         <label for="email" class="font--bold required">Email</label>
@@ -98,20 +103,30 @@
                                placeholder="VD: example@gmail.com">
                         <p class="posi--absolute text-danger err-msg"></p>
                     </div>
-                    {{-- PassConfirm --}}
+
+                    {{-- ZipCode --}}
                     <div class="col-sm-6 form-group">
-                        <label for="password2" class="font--bold required">Nhập lại mật khẩu</label>
-                        <input type="Password" name="password2" class="form-control required" id="password2"
-                            data-name="Mật khẩu xác nhận">
+                        <label for="zipcode" class="font--bold required">ZIP CODE</label>
+                        <input type="text" class="form-control required" name="zipcode" id="zipcode" data-name="ZIP CODE" 
+                               placeholder="VD: 70000">
                         <p class="posi--absolute text-danger err-msg"></p>
                     </div>
+                    
                     {{-- Pass --}}
                     <div class="col-sm-6 form-group">
                         <label for="password" class="font--bold required">Mật Khẩu</label>
                         <input type="Password" name="password" class="form-control required" id="password"
                             data-name="Mật khẩu">
                         <p class="posi--absolute text-danger err-msg"></p>    
-                        <p class="help-block" style="margin-top: 20px">Mật khẩu phải có ít nhất 8 ký tự, bao gồm ít nhất một ký tự đặc biệt và một chữ cái viết hoa và số.</p>
+                        <p class="help-block" style="margin-top: 20px;color:#525151">Mật khẩu phải có ít nhất 8 ký tự, bao gồm ít nhất một ký tự đặc biệt và một chữ cái viết hoa và số.</p>
+                    </div>
+
+                    {{-- PassConfirm --}}
+                    <div class="col-sm-6 form-group">
+                        <label for="password2" class="font--bold required">Nhập lại mật khẩu</label>
+                        <input type="Password" name="password2" class="form-control required" id="password2"
+                            data-name="Mật khẩu xác nhận">
+                        <p class="posi--absolute text-danger err-msg"></p>
                     </div>
                     
                     
@@ -120,7 +135,7 @@
                     
                 </div>
                 <div class="col-sm-12 form-group mb-4 mt-4 text-center">
-                    <button id="btnSubmit" class="btn btn-primary">Submit</button>
+                    <button id="btnSubmit" class="btn btn-primary">Đăng kí</button>
                 </div>
             </form>
         </div>
@@ -136,6 +151,23 @@
                 cityHTML += `<option value="` + item.id + `">` + item.name + `</option>`
             });
             $('#city_cbb').append(cityHTML);
+
+            // Get the input field element
+            const phone = $('#phone');
+            const zipcode = $('#zipcode');
+            // Listen for input events on the input field
+            phone.on('input', function(event) {
+                // Remove any non-numeric characters and update the input value
+                $(this).val(function(index, value) {
+                    return value.replace(/\D/g, '');
+                });
+            });
+            zipcode.on('input', function(event) {
+                // Remove any non-numeric characters and update the input value
+                $(this).val(function(index, value) {
+                    return value.replace(/\D/g, '');
+                });
+            });
         });
 
         function getDistrict() {
@@ -151,14 +183,14 @@
         }
         var form = document.getElementById('signUpForm');
         var emailInput = form.querySelector('input[name="email"]');
-        var phoneInput = form.querySelector('input[name="phone"]')
-        var passInput = form.querySelector('input[name="password"]')
-        var passInputConfirm = form.querySelector('input[name="password2"]')
+        var phoneInput = form.querySelector('input[name="phone"]');
+        var zipInput = form.querySelector('input[name="zipcode"]')
+        var passInput = form.querySelector('input[name="password"]');
+        var passInputConfirm = form.querySelector('input[name="password2"]');
         var nameInput = form.querySelector('input[name="name"]');
 
         function setElementBgColor(el, msg, isChange) {
             if (isChange) {
-                el.style.backgroundColor = '#ffc8d2';
                 el.style.borderColor = '#dc3545';
                 var errMsg = el.nextElementSibling;
                 if (errMsg && errMsg.classList.contains('err-msg')) {
@@ -181,6 +213,16 @@
             if (!regexName.test(name)) {
                 checker = false
                 setElementBgColor(nameInput, "Tên không chứa kí tự đặc biệt.", true)
+            }
+            return checker;
+        }
+
+        function validateZipCode(zipcode) {
+            let checker = true
+            setElementBgColor(zipInput,null,false)
+            if (zipcode.length !== 5) {
+                checker = false
+                setElementBgColor(zipInput, "Vui lòng nhập mã ZipCode hợp lệ với 7 số.", true)
             }
             return checker;
         }
@@ -255,11 +297,15 @@
                 }
             });
             if (isValid == true) {
-                // check Email
+                // check Name
                 if (!validateName(nameInput.value)) {
                     isValid = false
                 } 
-
+                // check Zipcode
+                if (!validateZipCode(zipInput.value)) {
+                    isValid = false
+                } 
+                
                 // check Email
                 if (!validateEmail(emailInput.value)) {
                     isValid = false
