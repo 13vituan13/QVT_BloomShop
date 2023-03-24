@@ -9,7 +9,7 @@ class StatusOrderSeeder extends Seeder
 {
     public function run()
     {
-        $status = ['hoàn tất','chưa giao','đã hủy'];
+        $status = ['Chờ duyệt','Đã duyệt','Đã hủy','Đã hoàn tất'];
         foreach ($status as $name) {
             StatusOrder::insert([
                 'name' => $name,

@@ -9,7 +9,7 @@ class StatusSeeder extends Seeder
 {
     public function run()
     {
-        $status = ['đang bán','hết hàng'];
+        $status = ['Đang bán','Hết hàng'];
         foreach ($status as $name) {
             Status::insert([
                 'name' => $name,

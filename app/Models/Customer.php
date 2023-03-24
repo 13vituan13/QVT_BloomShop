@@ -11,7 +11,9 @@ class Customer extends Model
 		'customer_id' => 'int'
 	];
     protected $fillable = [
+        'customer_id',
         'name',
+        'zipcode',
         'address',
         'district',
         'city',

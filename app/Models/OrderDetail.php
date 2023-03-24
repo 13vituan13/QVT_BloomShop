@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderDetail extends Model
 {
-    use HasFactory;
+    protected $table = 'order_detail';
+    protected $primaryKey = 'id';
+    protected $casts = [
+		'order_id' => 'int'
+	];
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'quantity',
+        'price',
+    ];
 }

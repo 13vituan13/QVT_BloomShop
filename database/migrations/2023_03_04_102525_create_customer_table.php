@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('customer', function (Blueprint $table) {
             $table->increments('customer_id');
             $table->string('name');
+            $table->string('zipcode');
             $table->string('address');
             $table->string('district');
             $table->string('city');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->integer('vip_id')->unsigned()->nullable();
+            $table->integer('flg_del')->nullable();
             $table->timestamps();
         });
         

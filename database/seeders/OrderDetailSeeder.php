@@ -18,7 +18,7 @@ class OrderDetailSeeder extends Seeder
             DB::table('order_detail')->insert([
                 'order_id' => $faker->randomElement($orderIds),
                 'product_id' => $faker->randomElement($productIds),
-                'number' => rand(1, 10),
+                'quantity' => rand(1, 10),
                 'price' => 300,
                 'created_at' => now(),
                 'updated_at' => now()

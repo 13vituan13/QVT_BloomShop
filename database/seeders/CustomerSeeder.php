@@ -15,6 +15,7 @@ class CustomerSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             Customer::insert([
                 'name' => $faker->name,
+                'zipcode' => $faker->postcode,
                 'address' => $faker->address,
                 'district' => $faker->randomElement($districts),
                 'city' => $faker->city,
@@ -23,6 +24,7 @@ class CustomerSeeder extends Seeder
                 'email' => $faker->unique()->email,
                 'password' => $faker->password,
                 'vip_id' => rand(1, 10),
+                'flg_del' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
