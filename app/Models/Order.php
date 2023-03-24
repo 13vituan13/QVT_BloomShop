@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\OrderDetail;
 
 class Order extends Model
 {
@@ -24,4 +25,8 @@ class Order extends Model
         'total_money',
         'flg_del',
     ];
+    public function order_detail()
+    {
+        return $this->hasMany(OrderDetail::class,'order_id','order_id');
+    }
 }

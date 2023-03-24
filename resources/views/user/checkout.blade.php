@@ -45,7 +45,7 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="form-validation.css" rel="stylesheet">
+    <link href="{{ asset('js/user/checkout/js/form-validation.css') }}" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -78,10 +78,10 @@
                             @foreach ($cart as $key => $item)
                                 <li class="list-group-item d-flex justify-content-between lh-sm">
                                     <div>
-                                        <h6 class="my-0">{{ $item['name'] }}</h6>
+                                        <h6 class="my-0">{{ $item['quantity'].' '.$item['name'] }}</h6>
                                         <small class="text-muted">{{ $item['category_name'] }}</small>
                                     </div>
-                                    <span class="text-muted">${{ $item['price'] }}</span>
+                                    <span class="text-muted">${{ ($item['quantity']*$item['price']) }}</span>
                                 </li>
                             @endforeach
                         @endif

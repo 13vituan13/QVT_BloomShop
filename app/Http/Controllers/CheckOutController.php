@@ -60,18 +60,8 @@ class CheckOutController extends Controller
                 OrderDetail::create($item);
             }
 
-            $order = getOrderById($order_id);
-
-            Mail::to('nguyenhangaptx4869@gmail.com')->send(new SendMail($order));
-
-            // Mail::to('nguoidung@example.com')
-            // ->cc('nguoidungkhac@example.com')
-            // ->bcc('nguoigui@example.com')
-            // ->subject('Chào mừng đến với trang web của chúng tôi')
-            // ->attach($pathToFile, ['as' => $name])
-            // ->send(new WelcomeEmail($user));
-
-
+            $NewOrder = getOrderById($order_id);
+            Mail::to($input['customer_email'])->send(new SendMail($NewOrder));
             DB::commit();
             return response()->json(['message' => 'Success!', 'data' => $order_id], 200);
         } catch (Exception $e) {

@@ -7,24 +7,24 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use App\Models\Order;
+
 
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $order;
+    protected $dataMail = [];
 
-    public function __construct($order)
+    public function __construct($dataMail)
     {
-        $this->order = $order;
+        $this->dataMail = $dataMail;
     }
 
     public function build()
     {
         return $this->view('layouts.mail')
                     ->with([
-                        'order' => $this->order->toArray(),
+                        'dataMail' => $this->dataMail,
                     ]);
     }
 }

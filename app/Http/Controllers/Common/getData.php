@@ -84,7 +84,10 @@ function getCustomerById($id){
     return $res;
 }
 function getOrderById($id){
-    $res = Order::where('order_id', $id)->first();
+    $res = Order::with(['order_detail', 'order_detail.product'])
+    ->where('order_id', $id)
+    ->first();
+
     return $res;
 }
 function getBestChoiceProduct($limit)
