@@ -161,7 +161,14 @@
             border: 1px solid black;
             color: black;
         }
-
+        .breadcrumb-item a{
+            color:#0d6efd;
+            text-decoration: underline;
+            font-family: var(--bs-font-sans-serif);
+        }
+        .breadcrumb-item a:hover {
+            color: #0a58ca;
+        }
         a {
             color: black;
         }
@@ -229,8 +236,16 @@
             height: 8px;
         }
     </style>
-    <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;">
+    <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;background:#f8f9fa!important">
         <div class="container">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+                    aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item "><a href="{{ route('product') }}">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+                </ol>
+            </nav>
             <div class="card mt-4">
                 <div class="row">
                     <div class="col-md-8 cart">

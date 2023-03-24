@@ -52,13 +52,16 @@
 
     <div class="container">
         <main>
-            
-              
+
+
             <div class="py-5 text-center">
-                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+                    aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#">Home</a></li>
-                      <li class="breadcrumb-item active" aria-current="page">Library</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a></li>
+                        <li class="breadcrumb-item "><a href="{{ route('product') }}">Sản phẩm</a></li>
+                        <li class="breadcrumb-item "><a href="{{ route('cart') }}">Giỏ hàng</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
                     </ol>
                 </nav>
                 <h2>THANH TOÁN</h2>
@@ -105,8 +108,7 @@
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Địa chỉ thanh toán</h4>
-                    <form class="needs-validation" novalidate
-                        method="POST" action="{{ route('checkout.submit') }}">
+                    <form class="needs-validation" novalidate method="POST" action="{{ route('checkout.submit') }}">
                         <input hidden id="promo" value="0">
                         <div class="row g-3">
                             {{-- Name --}}
@@ -115,7 +117,7 @@
                                     tên</label>
                                 <input type="text" class="form-control required" data-name="Họ tên"
                                     id="customer_name" name="customer_name" placeholder="VD: Quach Vi Tuan"
-                                    value="@if($customer_info){{$customer_info->name}}@endif" 
+                                    value="@if($customer_info){{$customer_info->name}} @endif"
                                     required>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập họ tên.
@@ -126,8 +128,8 @@
                                 <label for="lastName" class="form-label required"><i class="fa fa-phone"></i> Số điện
                                     thoại</label>
                                 <input type="text" class="form-control required" id="customer_phone"
-                                    name="customer_phone" placeholder="0903123456" 
-                                    value="@if($customer_info){{$customer_info->phone}}@endif" 
+                                    name="customer_phone" placeholder="0903123456"
+                                    value="@if($customer_info){{$customer_info->phone}}@endif"
                                     required pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
                                 <div class="invalid-feedback">
                                     Vui lòng cung cấp một số điện thoại hợp lệ.
@@ -138,8 +140,8 @@
                                 <label for="address" class="form-label required"><i class="fa fa-envelope"></i>
                                     Email</label>
                                 <input type="text" class="form-control required" id="customer_email"
-                                    name="customer_email" placeholder="you@example.com" 
-                                    value="@if($customer_info){{$customer_info->email}}@endif" 
+                                    name="customer_email" placeholder="you@example.com"
+                                    value="@if ($customer_info){{$customer_info->email}} @endif"
                                     required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                 <div class="invalid-feedback">
                                     Vui lòng cung cấp một email hợp lệ.
@@ -148,12 +150,13 @@
 
                             {{-- Address --}}
                             <div class="col-12">
-                                <label for="address" class="form-label required"><i class="fa fa-address-card-o"></i>
+                                <label for="address" class="form-label required"><i
+                                        class="fa fa-address-card-o"></i>
                                     Địa
                                     chỉ</label>
                                 <input type="text" class="form-control required" id="customer_address"
-                                    name="customer_address" placeholder="100/A" 
-                                    value="@if($customer_info){{$customer_info->address}}@endif" 
+                                    name="customer_address" placeholder="100/A"
+                                    value="@if ($customer_info) {{ $customer_info->address }} @endif"
                                     required>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập Địa chỉ.
@@ -162,11 +165,12 @@
 
                             {{-- City --}}
                             <div class="col-md-4">
-                                <label for="city" class="form-label required"><i class="fa fa-institution"></i> Chọn
+                                <label for="city" class="form-label required"><i class="fa fa-institution"></i>
+                                    Chọn
                                     tỉnh thành</label>
-                                <select class="form-select required"  id="city_cbb" name="city"
-                                        onchange="getDistrict()" required>
-                                        <option value="" selected>Chọn tỉnh</option>
+                                <select class="form-select required" id="city_cbb" name="city"
+                                    onchange="getDistrict()" required>
+                                    <option value="" selected>Chọn tỉnh</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Vui lòng chọn tỉnh thành.
@@ -176,8 +180,7 @@
                             {{-- District --}}
                             <div class="col-md-5">
                                 <label for="district" class="form-label required">Chọn quận</label>
-                                <select class="form-select required" id="district_cbb" name="district" 
-                                    required>
+                                <select class="form-select required" id="district_cbb" name="district" required>
                                     <option value="" selected>Chọn Quận</option>
                                 </select>
                                 <div class="invalid-feedback">
@@ -187,9 +190,9 @@
 
                             <div class="col-md-3">
                                 <label for="zip" class="form-label required">Zip</label>
-                                <input type="text" class="form-control" placeholder="VD: 70000"
-                                id="zipcode" name="zipcode" required
-                                value="@if($customer_info){{$customer_info->zipcode}}@endif" >
+                                <input type="text" class="form-control" placeholder="VD: 70000" id="zipcode"
+                                    name="zipcode" required
+                                    value="@if ($customer_info) {{ $customer_info->zipcode }} @endif">
                                 <div class="invalid-feedback">
                                     Vui lòng nhập mã zip.
                                 </div>
@@ -213,7 +216,7 @@
                         </div>
 
                         <div id="creditCardGroup" class="row gy-3" hidden>
-                            
+
                         </div>
 
                         <hr class="my-4">
@@ -293,16 +296,16 @@
                                     Mã bảo mật tín dụng là bắt buộc.
                                 </div>
                             </div>`
+
         function paymentShow() {
             creditCardGroup.removeAttr("hidden");
-            creditCardGroup.append(creditCardGroupHTML)           
+            creditCardGroup.append(creditCardGroupHTML)
         }
 
         function paymentClose() {
             creditCardGroup.attr("hidden", "hidden");
-            creditCardGroup.html('')  
+            creditCardGroup.html('')
         }
-
 
         $(document).ready(function() {
             // Get the input field element
@@ -316,14 +319,12 @@
                 });
             });
 
-
-
             let cityHTML = ""
             citysList.forEach(item => {
-                if(customerInfo && customerInfo.city_id == item.id){
+                if (customerInfo && customerInfo.city_id == item.id) {
                     cityHTML += `<option value="` + item.id + `" selected>` + item.name + `</option>`
                     getDistrict(item.id)
-                }else{
+                } else {
                     cityHTML += `<option value="` + item.id + `">` + item.name + `</option>`
                 }
             });
@@ -335,25 +336,26 @@
             let districtHTML = ""
             districtsList.forEach(item => {
                 if (item.city_id == cityValue) {
-                    if(customerInfo && customerInfo.district_id == item.id){
+                    if (customerInfo && customerInfo.district_id == item.id) {
                         districtHTML += `<option value="` + item.id + `" selected>` + item.name + `</option>`
-                    }else{
+                    } else {
                         districtHTML += `<option value="` + item.id + `">` + item.name + `</option>`
                     }
                 }
             });
             $('#district_cbb').html(districtHTML);
         }
-        function checkPromoCode(){
+
+        function checkPromoCode() {
             let promoCode = $('#promoCode').val()
-            if(promoCode == "BLOOM99"){
+            if (promoCode == "BLOOM99") {
                 $('#promo').val(10)
                 $('#promoCodeTxt').html('BLOOM99')
                 $('#promoApply').html('−$10')
                 $('#promoMsg').addClass('text-success')
                 $('#promoMsg').removeClass('text-danger')
                 $('#promoMsg').html('Mã khuyến mãi đã được áp dụng.')
-            }else{
+            } else {
                 $('#promo').val(0)
                 $('#promoCodeTxt').html('')
                 $('#promoApply').html('-$0')
