@@ -73,13 +73,21 @@ function getAllProduct()
 }
 //Get by id
 function getCustomerById($id){
-    return  Customer::where('customer_id', $id)->first();
+    $res = Customer::leftJoin('vip_member', 'vip_member.vip_id', '=', 'customer.vip_id')
+                    ->where('customer_id', $id)
+                    ->select('*',
+                    'customer.name AS name',
+                    'vip_member.name AS vip_name')
+                    ->first();
+
+    return $res;
 }
 function getBestChoiceProduct($limit)
 {
     $res = Product::with('category')->with('product_image')
         ->limit($limit)
         ->get();
+
     return $res;
 }
 function getProductList($inputs, $pagination = null)

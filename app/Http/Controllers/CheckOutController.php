@@ -21,9 +21,13 @@ class CheckOutController extends Controller
         }
         $cart = Session::get('cart', []);
         $cartCounter = cartCounter();
-        $totalMoney = cartTotalMoney();
         $citys_list  = getAllCity();
         $districts_list = getAllDistrict();
+        $totalMoney = cartTotalMoney();
+        if(isset($customer_info) && isset($customer_info->vip_id)){
+            //tính tiền giảm giá theo hạng Khách Hàng
+            $totalMoney = (int) $totalMoney * ((100 - $customer_info->offer)/100);
+        }
         $dataView = [
             'cart' => $cart,
             'cartCounter' => $cartCounter,
@@ -37,17 +41,15 @@ class CheckOutController extends Controller
     public function checkout_submit(Request $request){
         $input = $request->all();
         $cart = Session::get('cart', []);
-        $totalMoney = cartTotalMoney();
-        $input['customer_id'] = 11;
-        $input['customer_address'] = $input['customer_address'].'-'.$input['district_text'].'-'.$input['city_text'];
+        $input['customer_address'] = $input['customer_address'].', '.$input['district_text'].', '.$input['city_text'];
         $input['date'] = Carbon::now()->format('Y-m-d');
         $input['status_id'] = 1;
-        $input['total_money'] = $totalMoney;
+
         //Start create
         DB::beginTransaction();
         try {
             $order = Order::create($input);
-            $order = $order->fresh(); // Fresh product table in Db
+            $order = $order->fresh(); 
             $order_id = $order->order_id;
             foreach($cart as $key => $item){
                 $item['order_id'] = $order_id;

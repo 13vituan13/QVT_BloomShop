@@ -85,6 +85,19 @@
                                 </li>
                             @endforeach
                         @endif
+                        @if($customer_info && $customer_info->vip_id)
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0" style="color:{{$customer_info->vip_color}}">Khách Hàng</h6>
+                                <small style="color:{{$customer_info->vip_color}}">
+                                    {{ $customer_info->vip_name }}
+                                </small>
+                            </div>
+                            <span style="color:{{$customer_info->vip_color}}">
+                                {{$customer_info->offer}}%
+                            </span>
+                        </li>
+                        @endif
                         <li class="list-group-item d-flex justify-content-between bg-light">
                             <div class="text-success">
                                 <h6 class="my-0">Khuyến mãi</h6>
@@ -94,7 +107,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Tổng tiền (USD)</span>
-                            <strong>${{ $totalMoney }}</strong>
+                            <strong id="totalMoney__text">${{ $totalMoney }}</strong>
                         </li>
                     </ul>
 
@@ -109,15 +122,15 @@
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Địa chỉ thanh toán</h4>
                     <form class="needs-validation" novalidate method="POST" action="{{ route('checkout.submit') }}">
-                        <input hidden id="promo" value="0">
+                        <input hidden id="customer_id" name="customer_id" 
+                        value="@if($customer_info){{$customer_info->customer_id}}@endif">
                         <div class="row g-3">
                             {{-- Name --}}
                             <div class="col-sm-6">
-                                <label for="firstName" class="form-label required"><i class="fa fa-user"></i> Họ và
-                                    tên</label>
+                                <label for="firstName" class="form-label required"><i class="fa fa-user"></i> Họ và tên</label>
                                 <input type="text" class="form-control required" data-name="Họ tên"
                                     id="customer_name" name="customer_name" placeholder="VD: Quach Vi Tuan"
-                                    value="@if($customer_info){{$customer_info->name}} @endif"
+                                    value="@if($customer_info){{$customer_info->name}}@endif"
                                     required>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập họ tên.
@@ -141,7 +154,7 @@
                                     Email</label>
                                 <input type="text" class="form-control required" id="customer_email"
                                     name="customer_email" placeholder="you@example.com"
-                                    value="@if ($customer_info){{$customer_info->email}} @endif"
+                                    value="@if($customer_info){{$customer_info->email}}@endif"
                                     required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                 <div class="invalid-feedback">
                                     Vui lòng cung cấp một email hợp lệ.
@@ -247,6 +260,8 @@
     <script src="{{ asset('js/user/checkout/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/user/checkout/form-validation.js') }}"></script>
     <script>
+        const totalMoney = @json($totalMoney);
+        var totalMoneyLast = totalMoney;
         const customerInfo = {!! isset($customer_info) ? json_encode($customer_info) : 'null' !!};
         const citysList = @json($citys_list);
         const districtsList = @json($districts_list);
@@ -345,20 +360,23 @@
             });
             $('#district_cbb').html(districtHTML);
         }
-
+        
         function checkPromoCode() {
             let promoCode = $('#promoCode').val()
             if (promoCode == "BLOOM99") {
-                $('#promo').val(10)
+                totalMoneyLast = totalMoney - 10
+                $('#totalMoney__text').html('$'+totalMoneyLast)
                 $('#promoCodeTxt').html('BLOOM99')
                 $('#promoApply').html('−$10')
                 $('#promoMsg').addClass('text-success')
                 $('#promoMsg').removeClass('text-danger')
                 $('#promoMsg').html('Mã khuyến mãi đã được áp dụng.')
             } else {
-                $('#promo').val(0)
+                
+                totalMoneyLast = totalMoney
+                $('#totalMoney__text').html('$'+totalMoneyLast)
                 $('#promoCodeTxt').html('')
-                $('#promoApply').html('-$0')
+                $('#promoApply').html('−$0')
                 $('#promoMsg').addClass('text-danger')
                 $('#promoMsg').removeClass('text-success')
                 $('#promoMsg').html('Mã khuyến mãi không đúng.')

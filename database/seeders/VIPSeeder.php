@@ -9,10 +9,10 @@ class VIPSeeder extends Seeder
     public function run()
     {
         $data = [
-                    'silver' => 5,
-                    'gold' => 10,
-                    'platinum' => 20,
-                    'diamond'  => 30
+                    'Silver' => 5,
+                    'Gold' => 10,
+                    'Platinum' => 20,
+                    'Diamond'  => 30
                 ];
 
         foreach($data as $key => $value){

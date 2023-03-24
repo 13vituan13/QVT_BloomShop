@@ -16,10 +16,10 @@
           event.preventDefault();
           event.stopPropagation();
           var formData = new FormData(this)
+          formData.append("total_money", totalMoneyLast);
           formData.append("district_text", $('select[name="district"] option:selected').text());
           formData.append("city_text", $('select[name="city"] option:selected').text());
-          console.log([...formData])
-          console.log($(this).attr('action'))
+          //console.log([...formData])
           loadStart();
           $.ajax({
             url: $(this).attr('action'),
