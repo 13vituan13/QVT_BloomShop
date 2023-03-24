@@ -16,13 +16,13 @@
                         <h2>Đăng Nhập</h2>
                             <p>
                                 <label>Email<span>*</span></label>
-                                <input type="text" id="email" name="email" placeholder="Email">
+                                <input type="text" id="email_login" name="email_login" placeholder="Email">
                                 <span class="text-danger err-msg"></span>
                             </p>
                             
                             <p>
                                 <label>Password<span>*</span></label>
-                                <input type="password" id="password" name="password" placeholder="Password">
+                                <input type="password" id="password_login" name="password_login" placeholder="Password">
                                 <span class="text-danger err-msg"></span>
                             </p>
                             <p>
@@ -39,8 +39,8 @@
 </div>
 <script>
     function loginVali() {
-        let emailLogin = $('#email');
-        let passLogin = $('#password');
+        let emailLogin = $('#email_login');
+        let passLogin = $('#password_login');
         let isVali = true
 
         let errMsg = emailLogin.next();
@@ -93,8 +93,8 @@
             return
         }
         loadStart();
-        let emailLogin = $('#email').val();
-        let passLogin = $('#password').val();
+        let emailLogin = $('#email_login').val();
+        let passLogin = $('#password_login').val();
         var loginUrl = "{{ route('login.submit') }}";
         $.ajax({
             method: "POST",
@@ -119,9 +119,9 @@
             },
             error: (e) => {
                 console.log(e)
-                $('#password').css('backgroundColor', '#ffc8d2')
-                $('#password').css('borderColor', '#dc3545')
-                let errMsgPass = $('#password').next()
+                $('#password_login').css('backgroundColor', '#ffc8d2')
+                $('#password_login').css('borderColor', '#dc3545')
+                let errMsgPass = $('#password_login').next()
                 if (errMsgPass && errMsgPass.hasClass('err-msg')) {
                     errMsgPass.html('Mật khẩu không đúng.')
                 }

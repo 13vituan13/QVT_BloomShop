@@ -27,8 +27,8 @@ class UserSignUpController extends Controller
     private static $Messages = [
         'name.required' => 'Vui lòng nhập tên sản phẩm',
         'address.required' => 'Vui lòng nhập địa chỉ',
-        'district.required' => 'Vui lòng nhập quận',
-        'city.required' => 'Vui lòng nhập tỉnh thành',
+        'district_id.required' => 'Vui lòng nhập quận',
+        'city_id.required' => 'Vui lòng nhập tỉnh thành',
         'birthday.required' => 'Vui lòng nhập ngày sinh',
         'phone.required' => 'Vui lòng nhập số điện thoại',
         'email.required' => 'Vui lòng nhập email',

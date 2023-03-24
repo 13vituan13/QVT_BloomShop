@@ -79,8 +79,8 @@
                     </div>
                     {{-- City --}}
                     <div class="col-sm-3 form-group">
-                        <label for="city" class="font--bold required">Chọn tỉnh thành</label>
-                        <select onchange="getDistrict()" id="city_cbb" name="city"
+                        <label for="city_id" class="font--bold required">Chọn tỉnh thành</label>
+                        <select onchange="getDistrict()" id="city_cbb" name="city_id"
                             class="form-control browser-default custom-select required" data-name="Tỉnh Thành">
                             <option value="" selected>Chọn Tỉnh</option>
                         </select>
@@ -88,8 +88,8 @@
                     </div>
                     {{-- District --}}
                     <div class="col-sm-3 form-group">
-                        <label for="district" class="font--bold required">Chọn quận</label>
-                        <select id="district_cbb" name="district"
+                        <label for="district_id" class="font--bold required">Chọn quận</label>
+                        <select id="district_cbb" name="district_id"
                             class="form-control browser-default custom-select required" data-name="Quận Huyện">
                             <option value="" selected>Chọn Quận</option>
                         </select>
@@ -359,11 +359,12 @@
                             text: 'Tài khoản của bạn đã đăng ký thành công.',
                             confirmButtonText: 'OK',
                         }).then((result) => {
-                            window.location.href = "{{ route('home') }}"
+                            window.location.href = "{{route('home')}}"
                         });
                     }
                 },
                 error: function(e) {
+                    console.log(e)
                     loadEnd();
                     Swal.fire({
                         icon: 'error',
