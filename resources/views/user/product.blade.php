@@ -37,21 +37,21 @@
                 @foreach ($product_list as $item)
                 <div class="col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
                     <div class="product">
-                        @php
-                            $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                        @php    
+                            $image_product = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '/images/no_image.png';
                         @endphp
                         <div class="image">
-                            <img class="img-fluid animate-box" data-animate-effect="fadeIn" src="{{ asset("storage/{$path}") }}" />
+                            <img class="img-fluid animate-box" data-animate-effect="fadeIn" src="{{ asset("storage/{$image_product}") }}" />
                             <span class="sale">10%</span>
                             <div class="add_to_cart" 
                                     data-productId="{{$item->product_id}}"
                                     data-productName="{{$item->name}}"
                                     data-productPrice="{{$item->price}}"
-                                    data-productImage="{{$item->product_image[0]['image']}}"
+                                    data-productImage="{{$image_product}}"
                                     data-productCategory="{{isset($item->category['name']) ? $item->category['name'] : ''}}"
                                 >
                                 <i class="icon-shopping-cart"></i>
-                                <a target="_blank" href="{{ asset("storage/{$path}") }}" class="eye">
+                                <a target="_blank" href="{{ asset("storage/{$image_product}") }}" class="eye">
                                     <i class="icon-eye"></i>
                                 </a>
                             </div>

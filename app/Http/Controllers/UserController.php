@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function home()
@@ -41,7 +41,7 @@ class UserController extends Controller
         return view("user.contact");
     }
 
-    public function product()
+    public function product(Request $request)
     {   
         $inputs = [];
         $data = [
