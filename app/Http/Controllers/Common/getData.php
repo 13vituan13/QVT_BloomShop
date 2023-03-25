@@ -111,23 +111,23 @@ function getProductList($inputs, $pagination = null)
         ->with('product_image');
 
     if ($product_id) {
-        $query->where('products.id', '=', $product_id);
+        $query->where('product.id', '=', $product_id);
     }
 
     if ($product_name) {
-        $query->where('products.name', 'like', '%' . $product_name . '%');
+        $query->where('product.name', 'like', '%' . $product_name . '%');
     }
 
     if ($price) {
-        $query->where('products.price', '=', $price);
+        $query->where('product.price', '=', $price);
     }
 
     if ($category_id) {
-        $query->where('products.category_id', '=', $category_id);
+        $query->where('product.category_id', '=', $category_id);
     }
 
     if ($inventory_number) {
-        $query->where('products.inventory_number', '=', $inventory_number);
+        $query->where('product.inventory_number', '=', $inventory_number);
     }
 
     $res = !$pagination ? $query->get() : $query->paginate($pagination);
@@ -135,7 +135,15 @@ function getProductList($inputs, $pagination = null)
 }
 function getProductById($id)
 {
-    return Product::findOrFail($id);
+    $res = Product::with('category')
+                    ->with('status')
+                    ->with('product_image')->findOrFail($id);
+    return $res;
+}
+function getCategoryById($id)
+{
+    $res = Category::where('category_id', $id)->first();
+    return $res;
 }
 function getLastTokenById($id)
 {

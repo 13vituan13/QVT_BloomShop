@@ -25,8 +25,14 @@
                                     <div class="desc">
                                         <span class="price">${{ $item->product['price'] }}</span>
                                         <h2>{{ $item->product['name'] }}</h2>
-                                        <p>{{ $item->product['description'] }}</p>
-                                        <p><a href="single.html" class="btn btn-primary btn-outline btn-lg">Mua Ngay</a></p>
+                                        <div class="description_show">
+                                            {{-- htmlspecialchars_decode($product_detail->description) // php --}}
+                                            {!! html_entity_decode($item->product['description']) !!}
+                                        </div>
+                                        <p>
+                                            <a href="{{ route('product_detail',['id' => $item->product['product_id']])}}" 
+                                            class="btn btn-primary btn-outline btn-lg">Mua Ngay</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

@@ -354,3 +354,8 @@ form .gender_details .category {
     background: #fff;
 }
 /* end product cart */
+.description_show {
+    /* white-space: pre-wrap; */
+    word-wrap: break-word;
+  }
+  

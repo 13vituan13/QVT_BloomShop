@@ -29,7 +29,7 @@ Route::get('/about', [UserController::class, 'about'])->name('about');
 Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 Route::get('/product', [UserController::class, 'product'])->name('product');
 Route::get('/services', [UserController::class, 'services'])->name('services');
-Route::get('/product_detail', [UserController::class, 'product_detail'])->name('product_detail');
+Route::get('/product_detail/{id}', [UserController::class, 'product_detail'])->name('product_detail');
 
 // ****** CART ******
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');

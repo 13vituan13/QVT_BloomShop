@@ -70,7 +70,7 @@
             <div class="row g-5">
                 <div class="col-md-5 col-lg-4 order-md-last">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-primary">Giỏ hàng của bạn</span>
+                        <span class="text-primary">Giỏ Hàng Của Bạn</span>
                         <span class="badge bg-primary rounded-pill">{{ $cartCounter }}</span>
                     </h4>
                     <ul class="list-group mb-3">
@@ -78,7 +78,7 @@
                             @foreach ($cart as $key => $item)
                                 <li class="list-group-item d-flex justify-content-between lh-sm">
                                     <div>
-                                        <h6 class="my-0">{{ $item['quantity'].' '.$item['name'] }}</h6>
+                                        <h6 class="my-0">{{$item['name'].' x '.$item['quantity']}}</h6>
                                         <small class="text-muted">{{ $item['category_name'] }}</small>
                                     </div>
                                     <span class="text-muted">${{ ($item['quantity']*$item['price']) }}</span>
@@ -120,7 +120,7 @@
                     </form>
                 </div>
                 <div class="col-md-7 col-lg-8">
-                    <h4 class="mb-3">Địa chỉ thanh toán</h4>
+                    <h4 class="mb-3">Địa Chỉ Thanh Toán</h4>
                     <form class="needs-validation" novalidate method="POST" action="{{ route('checkout.submit') }}">
                         <input hidden id="customer_id" name="customer_id" 
                         value="@if($customer_info){{$customer_info->customer_id}}@endif">
@@ -213,7 +213,7 @@
                         </div>
                         <hr class="my-4">
 
-                        <h4 class="mb-3">Payment</h4>
+                        <h4 class="mb-3">Phương Thức Thanh Toán</h4>
                         <div class="my-3">
                             <div class="form-check">
                                 <input onclick="paymentClose()" id="cash" name="paymentMethod" type="radio"

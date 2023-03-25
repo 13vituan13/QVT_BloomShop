@@ -43,11 +43,21 @@ class UserController extends Controller
 
     public function product(Request $request)
     {   
-        $inputs = [];
+        $input = $request->all();
+        $category_id = isset($input['category_id']) ? $input['category_id'] : null;
+        $category = getCategoryById($category_id); 
         $data = [
-            'product_list' => getProductList($inputs,6),
+            'product_list' => getProductList($input,6),
+            'category'    => $category,
         ];
         return view("user.product",$data);
+    }
+
+    public function product_detail($id)
+    {   
+        $product_detail = getProductById($id);
+
+        return view("user.product_detail",['product_detail' => $product_detail]);
     }
 
     public function services()
@@ -55,9 +65,6 @@ class UserController extends Controller
         return view("user.services");
     }
     
-    public function product_detail()
-    {
-        return view("user.product_detail");
-    }
+    
 
 }

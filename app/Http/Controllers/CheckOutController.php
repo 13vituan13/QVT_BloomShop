@@ -45,6 +45,7 @@ class CheckOutController extends Controller
     public function checkout_submit(Request $request){
         $input = $request->all();
         $cart = Session::get('cart', []);
+        $input['customer_id'] = isset($input['customer_id']) ? $input['customer_id'] : 0;
         $input['customer_address'] = $input['customer_address'].', '.$input['district_text'].', '.$input['city_text'];
         $input['date'] = Carbon::now()->format('Y-m-d');
         $input['status_id'] = 1;
