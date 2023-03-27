@@ -22,8 +22,7 @@ use App\Http\Controllers\AdminLoginController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/payment', [CheckOutController::class, 'test_view'])->name('payment');
-Route::post('/payment_submit', [CheckOutController::class, 'payment'])->name('payment.submit');
+
 //______________________________ USER SITE_______________________________
 Route::get('/', [UserController::class, 'home'])->name('home');
 Route::get('/about', [UserController::class, 'about'])->name('about');
