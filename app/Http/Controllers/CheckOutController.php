@@ -14,8 +14,31 @@ use Illuminate\Support\Facades\Mail;
 
 use Exception;
 
+use Stripe\Stripe;
+use Stripe\Charge;
 class CheckOutController extends Controller
-{
+{   
+    public function test_view(Request $request)
+    {
+        return view('user.payment');
+    }
+    public function payment(Request $request)
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $amount = 1000; // Số tiền thanh toán, đơn vị là cents
+
+        $charge = Charge::create([
+            'amount' => $amount,
+            'currency' => 'usd',
+            'description' => 'Test Payment',
+            'source' => $request->stripeToken,
+        ]);
+
+        return 'success';
+    }
+
+
     public function checkout()
     {   
         if(Session::has('customer')){
