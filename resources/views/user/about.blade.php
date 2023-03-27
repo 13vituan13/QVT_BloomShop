@@ -61,8 +61,8 @@
             </div>
             <div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
                 <div class="fh5co-staff">
-                    <img style="height: 170px;" src="{{ asset('/images/admin/avt.png') }}" alt="Free HTML5 Templates by gettemplates.co">
-                    <h3>Hush Raven</h3>
+                    <img style="height: 170px;" src="{{ asset('/images/admin/avt2.png') }}" alt="Free HTML5 Templates by gettemplates.co">
+                    <h3>Mr. David Beckham</h3>
                     <strong class="role">Đồng Sáng Lập</strong>
                     <p>Đây là một trong những người đồng sáng lập của shop bán hoa của chúng tôi, là một nhà thiết kế hoa tài ba với sự đam mê và tâm huyết dành cho ngành hoa. Với kinh nghiệm và tầm nhìn sáng tạo của mình, anh ấy đã đóng góp không nhỏ cho sự phát triển của shop của chúng tôi.</p>
                     <ul class="fh5co-social-icons">

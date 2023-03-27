@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Status;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\PersonalAccessToken;
 use Illuminate\Support\Facades\Session;
 
@@ -71,12 +72,30 @@ function getAllProduct()
     $res = Product::all();
     return $res;
 }
+//Get by id
+function getCustomerById($id){
+    $res = Customer::leftJoin('vip_member', 'vip_member.vip_id', '=', 'customer.vip_id')
+                    ->where('customer_id', $id)
+                    ->select('*',
+                    'customer.name AS name',
+                    'vip_member.name AS vip_name')
+                    ->first();
 
+    return $res;
+}
+function getOrderById($id){
+    $res = Order::with(['order_detail', 'order_detail.product'])
+    ->where('order_id', $id)
+    ->first();
+
+    return $res;
+}
 function getBestChoiceProduct($limit)
 {
     $res = Product::with('category')->with('product_image')
         ->limit($limit)
         ->get();
+
     return $res;
 }
 function getProductList($inputs, $pagination = null)
@@ -92,23 +111,23 @@ function getProductList($inputs, $pagination = null)
         ->with('product_image');
 
     if ($product_id) {
-        $query->where('products.id', '=', $product_id);
+        $query->where('product.id', '=', $product_id);
     }
 
     if ($product_name) {
-        $query->where('products.name', 'like', '%' . $product_name . '%');
+        $query->where('product.name', 'like', '%' . $product_name . '%');
     }
 
     if ($price) {
-        $query->where('products.price', '=', $price);
+        $query->where('product.price', '=', $price);
     }
 
     if ($category_id) {
-        $query->where('products.category_id', '=', $category_id);
+        $query->where('product.category_id', '=', $category_id);
     }
 
     if ($inventory_number) {
-        $query->where('products.inventory_number', '=', $inventory_number);
+        $query->where('product.inventory_number', '=', $inventory_number);
     }
 
     $res = !$pagination ? $query->get() : $query->paginate($pagination);
@@ -116,7 +135,15 @@ function getProductList($inputs, $pagination = null)
 }
 function getProductById($id)
 {
-    return Product::findOrFail($id);
+    $res = Product::with('category')
+                    ->with('status')
+                    ->with('product_image')->findOrFail($id);
+    return $res;
+}
+function getCategoryById($id)
+{
+    $res = Category::where('category_id', $id)->first();
+    return $res;
 }
 function getLastTokenById($id)
 {

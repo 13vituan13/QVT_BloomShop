@@ -41,7 +41,7 @@
         <div class="row copyright">
             <div class="col-md-12 text-center">
                 <p>
-                    <small class="block">&copy; 2022 BloomShop. All Rights Reserved.</small> 
+                    <small class="block">&copy; 2022 BloomShop. Đã đăng ký Bản quyền.</small> 
                     <small class="block">Designed by <a href="#" target="_blank">Q.V.T</a> Demo Images: <a href="#" target="_blank">Bloom</a> &amp; <a href="" target="_blank">Shop</a></small>
                 </p>
             </div>

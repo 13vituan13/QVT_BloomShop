@@ -1199,8 +1199,8 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 #fh5co-offcanvas {
-  position: absolute;
-  z-index: 1901;
+  position: fixed;
+  z-index: 99991;
   width: 270px;
   background: black;
   top: 0;

@@ -11,68 +11,6 @@
             border-bottom: 1px solid lightgray;
             margin-bottom: 20px;
         }
-
-        .product {
-            margin-bottom: 2em;
-        }
-
-        .product .image {
-            position: relative;
-        }
-
-        .product .add_to_cart {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            font-size: 2em;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            opacity: 0;
-
-        }
-
-        .product .add_to_cart:hover {
-
-            opacity: 1;
-        }
-
-        .product .add_to_cart:active {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .product .add_to_cart .icon-shopping-cart {
-            padding: 9px 10px;
-            color: #fff;
-            background: #d1c286;
-            font-size: 16px;
-        }
-
-        .product .add_to_cart .icon-shopping-cart:hover,
-        .product .add_to_cart .icon-shopping-cart:focus {
-            color: #d1c286;
-            background: #fff;
-        }
-
-        .product .add_to_cart .eye {
-            padding: 4px 10px;
-            color: #fff;
-            background: #d1c286;
-            font-size: 16px;
-            margin-left: 10px;
-        }
-
-        .product .add_to_cart .eye:hover,
-        .product .add_to_cart .eye:focus {
-            color: #d1c286;
-            background: #fff;
-        }
     </style>
     <aside id="fh5co-hero" style="height: auto;">
         <div class="flexslider " style="height: auto;">
@@ -87,8 +25,14 @@
                                     <div class="desc">
                                         <span class="price">${{ $item->product['price'] }}</span>
                                         <h2>{{ $item->product['name'] }}</h2>
-                                        <p>{{ $item->product['description'] }}</p>
-                                        <p><a href="single.html" class="btn btn-primary btn-outline btn-lg">Mua Ngay</a></p>
+                                        <div class="description_show">
+                                            {{-- htmlspecialchars_decode($product_detail->description) // php --}}
+                                            {!! html_entity_decode($item->product['description']) !!}
+                                        </div>
+                                        <p>
+                                            <a href="{{ route('product_detail',['id' => $item->product['product_id']])}}" 
+                                            class="btn btn-primary btn-outline btn-lg">Mua Ngay</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -161,13 +105,13 @@
             <div class="row">
                 @if (count($best_choice) > 0)
                     @foreach ($best_choice as $item)
-                        <div class="col-sm-4 text-center animate-box fadeInUp animated-fast">
+                        <div class="col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
                             <div class="product">
                                 @php
                                     $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
                                 @endphp
                                 <div class="image">
-                                    <img class="img-fluid" src="{{ asset("storage/{$path}") }}" />
+                                    <img class="img-fluid animate-box" data-animate-effect="fadeIn" src="{{ asset("storage/{$path}") }}" />
                                     <span class="sale">10%</span>
                                     <div class="add_to_cart" 
                                             data-productId="{{$item->product_id}}"
@@ -309,7 +253,4 @@
             </div>
         </div>
     </div>
-
-
-
 @endsection

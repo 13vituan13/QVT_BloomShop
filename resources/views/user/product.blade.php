@@ -23,35 +23,45 @@
             </div>
         </div>
 </header>
-<div id="fh5co-product">
-    <div class="container">
+<div id="container_product" style="padding: 7em 0;clear: both;">
+    <div class="container container_product">
         <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <span>Cool Stuff</span>
-                <h2>Products.</h2>
-                <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+                <h2>SẢN PHẨM {{isset($category->name) ? $category->name : ''}}</h2>
+                <p>Hoa hồng Ecuador – Vẻ Đẹp Kiêu Hãnh Từ Bên Kia Địa Cầu<br>
+                        Hoa hồng Ecuador được ví như nàng thơ dịu dàng, quyến rũ trước một rừng hoa bạt ngàn màu sắc. Vẻ đẹp
+                        của hồng Ecuador thật khó để diễn tả bằng lời, và người tặng nó cũng mang nhiều nỗi tâm tư tình cảm
+                        giấu kín.
+                </p>
             </div>
         </div>
         <div class="row">
             @if(count($product_list) > 0)
                 @foreach ($product_list as $item)
-                <div class="col-md-4 text-center animate-box">
+                <div class="col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
                     <div class="product">
-                        @php
-                            $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                        @php    
+                            $image_product = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '/images/no_image.png';
                         @endphp
-                        <div class="product-grid" style="background-image:url({{ asset("storage/{$path}") }}">
+                        <div class="image">
+                            <img class="img-fluid animate-box" data-animate-effect="fadeIn" src="{{ asset("storage/{$image_product}") }}" />
                             <span class="sale">10%</span>
-                            <div class="inner">
-                                <p>
-                                    <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                    <a target="_blank" href="{{ asset("storage/{$path}") }}" class="icon"><i class="icon-eye"></i></a>
-                                </p>
+                            <div class="add_to_cart" 
+                                    data-productId="{{$item->product_id}}"
+                                    data-productName="{{$item->name}}"
+                                    data-productPrice="{{$item->price}}"
+                                    data-productImage="{{$image_product}}"
+                                    data-productCategory="{{isset($item->category['name']) ? $item->category['name'] : ''}}"
+                                >
+                                <i class="icon-shopping-cart"></i>
+                                <a target="_blank" href="{{ asset("storage/{$image_product}") }}" class="eye">
+                                    <i class="icon-eye"></i>
+                                </a>
                             </div>
                         </div>
-                        <div class="desc">
-                            <h3><a href="single.html">{{ $item->name }}</a></h3>
-                            <span class="price">${{$item->price}}</span>
+                        <div class="desc mt-4">
+                            <h3><a href="{{ route('product_detail',['id' => $item->product_id])}}">{{ $item->name }}</a></h3>
+                            <span class="price">${{ $item->price }}</span>
                         </div>
                     </div>
                 </div>
