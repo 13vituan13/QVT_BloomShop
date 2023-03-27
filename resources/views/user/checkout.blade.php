@@ -58,7 +58,8 @@
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
                     aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang
+                                chủ</a></li>
                         <li class="breadcrumb-item "><a href="{{ route('product') }}">Sản phẩm</a></li>
                         <li class="breadcrumb-item "><a href="{{ route('cart') }}">Giỏ hàng</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
@@ -78,25 +79,25 @@
                             @foreach ($cart as $key => $item)
                                 <li class="list-group-item d-flex justify-content-between lh-sm">
                                     <div>
-                                        <h6 class="my-0">{{$item['name'].' x '.$item['quantity']}}</h6>
+                                        <h6 class="my-0">{{ $item['name'] . ' x ' . $item['quantity'] }}</h6>
                                         <small class="text-muted">{{ $item['category_name'] }}</small>
                                     </div>
-                                    <span class="text-muted">${{ ($item['quantity']*$item['price']) }}</span>
+                                    <span class="text-muted">${{ $item['quantity'] * $item['price'] }}</span>
                                 </li>
                             @endforeach
                         @endif
-                        @if($customer_info && $customer_info->vip_id)
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0" style="color:{{$customer_info->vip_color}}">Khách Hàng</h6>
-                                <small style="color:{{$customer_info->vip_color}}">
-                                    {{ $customer_info->vip_name }}
-                                </small>
-                            </div>
-                            <span style="color:{{$customer_info->vip_color}}">
-                                {{$customer_info->offer}}%
-                            </span>
-                        </li>
+                        @if ($customer_info && $customer_info->vip_id)
+                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                <div>
+                                    <h6 class="my-0" style="color:{{ $customer_info->vip_color }}">Khách Hàng</h6>
+                                    <small style="color:{{ $customer_info->vip_color }}">
+                                        {{ $customer_info->vip_name }}
+                                    </small>
+                                </div>
+                                <span style="color:{{ $customer_info->vip_color }}">
+                                    {{ $customer_info->offer }}%
+                                </span>
+                            </li>
                         @endif
                         <li class="list-group-item d-flex justify-content-between bg-light">
                             <div class="text-success">
@@ -121,13 +122,15 @@
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Địa Chỉ Thanh Toán</h4>
-                    <form class="needs-validation" novalidate method="POST" action="{{ route('checkout.submit') }}">
-                        <input hidden id="customer_id" name="customer_id" 
-                        value="@if($customer_info){{$customer_info->customer_id}}@endif">
+                    <form id="payment__form" class="needs-validation" novalidate method="POST"
+                        action="{{ route('checkout.submit') }}">
+                        <input hidden id="customer_id" name="customer_id"
+                            value="@if($customer_info){{$customer_info->customer_id}}@endif">
                         <div class="row g-3">
                             {{-- Name --}}
                             <div class="col-sm-6">
-                                <label for="firstName" class="form-label required"><i class="fa fa-user"></i> Họ và tên</label>
+                                <label for="firstName" class="form-label required"><i class="fa fa-user"></i> Họ và
+                                    tên</label>
                                 <input type="text" class="form-control required" data-name="Họ tên"
                                     id="customer_name" name="customer_name" placeholder="VD: Quach Vi Tuan"
                                     value="@if($customer_info){{$customer_info->name}}@endif"
@@ -217,23 +220,21 @@
                         <div class="my-3">
                             <div class="form-check">
                                 <input onclick="paymentClose()" id="cash" name="paymentMethod" type="radio"
-                                    class="form-check-input" checked required>
+                                    class="form-check-input" checked required value="cash">
                                 <label class="form-check-label" for="credit">Thanh toán tiền mặt (khi nhận
                                     hàng).</label>
                             </div>
                             <div class="form-check">
                                 <input onclick="paymentShow()" id="creditCard" name="paymentMethod" type="radio"
-                                    class="form-check-input" required>
+                                    class="form-check-input" required value="creditCard">
                                 <label class="form-check-label" for="debit">Thanh toán bằng thẻ.</label>
                             </div>
                         </div>
-
+                        {{-- hiển thị thanh toán bằng thẻ --}}
                         <div id="creditCardGroup" class="row gy-3" hidden>
-
+                            {{-- thanh toán bằng thẻ --}}
                         </div>
-
                         <hr class="my-4">
-
                         <button class="w-100 btn btn-primary btn-lg" type="submit">THANH TOÁN</button>
                     </form>
                 </div>
@@ -254,12 +255,28 @@
     </div>
 
     <!-- jQuery -->
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/user/usersite.js') }}"></script>
     <script src="{{ asset('js/user/jquery.min.js') }}"></script>
     <script src="{{ asset('js/user/checkout/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/user/checkout/form-validation.js') }}"></script>
     <script>
+        //payment
+        var stripe = Stripe('{{ config('services.stripe.key') }}'); // Create a Stripe client.
+
+        // Create an instance of Elements.
+        var elements = stripe.elements();
+
+        // Custom styling can be passed to options when creating an Element.
+        var style = {
+            base: {
+                // Add your base input styles here. For example:
+                fontSize: '16px',
+                color: '#32325d',
+            },
+        };
+
         const totalMoney = @json($totalMoney);
         var totalMoneyLast = totalMoney;
         const customerInfo = {!! isset($customer_info) ? json_encode($customer_info) : 'null' !!};
@@ -269,52 +286,60 @@
         const creditCard = $('#creditCard');
         const creditCardGroup = $('#creditCardGroup');
         const creditCardGroupHTML = `<div class="col-md-12">
-                                <label for="fname">Thẻ được chấp nhận</label>
-                                <div class="icon-container" style="font-size: 50px;">
-                                    <i class="fa fa-cc-paypal" style="color:#141e41;"></i>
-                                    <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                    <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                    <i class="fa fa-cc-discover" style="color:orange;"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="cc-name" class="form-label required">Tên trên thẻ</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                <small class="text-muted">Tên đầy đủ hiển thị trên thẻ.</small>
-                                <div class="invalid-feedback">
-                                    Tên trên thẻ tín dụng là bắt buộc.
-                                </div>
-                            </div>
+                                        <label for="fname">Thẻ được chấp nhận</label>
+                                        <div class="icon-container" style="font-size: 50px;">
+                                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                                        </div>
+                                    </div>
 
-                            <div class="col-md-6">
-                                <label for="cc-number" class="form-label required">Số thẻ tín dụng</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Số thẻ tín dụng là bắt buộc.
-                                </div>
-                            </div>
+                                    <div class="col-md-6">
+                                        <label for="cc-number" class="form-label required">Số thẻ tín dụng</label>
+                                        <div id="card-number" class="form-control">
+                                            <!-- mã thẻ tín dụng. -->
+                                        </div>
+                                    </div>
 
-                            <div class="col-md-3">
-                                <label for="cc-expiration" class="form-label required">Hạn thẻ</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Hạn thẻ tín dụng là bắt buộc.
-                                </div>
-                            </div>
+                                    <div class="col-md-3">
+                                        <label for="cc-expiration" class="form-label required">Hạn thẻ</label>
+                                        <div id="card-expiry" class="form-control">
+                                            <!-- Hạn thẻ tín dụng. -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label for="cc-cvv" class="form-label required">CVV</label>
+                                        <div id="card-cvc" class="form-control">
+                                            <!-- Mã bảo mật tín dụng. -->
+                                        </div>
+                                    </div>
+                                    <!-- Used to display form errors. -->
+                                    <div id="card-errors" role="alert"></div>`
 
-                            <div class="col-md-3">
-                                <label for="cc-cvv" class="form-label required">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Mã bảo mật tín dụng là bắt buộc.
-                                </div>
-                            </div>`
+        // Create an instance of the card number Element.
+        var cardNumberElement = elements.create('cardNumber', {
+            style: style,
+            showIcon: true,
+            placeholder: 'Card Number'
+        });
+        // Create an instance of the CVC Element.
+        var cvcElement = elements.create('cardCvc', {
+            style: style
+        });
+        // Create an instance of the expiration date Element.
+        var expDateElement = elements.create('cardExpiry', {
+            style: style
+        });
 
         function paymentShow() {
             creditCardGroup.removeAttr("hidden");
             creditCardGroup.append(creditCardGroupHTML)
+            //create payment
+            cardNumberElement.mount('#card-number');
+            cvcElement.mount('#card-cvc');
+            expDateElement.mount('#card-expiry');
         }
 
         function paymentClose() {
@@ -360,21 +385,21 @@
             });
             $('#district_cbb').html(districtHTML);
         }
-        
+
         function checkPromoCode() {
             let promoCode = $('#promoCode').val()
             if (promoCode == "BLOOM99") {
                 totalMoneyLast = totalMoney - 10
-                $('#totalMoney__text').html('$'+totalMoneyLast)
+                $('#totalMoney__text').html('$' + totalMoneyLast)
                 $('#promoCodeTxt').html('BLOOM99')
                 $('#promoApply').html('−$10')
                 $('#promoMsg').addClass('text-success')
                 $('#promoMsg').removeClass('text-danger')
                 $('#promoMsg').html('Mã khuyến mãi đã được áp dụng.')
             } else {
-                
+
                 totalMoneyLast = totalMoney
-                $('#totalMoney__text').html('$'+totalMoneyLast)
+                $('#totalMoney__text').html('$' + totalMoneyLast)
                 $('#promoCodeTxt').html('')
                 $('#promoApply').html('−$0')
                 $('#promoMsg').addClass('text-danger')
