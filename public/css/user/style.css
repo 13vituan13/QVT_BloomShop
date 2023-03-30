@@ -28,6 +28,7 @@ body {
   -o-transition: 0.5s;
   transition: 0.5s;
 }
+
 .offcanvas #page {
   overflow: hidden;
   position: absolute;
@@ -136,7 +137,7 @@ h1, h2, h3, h4, h5, h6, figure {
   outline: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.fh5co-nav .menu-2 li button {
+.fh5co-nav .menu-2 li button:not(.btn-user) {
   margin-top: 4px;
   padding: 5px;
   background: transparent;
@@ -145,14 +146,14 @@ h1, h2, h3, h4, h5, h6, figure {
 .fh5co-nav .menu-2 li button i {
   color: rgba(0, 0, 0, 0.5);
 }
-.fh5co-nav .menu-2 li button:hover, .fh5co-nav .menu-2 li button:focus {
+.fh5co-nav .menu-2 li button:hover:not(.btn-user), .fh5co-nav .menu-2 li button:focus:not(.btn-user) {
   background: transparent !important;
 }
 .fh5co-nav .menu-2 li button:hover i, .fh5co-nav .menu-2 li button:focus i {
   color: black;
 }
 .fh5co-nav .menu-2 li.shopping-cart {
-  float: right;
+  /* float: right; */
 }
 .fh5co-nav .menu-2 li a.cart {
   color: black;
@@ -185,7 +186,7 @@ h1, h2, h3, h4, h5, h6, figure {
   display: inline-block;
   font-family: "Montserrat", Arial, sans-serif;
 }
-.fh5co-nav ul li a {
+.fh5co-nav ul li a:not(.avt-link) {
   font-size: 13px;
   padding: 30px 10px;
   text-transform: uppercase;
@@ -195,7 +196,7 @@ h1, h2, h3, h4, h5, h6, figure {
   transition: 0.5s;
 }
 @media screen and (min-width:1260px) {
-  .fh5co-nav ul li a {
+  .fh5co-nav ul li a:not(.avt-link) {
     font-size: 16px;
   }
 }
@@ -801,7 +802,7 @@ h1, h2, h3, h4, h5, h6, figure {
   -o-transition: 0.3s;
   transition: 0.3s;
 }
-.product .product-grid .sale {
+.product .sale {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -825,21 +826,21 @@ h1, h2, h3, h4, h5, h6, figure {
   transition: 0.3s;
 }
 @media screen and (max-width: 768px) {
-  .product .product-grid .inner {
+  .product  .inner {
     opacity: 1;
     background: transparent;
   }
 }
-.product .product-grid .inner p {
+.product  .inner div {
   display: table-cell;
   vertical-align: middle;
 }
-.product .product-grid .inner p .icon {
+.product  .inner div .icon {
   padding: 7px 10px;
   color: #fff;
   background: #d1c286;
 }
-.product .product-grid .inner p .icon:hover, .product .product-grid .inner p .icon:focus {
+.product  .inner div .icon:hover, .product  .inner div .icon:focus {
   color: #d1c286;
   background: #fff;
 }
@@ -858,7 +859,7 @@ h1, h2, h3, h4, h5, h6, figure {
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-.product:hover .product-grid, .product:focus .product-grid {
+.product:hover .img-fluid, .product:focus .img-fluid {
   -webkit-box-shadow: 0px 10px 24px -7px rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0px 10px 24px -7px rgba(0, 0, 0, 0.35);
   -ms-box-shadow: 0px 10px 24px -7px rgba(0, 0, 0, 0.35);
@@ -1198,8 +1199,8 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 #fh5co-offcanvas {
-  position: absolute;
-  z-index: 1901;
+  position: fixed;
+  z-index: 99991;
   width: 270px;
   background: black;
   top: 0;
@@ -1358,7 +1359,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 .gototop {
   position: fixed;
-  bottom: 20px;
+  bottom: 80px;
   right: 20px;
   z-index: 999;
   opacity: 0;
@@ -1596,24 +1597,26 @@ h1, h2, h3, h4, h5, h6, figure {
   background: #f0ad4e;
   color: #fff;
 }
+
 .ButtonUserGroup button {
-  cursor: pointer;
-  border: 0;
+  
   border-radius: 4px;
-  font-weight: 600;
-  margin: 0 10px;
-  width: 160px;
-  padding: 10px 0;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  font-weight: 200;
+  margin: 0px 10px;
+  width: 120px;
+  padding: 3px 0;
+  box-shadow: 0 0 20px rgb(0 0 0 / 20%);
   transition: 0.4s;
-  margin-top: 35px;
+  font-size: 16px;
 }
+
 .ButtonUserGroup__login {
   color: rgb(0, 0, 0,1);
   background-color: rgba(255, 255, 255, 1);
   border: 1px solid rgb(0, 0, 0,1)!important;
 }
 .ButtonUserGroup__regist {
+  border: 0!important;
   color: rgba(255, 255, 255, 1);
   background-color: rgba(0, 0, 0, 1);
 }
@@ -1721,8 +1724,8 @@ h1, h2, h3, h4, h5, h6, figure {
 /*# sourceMappingURL=style.css.map */
 
 .logo__image{
-    width: 200px;
-    height: 150px;
+    width: 135px;
+    height: 70px;
 }
 
 @media only screen and (max-width: 768px) { 

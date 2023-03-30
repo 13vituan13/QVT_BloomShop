@@ -7,15 +7,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Session;
 class AdminLoginController extends Controller
 {
     public function login()
     {   
+        if (Auth::guard('admin')->check()) {
+            return redirect()->intended('admin/product');
+        }
         return view("admin.login");
     }
    
-    public function postLogin(Request $request)
+    public function post_Login(Request $request)
     {   
         $rules = [
             'email' => 'required',
@@ -36,6 +39,9 @@ class AdminLoginController extends Controller
         $credentials = $request->only('email', 'password');
         // $remember = $request->has('remember'); // kiểm tra xem người dùng đã chọn "remember me" hay chưa
         if (Auth::guard('admin')->attempt($credentials)) {
+            $user = Auth::guard('admin')->user();
+            $token = $user->createToken('token')->plainTextToken;
+            Session::put('token',$token);
             return redirect()->intended('admin/product');
         }
         else {

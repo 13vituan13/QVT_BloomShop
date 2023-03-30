@@ -11,7 +11,7 @@
                     <div class="product-status-wrap">
                         <h4>Danh Sách Sản Phẩm</h4>
                         <div class="add-product">
-                            <a href="product-edit.html">Add Product</a>
+                            <a href="{{ route('admin.product_detail') }}">Thêm mới</a>
                         </div>
                         <table>
                             <thead>
@@ -28,18 +28,10 @@
                                     @foreach ($product_list as $item)
                                         <tr>
                                             <td>
-                                                {{-- @php
-                                                    // $img = isset($item->product_image) ? $item->product_image[0]['image'] : '';
-                                                    // echo $item->product_image;
-                                                    $img = $item->product_image[0]['image'];
-                                                @endphp --}}
-                                                {{-- @if(count($item->product_image) > 0)
-                                                    @foreach ($item->product_image as $v)
-                                                    {{ $v->image }}
-                                                    @endforeach
-                                                @endif --}}
-                                                
-                                                {{-- <img src="{{ asset("images/products/1/{$item->product_image[0]['image']}") }}" alt="" /> --}}
+                                                @php
+                                                    $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                                                @endphp
+                                                <img src="{{ asset("storage/{$path}") }}" alt="" />
                                             </td>
                                             <td>{{ $item->name }}</td>
                                             <td>
@@ -50,10 +42,10 @@
                                                 @endif
                                             </td>
                                             <td>{{ isset($item->category) ? $item->category['name'] : ''}}</td>
-                                            <td>{{ $item->Inventory_number }}</td>
+                                            <td>{{ $item->inventory_number }}</td>
                                             <td>{{ "$$item->price" }}</td>
                                             <td>
-                                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed" onclick="goToPage('{{ route('admin.product_detail',['id' => $item->product_id]) }}')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                                 <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             </td>
                                         </tr>
@@ -62,19 +54,21 @@
                             </tbody>
                         </table>
                         <div class="custom-pagination">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
+                            {{ $product_list->links('admin.partial.pagination') }}
                         </div>
+                        
+                            
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
+    <script>
+        function goToPage(url){
+            window.location.href = url
+        }
+    </script>
 
 @endsection

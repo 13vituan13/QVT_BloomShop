@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use App\Models\Product;
 use App\Models\ProductImage;
 
 class ProductImageSeeder extends Seeder
@@ -14,7 +12,7 @@ class ProductImageSeeder extends Seeder
         for ($i = 1; $i < 10; $i++) {
             ProductImage::insert([
                 'product_id' => $i,
-                'image' => 'product.png',
+                'image' => "images/products/$i/product.png",
             ]);
         }
     }

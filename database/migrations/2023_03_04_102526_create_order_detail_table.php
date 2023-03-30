@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('order_detail', function (Blueprint $table) {
             $table->integer('order_id')->unsigned();
             $table->integer('product_id')->unsigned();
+            $table->integer('quantity');
+            $table->integer('price');
             $table->primary(['order_id', 'product_id']);
             $table->timestamps();
         });

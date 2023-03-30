@@ -15,6 +15,14 @@ return new class extends Migration
             $table->increments('order_id');
             $table->integer('customer_id')->unsigned();
             $table->date('date');
+            $table->string('customer_name');
+            $table->string('customer_email');
+            $table->string('zipcode');
+            $table->string('customer_address');
+            $table->string('customer_phone');
+            $table->integer('status_id');
+            $table->integer('total_money');
+            $table->integer('flg_del')->nullable();
             $table->timestamps();
         });
         

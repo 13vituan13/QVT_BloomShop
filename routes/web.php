@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\UserController AS USER;
-use App\Http\Controllers\UserLoginController AS USER_LOGIN;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\UserSignUpController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckOutController;
 
-use App\Http\Controllers\AdminController AS ADMIN;
-use App\Http\Controllers\AdminLoginController AS ADMIN_LOGIN;
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,24 +23,54 @@ use App\Http\Controllers\AdminLoginController AS ADMIN_LOGIN;
 |
 */
 
-Route::get('/', [USER::class, 'home'])->name('home');
-Route::get('/about', [USER::class, 'about'])->name('about');
-Route::get('/contact', [USER::class, 'contact'])->name('contact');
-Route::get('/product', [USER::class, 'product'])->name('product');
-Route::get('/services', [USER::class, 'services'])->name('services');
-Route::get('/product_detail', [USER::class, 'product_detail'])->name('product_detail');
+//______________________________ USER SITE_______________________________
+Route::get('/', [UserController::class, 'home'])->name('home');
+Route::get('/about', [UserController::class, 'about'])->name('about');
+Route::get('/contact', [UserController::class, 'contact'])->name('contact');
+Route::get('/product', [UserController::class, 'product'])->name('product');
+Route::get('/services', [UserController::class, 'services'])->name('services');
+Route::get('/product_detail/{id}', [UserController::class, 'product_detail'])->name('product_detail');
 
+// ****** CART ******
+Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::post('/cart_store', [CartController::class, 'store'])->name('cart.store');
+Route::post('/cart_update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart_remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/checkout', [CheckOutController::class, 'checkout'])->name('checkout');
+Route::post('/checkout_submit', [CheckOutController::class, 'checkout_submit'])->name('checkout.submit');
 
+// ****** LOGIN ******
+Route::get('/login', [UserLoginController::class, 'login'])->name('login');
+Route::post('login_submit', [UserLoginController::class, 'post_Login'])->name('login.submit');
+Route::get('/logout', [UserLoginController::class, 'logout'])->name('logout');
+
+// ****** SIGNUP ******
+Route::get('/sign_up', [UserSignUpController::class, 'sign_up'])->name('sign_up');
+Route::post('/sign_up_submit', [UserSignUpController::class, 'sign_up_submit'])->name('sign_up.submit');
+Route::post('/check_email_exist', [UserSignUpController::class, 'check_email_exist'])->name('check.email');
+
+/*
+|
+|
+|-------------------------------------------------------------------------
+| 
+| 
+*/
+
+//______________________________ ADMIN SITE_______________________________
+Route::get('/test', [AdminController::class, 'test'])->name('test');
 
 Route::prefix('/admin')->group(function() {
-    Route::get('login', [ADMIN_LOGIN::class, 'login'])->name('admin.login');
-    Route::get('logout', [ADMIN_LOGIN::class, 'logout'])->name('admin.logout');
-
-    Route::post('login_submit', [ADMIN_LOGIN::class, 'postLogin'])->name('admin.login.submit');
+    // ****** LOGIN ******
+    Route::get('login', [AdminLoginController::class, 'login'])->name('admin.login');
+    Route::post('login_submit', [AdminLoginController::class, 'post_Login'])->name('admin.login.submit');
+    Route::get('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
 Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
-    Route::get('product', [ADMIN::class, 'product'])->name('admin.product');
+    // ****** PRODUCT ******
+    Route::get('product', [AdminController::class, 'product'])->name('admin.product');
+    Route::get('product_detail/{id?}', [AdminController::class, 'product_detail'])->name('admin.product_detail');
 });
 
 

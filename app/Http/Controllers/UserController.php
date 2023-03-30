@@ -1,14 +1,27 @@
 <?php
 namespace App\Http\Controllers;
-
-class UserController extends StatusController
+use Illuminate\Http\Request;
+class UserController extends Controller
 {
     public function home()
     {   
+        $banner = getAllBanner();
+        $product_banner = getBestChoiceProduct(count(getAllBanner()));
+        $best_choice = getBestChoiceProduct(9);
+        foreach($banner as $key => $value){
+            foreach($product_banner as $k => $v){
+                if($key == $k){
+                    $value['product'] = $v;
+                }
+            }
+        }
         
         $data = [
-            'banners' => getAllBanner(),
-            'best_choice' => getBestChoiceProduct(),
+            'banners' => $banner,
+            'best_choice' => $best_choice,
+            'count_product' => count(getAllProduct()),
+            'count_client' => count(getAllCustomer()),
+            'cartCounter'  => cartCounter()
         ];
         
         return view("user.home",$data);
@@ -18,15 +31,33 @@ class UserController extends StatusController
     {
         return view("user.about");
     }
+    public function cart()
+    {
+        return view("user.cart");
+    }
 
     public function contact()
     {
         return view("user.contact");
     }
 
-    public function product()
-    {
-        return view("user.product");
+    public function product(Request $request)
+    {   
+        $input = $request->all();
+        $category_id = isset($input['category_id']) ? $input['category_id'] : null;
+        $category = getCategoryById($category_id); 
+        $data = [
+            'product_list' => getProductList($input,6),
+            'category'    => $category,
+        ];
+        return view("user.product",$data);
+    }
+
+    public function product_detail($id)
+    {   
+        $product_detail = getProductById($id);
+
+        return view("user.product_detail",['product_detail' => $product_detail]);
     }
 
     public function services()
@@ -34,9 +65,6 @@ class UserController extends StatusController
         return view("user.services");
     }
     
-    public function product_detail()
-    {
-        return view("user.product_detail");
-    }
+    
 
 }
