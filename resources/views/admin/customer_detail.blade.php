@@ -97,13 +97,12 @@
                                     <li class="active"><a href="#description"><i class="icon nalika-edit"
                                                 aria-hidden="true"></i>
                                             Sản Phẩm</a></li>
-                                   
                                     <li><a href="#INFORMATION"><i class="icon nalika-chat" aria-hidden="true"></i> Mô Tả</a>
                                     </li>
                                 </ul>
 
                                 <div id="btnSubmit" class="text-center custom-pro-edt-ds">
-                                    @if (isset($products->product_id))
+                                    @if (isset($customer->customer_id))
                                         <button type="button" class="btnSubmit btn btn-ctl-bt waves-effect waves-light m-r-10"
                                             onclick="update()">Cập Nhật
                                         </button>
@@ -125,14 +124,14 @@
                                                         <i class="fa-solid fa-fan" aria-hidden="true"></i>
                                                     </span>
                                                     <input id="name" type="text" class="form-control"
-                                                        placeholder="Tên Sản Phẩm"
-                                                        value="{{ isset($products) ? $products->name : '' }}">
+                                                        placeholder="Tên Khách Hàng"
+                                                        value="{{ isset($customer) ? $customer->name : '' }}">
                                         
                                                 </div>
                                                 <p class="text_error__name"></p>
                                                 <select id="category_id" name="select"
                                                     class="form-control pro-edt-select form-control-primary mg-b-pro-edt">
-                                                    <option value="">Chọn Loại Sản Phẩm</option>
+                                                    <option value="">Chọn Loại Khách Hàng</option>
                                                     @if (count($category_list) > 0)
                                                         @foreach ($category_list as $category)
                                                             <option value="{{ $category->category_id }}"

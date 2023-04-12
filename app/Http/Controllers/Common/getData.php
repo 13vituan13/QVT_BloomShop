@@ -98,6 +98,33 @@ function getBestChoiceProduct($limit)
 
     return $res;
 }
+function getCustomerList($inputs, $pagination = null){
+    $query = Customer::with('vip_member') // gọi hàm , district vs cái kia tương tự
+    ->with('citys');
+    $customer_id = isset($inputs['customer_id']) ? $inputs['customer_id'] : null;
+    $customer_name = isset($inputs['customer_name']) ? $inputs['customer_name'] : null;
+    $city = isset($inputs['citys']) ? $inputs['citys'] : null;
+    $phone = isset($inputs['phone']) ? $inputs['phone'] : null;
+    if ($customer_id) {
+        $query->where('customer.id', '=', $customer_id);
+    }
+
+    if ($customer_name) {
+        $query->where('customer.name', 'like', '%' . $customer_name . '%');
+    }
+
+    if ($city) {
+        $query->where('customer.citys', '=', $city);
+    }
+
+    if ($phone) {
+        $query->where('customer.phone', '=', $phone);
+    }
+
+    $res = !$pagination ? $query->get() : $query->paginate($pagination); 
+    return $res;
+   return $query;
+}
 function getProductList($inputs, $pagination = null)
 {
     $product_id = isset($inputs['product_id']) ? $inputs['product_id'] : null;

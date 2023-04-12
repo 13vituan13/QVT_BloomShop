@@ -2,7 +2,8 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\VipMember;
+use App\Models\City;
 class Customer extends Model
 {
     protected $table = 'customer';
@@ -28,4 +29,12 @@ class Customer extends Model
     protected $hidden = [
         'password',
     ];
+    public function vip_member()
+    {
+        return $this->hasOne(VipMember::class,'vip_id','vip_id'); // join 2 bảng lại với khóa là vip_id
+    }
+    public function citys()
+    {
+        return $this->hasOne(City::class,'id','city_id'); 
+    }
 }
