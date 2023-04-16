@@ -120,8 +120,8 @@
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="review-content-section">
                                                 <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa-solid fa-fan" aria-hidden="true"></i>
+                                                    <span class="input-group-addon title_input_label">
+                                                        Tên Khách Hàng
                                                     </span>
                                                     <input id="name" type="text" class="form-control"
                                                         placeholder="Tên Sản Phẩm"
@@ -147,16 +147,18 @@
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="review-content-section">
                                                 <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon"><i class="fa-solid fa-calculator"
-                                                            aria-hidden="true"></i></span>
+                                                    <span class="input-group-addon title_input_label">
+                                                        Số Điện Thoại
+                                                    </span>
                                                     <input id="phone" type="text" name="phone"
                                                         class="form-control" placeholder="Số Điện Thoại"
                                                         value="{{ isset($customers) ? $customers->phone : '' }}">
                                                 </div>
                                                 <p class="text_error__phone"></p>
                                                 <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon"><i class="fa-solid fa-dollar-sign"
-                                                            aria-hidden="true"></i></span>
+                                                    <span class="input-group-addon title_input_label">
+                                                        ZIPCODE
+                                                    </span>
                                                     <input id="zipcode" type="text" name="zipcode" class="form-control"
                                                         placeholder="Zip Code"
                                                         value="{{ isset($customers) ? $customers->zipcode : '' }}">
@@ -188,8 +190,6 @@
         @else
             let customer_id = null;
         @endif
-
-
 
         function save() {
             var formData = new FormData();

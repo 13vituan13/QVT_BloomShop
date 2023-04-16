@@ -16,23 +16,24 @@ class CustomerController extends APIStatusController
     public function __construct()
     {
         $this->PATH_Customer_IMAGE = config('path.Customer_IMAGE');
-
     }
     private static $Rules = [
         'name' => 'required|string|max:20',
-        'price' => 'required|integer',
-        'inventory_number' => 'required|integer',
-        'category_id' => 'required',
-        'status_id' => 'required',
+        'zipcode' => 'required|integer',
+        'phone' => 'required|integer',
+        'district_id' => 'required|integer',
+        'city_id' => 'required|integer',
+        'address' => 'required',
+        'email' => 'required',
     ];
     private static $Messages = [
-        'name.required' => 'Vui lòng nhập tên sản phẩm',
-        'price.required' => 'Vui lòng nhập giá sản phẩm',
-        'price.integer' => 'Giá sản phẩm phải là số nguyên',
-        'inventory_number.required' => 'Vui lòng nhập số lượng tồn kho',
-        'inventory_number.integer' => 'Số lượng tồn kho phải là số nguyên',
-        'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
-        'status_id.required' => 'Vui lòng chọn trạng thái sản phẩm',
+        'name.required' => 'Vui lòng nhập tên khách hàng',
+        'zipcode.required' => 'Vui lòng nhập zipcode',
+        'phone.required' => 'Vui lòng nhập số điện thoại',
+        'district_id.required' => 'Vui lòng chọn quận/huyện',
+        'city_id.required' => 'Vui lòng chọn thành phố',
+        'address.required' => 'Vui lòng nhập địa chỉ',
+        'email.required' => 'Vui lòng nhập địa chỉ email',
     ];
     
     public function validateInput($input)
@@ -67,37 +68,24 @@ class CustomerController extends APIStatusController
         try {
             $input['created_at'] = now();
             $input['updated_at'] = now();
-            $Customer = Customer::create($input);
-            $Customer = $Customer->fresh(); // Fresh Customer table in Db
-            $last_id = $Customer->Customer_id; //Just apply for Id = auto-incrementing
+            $customer = Customer::create($input);
+            $customer = $customer->fresh(); // Fresh Customer table in Db
+            $last_id = $customer->Customer_id; //Just apply for Id = auto-incrementing
 
             //handle image Customer
-            if ($request->hasFile('images_list')) {
-                $images_list = $request->file('images_list');
+            // if ($request->hasFile('avatar')) {
+            //     $images_list = $request->file('avatar');
                 
-                $folder_path = $this->PATH_Customer_IMAGE.$last_id;
-                Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
+            //     $folder_path = $this->PATH_Customer_IMAGE.$last_id;
+            //     Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
 
-                foreach ($images_list as $file) {
-                    $file_name = uniqid().'_'.$file->getClientOriginalName();
-                    $file_path = $folder_path.'/'.$file_name;
+            //     foreach ($images_list as $file) {
+            //         $file_name = uniqid().'_'.$file->getClientOriginalName();
+            //         $file_path = $folder_path.'/'.$file_name;
 
-                    $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
-                    
-                    //create ImageCustomer row
-                    $Customer_image = [
-                        'Customer_id' => $last_id,
-                        'image' => $file_path,
-                    ];
-
-                    CustomerImage::create($Customer_image);
-                }
-            }
-            $file_list = CustomerImage::where('Customer_id','=',$last_id)->get();
-            $result = [
-                'Customer_id' => $last_id,
-                'file_list'  => $file_list
-            ];
+            //         $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
+            //     }
+            // }
             //End create
             DB::commit();
             return $this->successResponse('Insert successfully created.',  $result);
@@ -111,7 +99,7 @@ class CustomerController extends APIStatusController
     public function update(Request $request)
     {
         $input = $request->all();
-        $Customer_id = $input['Customer_id'];
+        $customer_id = $input['customer_id'];
         $result_validator = self::validateInput($input);
 
         if (!$result_validator['status']) {
@@ -121,51 +109,18 @@ class CustomerController extends APIStatusController
         //Start create
         DB::beginTransaction();
         try {
-            $Customer = Customer::find($Customer_id);
-            $Customer->name = $input['name'];
-            $Customer->description = $input['description'];
-            $Customer->price = $input['price'];
-            $Customer->inventory_number = $input['inventory_number'];
-            $Customer->category_id = $input['category_id'];
-            $Customer->status_id = $input['status_id'];
-            $Customer->updated_at = now();
-            $Customer->save();
+            $customer = Customer::find($customer_id);
+            $customer->name = $input['name'];
+            $customer->zipcode = $input['zipcode'];
+            $customer->address = $input['address'];
+            $customer->district_id = $input['district_id'];
+            $customer->city_id = $input['city_id'];
+            $customer->phone = $input['phone'];
+            $customer->email = $input['email'];
 
-            //handle image Customer
-            $arr_remove_image = json_decode($input['arr_remove_image']);
-            if(count($arr_remove_image) > 0){
-                foreach ($arr_remove_image as $remove_item) {
-                    CustomerImage::where('image','=',$remove_item)->delete();
-                    Storage::delete('public/'.$remove_item);
-                }
-            }
-            if ($request->hasFile('images_list')) {
-                $images_list = $request->file('images_list');
+            $customer->updated_at = now();
+            $customer->save();
 
-                $folder_path = $this->PATH_Customer_IMAGE.$Customer_id;
-                Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
-
-                foreach ($images_list as $file) {
-                    $file_name = uniqid().'_'.$file->getClientOriginalName();
-                    $file_path = $folder_path.'/'.$file_name;
-
-                    $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
-                    
-                    //create ImageCustomer row
-                    $Customer_image = [
-                        'Customer_id' => $Customer_id,
-                        'image' => $file_path,
-                    ];
-
-                    CustomerImage::create($Customer_image);
-                }
-            }
-            //end handle image Customer
-            $file_list = CustomerImage::where('Customer_id','=',$Customer_id)->get();
-            $result = [
-                'Customer_id' => $Customer_id,
-                'file_list'  => $file_list
-            ];
             //End create
             DB::commit();
             return $this->successResponse('Update successfully created.',  $result);
