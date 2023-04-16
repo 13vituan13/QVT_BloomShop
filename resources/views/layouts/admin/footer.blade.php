@@ -3,7 +3,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="footer-copy-right">
-                    <p>Copyright © 2018 <a href="https://colorlib.com/wp/templates/">Colorlib</a> All rights reserved.</p>
+                    <p>
+                        <small class="block">&copy; 2022 BloomShop. Đã đăng ký Bản quyền.</small> 
+                        <small class="block">Designed by <a href="#" target="_blank">Q.V.T</a> Demo Images: <a href="#" target="_blank">Bloom</a> &amp; <a href="" target="_blank">Shop</a></small>
+                    </p>
                 </div>
             </div>
         </div>

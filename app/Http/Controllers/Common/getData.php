@@ -10,6 +10,7 @@ use App\Models\Status;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\VipMember;
 use App\Models\PersonalAccessToken;
 use Illuminate\Support\Facades\Session;
 
@@ -31,7 +32,11 @@ function cartTotalMoney(){
     }
     return $total_money;
 }
-
+function getAllVipMemBer()
+{
+    $res = VipMember::all();
+    return $res;
+}
 function getAllCity()
 {
     $res = City::all();
@@ -98,41 +103,6 @@ function getBestChoiceProduct($limit)
 
     return $res;
 }
-function getProductList($inputs, $pagination = null)
-{
-    $product_id = isset($inputs['product_id']) ? $inputs['product_id'] : null;
-    $product_name = isset($inputs['product_name']) ? $inputs['product_name'] : null;
-    $price = isset($inputs['price']) ? $inputs['price'] : null;
-    $category_id = isset($inputs['category_id']) ? $inputs['category_id'] : null;
-    $inventory_number = isset($inputs['inventory_number']) ? $inputs['inventory_number'] : null;
-
-    $query = Product::with('category')
-        ->with('status')
-        ->with('product_image');
-
-    if ($product_id) {
-        $query->where('product.id', '=', $product_id);
-    }
-
-    if ($product_name) {
-        $query->where('product.name', 'like', '%' . $product_name . '%');
-    }
-
-    if ($price) {
-        $query->where('product.price', '=', $price);
-    }
-
-    if ($category_id) {
-        $query->where('product.category_id', '=', $category_id);
-    }
-
-    if ($inventory_number) {
-        $query->where('product.inventory_number', '=', $inventory_number);
-    }
-
-    $res = !$pagination ? $query->get() : $query->paginate($pagination);
-    return $res;
-}
 function getProductById($id)
 {
     $res = Product::with('category')
@@ -169,4 +139,76 @@ function checkCustomerLogin($email, $password)
 function getCustomerLogin($email)
 {
     return Customer::where('email', $email)->first();
+}
+
+//GET LIST 
+function getProductList($inputs, $pagination = null)
+{
+    $product_id = isset($inputs['product_id']) ? $inputs['product_id'] : null;
+    $product_name = isset($inputs['product_name']) ? $inputs['product_name'] : null;
+    $price = isset($inputs['price']) ? $inputs['price'] : null;
+    $category_id = isset($inputs['category_id']) ? $inputs['category_id'] : null;
+    $inventory_number = isset($inputs['inventory_number']) ? $inputs['inventory_number'] : null;
+
+    $query = Product::with('category')
+        ->with('status')
+        ->with('product_image');
+
+    if ($product_id) {
+        $query->where('product.product_id', '=', $product_id);
+    }
+
+    if ($product_name) {
+        $query->where('product.name', 'like', '%' . $product_name . '%');
+    }
+
+    if ($price) {
+        $query->where('product.price', '=', $price);
+    }
+
+    if ($category_id) {
+        $query->where('product.category_id', '=', $category_id);
+    }
+
+    if ($inventory_number) {
+        $query->where('product.inventory_number', '=', $inventory_number);
+    }
+    $query->orderBy('product_id', 'DESC');
+    $res = !$pagination ? $query->get() : $query->paginate($pagination);
+    return $res;
+}
+function getCustomerList($inputs, $pagination = null)
+{
+    $customer_id = isset($inputs['customer_id']) ? $inputs['customer_id'] : null;
+    $name = isset($inputs['name']) ? $inputs['name'] : null;
+    $phone = isset($inputs['phone']) ? $inputs['phone'] : null;
+    $email = isset($inputs['email']) ? $inputs['email'] : null;
+    $vip_id = isset($inputs['vip_id']) ? $inputs['vip_id'] : null;
+
+    $query = Customer::with('vip_member')
+        ->with('city')
+        ->with('district');
+
+    if ($customer_id) {
+        $query->where('customer.customer_id', '=', $customer_id);
+    }
+
+    if ($name) {
+        $query->where('customer.name', 'like', '%' . $name . '%');
+    }
+
+    if ($phone) {
+        $query->where('customer.name', 'like', '%' . $phone . '%');
+    }
+
+    if ($email) {
+        $query->where('customer.name', 'like', '%' . $email . '%');
+    }
+
+    if ($vip_id) {
+        $query->where('customer.vip_id', '=', $vip_id);
+    }
+    $query->orderBy('customer_id', 'DESC');
+    $res = !$pagination ? $query->get() : $query->paginate($pagination);
+    return $res;
 }
