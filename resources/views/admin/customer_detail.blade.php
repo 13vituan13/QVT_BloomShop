@@ -140,6 +140,7 @@
                                                             </option>
                                                         @endforeach
                                                     @endif
+                                                    
                                                 </select>
                                                 <p class="text_error text_error__category_id"></p>
                                             </div>

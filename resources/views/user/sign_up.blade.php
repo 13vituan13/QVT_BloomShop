@@ -14,11 +14,11 @@
         }
 
     </style>
-    <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;background:#c3c3c3;color:#525151">
+    <div id="fh5co-services" class="fh5co-bg-section" style="padding: 3em 0;clear: both;background:#ffffff;color:#525151">
         <div class="container">
             <div class="row animate-box">
                 <div class="col-md-8 col-md-offset-2 text-center fh5co-heading" style="margin-bottom: 3em">
-                    <h1>ĐĂNG KÝ</h1>
+                    <h1 style="color:#0d6efd">ĐĂNG KÝ</h1>
                 </div>
             </div>
             <form id="signUpForm" method="POST" action="{{ route('sign_up.submit') }}">

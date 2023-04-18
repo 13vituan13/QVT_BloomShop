@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\Models\Comment;
 class UserController extends Controller
 {
     public function home()
@@ -65,6 +66,10 @@ class UserController extends Controller
         return view("user.services");
     }
     
-    
-
+    public function addComment(Request $request)
+    {   
+        $input = $request->all();
+        $comment = Comment::create($input);
+        return response()->json(['message' => 'successfully created.', 'comment' => $comment], 200);
+    }
 }
