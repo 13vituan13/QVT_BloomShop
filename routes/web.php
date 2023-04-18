@@ -49,6 +49,8 @@ Route::get('/sign_up', [UserSignUpController::class, 'sign_up'])->name('sign_up'
 Route::post('/sign_up_submit', [UserSignUpController::class, 'sign_up_submit'])->name('sign_up.submit');
 Route::post('/check_email_exist', [UserSignUpController::class, 'check_email_exist'])->name('check.email');
 
+Route::post('/add_comment', [UserController::class, 'addComment'])->name('admin.addComment');
+
 /*
 |
 |

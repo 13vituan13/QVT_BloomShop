@@ -107,7 +107,8 @@ function getProductById($id)
 {
     $res = Product::with('category')
                     ->with('status')
-                    ->with('product_image')->findOrFail($id);
+                    ->with('product_image')
+                    ->with('comment')->findOrFail($id);
     return $res;
 }
 function getCategoryById($id)
@@ -163,7 +164,17 @@ function getProductList($inputs, $pagination = null)
     }
 
     if ($price) {
-        $query->where('product.price', '=', $price);
+        if($price == "1"){
+            $query->where('product.price', '<', 200);
+        }
+
+        if($price == "2"){
+            $query->where('product.price', '>=', 200)->where('product.price', '=<', 500);
+        }
+
+        if($price == "3"){
+            $query->where('product.price', '>', 500);
+        }
     }
 
     if ($category_id) {
