@@ -337,6 +337,23 @@
             text-transform: uppercase;
             cursor: pointer;
         }
+        .star {
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star-show {
+            font-size: 1rem;
+        }
+        .star-show.selected {
+            color: orange;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: orange;
+        }
+
     </style>
     <!--Important link from https://bootsnipp.com/snippets/XqvZr-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -566,8 +583,47 @@
                 </div>
             </div>
         </div>
-    </div>
+        
+        <div class="container">
+            <h1>Bình luận</h1>
+              <input id="product_id" value="{{$product_detail->product_id}}" hidden/>
 
+              <label for="name">Tên:</label>
+              <input type="text" id="name" name="name" class="form-control"><br>
+
+              <label for="comment">Bình luận:</label><br>
+              <textarea id="content" name="content" rows="4" cols="50" class="form-control"></textarea><br>
+              
+              <label for="rating">Đánh giá:</label><br>
+              <input type="hidden" name="rating" id="rating" value="0">
+              <div class="rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+              </div>
+              <br>
+              
+              <button type="button" class="btn btn-primary" onclick="addNewComment()">Gửi bình luận</button>
+            <hr>
+            <h2>Danh sách bình luận:</h2>
+            <ul id="comments-list" class="list-unstyled">
+
+            @foreach ($product_detail->comment as $k => $item)
+                <li>
+                    <strong>{{$item['name']}}</strong> : {{$item['content']}} 
+                    <div class="rating-show">
+                        @for($i = 1; $i <= 5; $i++)
+                            <span class="star-show @if($i <= $item['rating']) selected @endif" >&#9733;</span>
+                        @endfor
+                    </div>
+                </li>
+                <hr>
+            @endforeach
+            </ul>
+          </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
@@ -664,5 +720,88 @@
                 }
             });
         });
+        $(".star").click(function() {
+        var value = $(this).data("value"); // giá trị đánh giá
+            $("#rating").val(value);
+            $(".star").removeClass("selected");
+            $(".star").each(function(index) { // duyệt qua từng ngôi sao
+                if (index <= value - 1) { // nếu giá trị của ngôi sao nhỏ hơn hoặc bằng giá trị đánh giá
+                $(this).addClass("selected"); // thêm lớp selected
+                }
+            });
+        });
+        
+
+        //comment add
+        function addNewComment() {
+            var formData = new FormData()
+            let name = $('#name').val();
+            let content = $('#content').val();
+            if(!name){
+                alert('vui lòng nhập tên.')
+                return
+            }
+            if(!content){
+                alert('vui lòng nhập bình luận.')
+                return
+            }
+            formData.append("product_id", $('#product_id').val());
+            formData.append("name", name);
+            formData.append("content", content);
+            //get Star Rating
+            var maxRating = 0;
+            $(".star.selected").each(function(index) {
+                var rating = $(this).data("value");
+                if (rating > maxRating) {
+                    maxRating = rating;
+                }
+            });
+            formData.append("rating", maxRating);
+            $("#loading").removeAttr("hidden");
+            //console.log([...formData])
+            $.ajax({
+                url: '{{ route('admin.addComment') }}',
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $("#loading").attr("hidden", true);
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'Gửi Bình Luận Thành Công',
+                            text: 'Cảm ơn bạn đã gửi phản hồi sản phẩm.',
+                            confirmButtonText: 'OK',
+                    }).then((result) => {
+                        let html = `<li>
+                                       <strong>`+response.comment.name+`</strong> : `+response.comment.content+`
+                                    </li>
+                                    <div class="rating-show ">`
+                                        for($i = 1; $i <= 5; $i++){
+                                           html += `<span class="star-show`
+                                           if($i <= parseInt(response.comment.rating))
+                                           { html += ` selected` }
+                                           html += `">&#9733;</span>`
+                                        }
+                            html +=`</div><hr>`        
+                        $('#comments-list').append(html);
+                    });
+                },
+                error: function(e) {
+                    console.log(e)
+                    $("#loading").attr("hidden", true);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gửi Bình Luận Thất Bại',
+                        text: 'vui lòng hãy thử lại!',
+                        confirmButtonText: 'OK',
+                    });
+                }
+            }); //end ajax
+
+        }
     </script>
 @endsection

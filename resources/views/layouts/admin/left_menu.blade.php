@@ -40,11 +40,10 @@
                             <span class="mini-click-non">Danh Mục</span>
                         </a>
                         <ul class="submenu-angle" aria-expanded="false">
-                            <li><a title="Inbox" href="{{ route('admin.product') }}"><span class="mini-sub-pro">Sản Phẩm</span></a>
+                            <li><a title="product" href="{{ route('admin.product') }}"><span class="mini-sub-pro">Sản Phẩm</span></a>
                             </li>
-                            <li><a title="View Mail" href="mailbox-view.html"><span class="mini-sub-pro">Loại Sản
-                                        Phẩm</span></a></li>
-                            <li><a title="Compose Mail" href="mailbox-compose.html"><span class="mini-sub-pro">Khách
+                            {{-- <li><a title="custome" href=""><span class="mini-sub-pro">Đơn Hàng</span></a></li> --}}
+                            <li><a title="customer" href="{{ route('admin.customer') }}"><span class="mini-sub-pro">Khách
                                         Hàng</span></a></li>
                         </ul>
                     </li>

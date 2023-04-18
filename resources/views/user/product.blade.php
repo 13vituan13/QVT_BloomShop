@@ -35,6 +35,42 @@
                 </p>
             </div>
         </div>
+        <form id="signUpForm" method="GET" action="{{ route('product') }}">
+        <div class="row">
+            <div class="col-5">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" >Tên sản phẩm</span>
+                    <input type="text" class="form-control" name="product_name" id="product_name" value="{{ old('product_name') }}">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="price" id="price1" value="1" 
+                    checked >
+                    <label class="form-check-label" >
+                      Dưới $200
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="price" id="price2" value="2" 
+                    >
+                    <label class="form-check-label" >
+                      $200 ~ $500
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="price" id="price4" value="3"
+                    >
+                    <label class="form-check-label" >
+                      Trên $500
+                    </label>
+                </div>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-outline-secondary">Tìm kiếm</button>
+            </div>
+        </div>
+        </form>
         <div class="row">
             @if(count($product_list) > 0)
                 @foreach ($product_list as $item)

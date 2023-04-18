@@ -358,4 +358,10 @@ form .gender_details .category {
     /* white-space: pre-wrap; */
     word-wrap: break-word;
   }
+
+.title_input_label {
+    border-right: 1px solid #1b2a47;
+    background: #fff!important;
+    color: #152036!important;
+}
   

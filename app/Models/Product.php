@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Status;
 use App\Models\Category;
 use App\Models\ProductImage;
+use App\Models\Comment;
 
 class Product extends Model
 {
@@ -35,5 +36,9 @@ class Product extends Model
     public function product_image()
     {
         return $this->hasMany(ProductImage::class,'product_id','product_id');
+    }
+    public function comment()
+    {
+        return $this->hasMany(Comment::class,'product_id','product_id');
     }
 }

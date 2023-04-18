@@ -49,13 +49,40 @@ class AdminController extends Controller
             $dataView['title'] = 'Thêm Sản Phẩm';
             $dataView['icon_title'] = 'fa-solid fa-plus';
         }
-
         return view("admin.product_detail", $dataView);
     }
-    public function test()
+    public function customer(Request $request)
     {   
-        
-        return view("admin.test");
+        $inputs = $request->all();
+        $dataView = [
+            'title' => 'Danh Sách Sản Phẩm',
+            'customer_list' => getCustomerList($inputs,5),
+            'icon_title' => 'fa-solid fa-table-list',
+        ];
+        return view("admin.customer_list",$dataView);
+
+    }
+    public function customer_detail($id = null)
+    {   
+        $dataView = [
+            'vip_member_list' => getAllVipMemBer(),
+            'citys_list' => getAllCity(),
+            'districts_list' => getAllDistrict(),
+        ];
+        if ($id) { 
+            // update
+            $dataView['title'] = 'Cập nhật khách hàng';
+            $dataView['icon_title'] = 'fa fa-pencil-square-o';
+
+            $customers = getCustomerById($id);
+            $dataView['customers'] = $customers;
+        } else { 
+            // create
+            $dataView['title'] = 'Thêm khách hàng';
+            $dataView['icon_title'] = 'fa-solid fa-plus';
+        }
+
+        return view("admin.customer_detail", $dataView);
     }
 
 }

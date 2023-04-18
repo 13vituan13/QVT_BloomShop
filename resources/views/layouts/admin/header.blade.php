@@ -22,17 +22,17 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
-                                <div class="header-top-menu tabl-d-n">
+                                <!-- <div class="header-top-menu tabl-d-n">
                                     <div class="breadcome-heading">
                                         <form role="search" class="">
                                             <input type="text" placeholder="Search..." class="form-control">
                                             <a href=""><i class="fa fa-search"></i></a>
                                         </form>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                <div class="header-right-info">
+                                <!-- <div class="header-right-info">
                                     <ul class="nav navbar-nav mai-top-nav header-right-menu">
                                         <li class="nav-item dropdown">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="icon nalika-mail nalika-chat-pro" aria-hidden="true"></i><span class="indicator-ms"></span></a>
@@ -556,7 +556,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
