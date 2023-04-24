@@ -76,6 +76,8 @@ Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
     // ****** CUSTOMER ******
     Route::get('customer', [AdminController::class, 'customer'])->name('admin.customer');
     Route::get('customer_detail/{id?}', [AdminController::class, 'customer_detail'])->name('admin.customer_detail');
+    // ****** ORDER ******
+    Route::get('order', [AdminController::class, 'order'])->name('admin.order');
 });
 
 

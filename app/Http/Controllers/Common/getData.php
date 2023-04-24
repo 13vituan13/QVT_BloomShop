@@ -223,3 +223,25 @@ function getCustomerList($inputs, $pagination = null)
     $res = !$pagination ? $query->get() : $query->paginate($pagination);
     return $res;
 }
+
+function getOrderList($inputs, $pagination = null)
+{
+
+    $res = Order::select(
+        'order.order_id',
+        'order.customer_phone as cusPhone',
+        'order.date',
+        'order.customer_name as cusName',
+        'order.total_money as total', 
+        DB::raw('GROUP_CONCAT(product.name SEPARATOR ", ") AS productName'),
+        DB::raw('SUM(order_detail.quantity) AS quantity'),
+        DB::raw('GROUP_CONCAT(order_detail.price SEPARATOR ", ") AS price'), 
+        'status_order.name as statusName')
+    ->leftjoin('status_order', 'status_order.status_id', '=', 'order.status_id')
+    ->leftjoin('order_detail', 'order_detail.order_id', '=', 'order.order_id')
+    ->leftjoin('product', 'product.product_id', '=', 'order_detail.product_id')
+    ->groupBy('order.order_id')
+    ->orderBy('order.order_id','DESC');
+    $res = !$pagination ? $res->get() : $res->paginate($pagination);
+    return $res;
+}

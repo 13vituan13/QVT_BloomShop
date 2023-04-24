@@ -15,7 +15,8 @@ use Illuminate\Http\Request;
 
 
 class AdminController extends Controller
-{
+{   
+    //Product List Page
     public function product(Request $request)
     {   
         $inputs = $request->all();
@@ -51,6 +52,7 @@ class AdminController extends Controller
         }
         return view("admin.product_detail", $dataView);
     }
+    //Customer List Page
     public function customer(Request $request)
     {   
         $inputs = $request->all();
@@ -85,4 +87,15 @@ class AdminController extends Controller
         return view("admin.customer_detail", $dataView);
     }
 
+    //Order List Page
+    public function order(Request $request)
+    {   
+        $inputs = $request->all();
+        $dataView = [
+            'title' => 'Danh Sách Đặt Hàng',
+            'order_list' => getOrderList($inputs,5),
+            'icon_title' => 'fa-solid fa-table-list',
+        ];
+        return view("admin.order_list",$dataView);
+    }
 }
