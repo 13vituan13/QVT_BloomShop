@@ -42,7 +42,7 @@
                         <ul class="submenu-angle" aria-expanded="false">
                             <li><a title="product" href="{{ route('admin.product') }}"><span class="mini-sub-pro">Sản Phẩm</span></a>
                             </li>
-                            {{-- <li><a title="custome" href=""><span class="mini-sub-pro">Đơn Hàng</span></a></li> --}}
+                            <li><a title="custome" href="{{ route('admin.order') }}"><span class="mini-sub-pro">Đơn Hàng</span></a></li>
                             <li><a title="customer" href="{{ route('admin.customer') }}"><span class="mini-sub-pro">Khách
                                         Hàng</span></a></li>
                         </ul>

@@ -80,7 +80,8 @@ class CheckOutController extends Controller
             }
             Session::forget('cart');
             $NewOrder = getOrderById($order_id);
-            Mail::to($input['customer_email'])->send(new SendMail($NewOrder));
+            // send mail 
+            // Mail::to($input['customer_email'])->send(new SendMail($NewOrder));
             DB::commit();
             return response()->json(['message' => 'Success!', 'data' => $order_id], 200);
         } catch (Exception $e) {
