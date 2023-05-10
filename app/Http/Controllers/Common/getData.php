@@ -10,6 +10,7 @@ use App\Models\Status;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\VipMember;
 use App\Models\PersonalAccessToken;
 use Illuminate\Support\Facades\Session;
@@ -93,6 +94,10 @@ function getOrderById($id){
     ->where('order_id', $id)
     ->first();
 
+    return $res;
+}
+function getOrderDetailById($id){
+    $res = OrderDetail::with('product')->where('order_id', $id)->get();
     return $res;
 }
 function getBestChoiceProduct($limit)
@@ -230,6 +235,8 @@ function getOrderList($inputs, $pagination = null)
     $res = Order::select(
         'order.order_id',
         'order.customer_phone as cusPhone',
+        'order.customer_address as cusAddress',
+        'order.customer_email as cusEmail',
         'order.date',
         'order.customer_name as cusName',
         'order.total_money as total', 

@@ -98,4 +98,13 @@ class AdminController extends Controller
         ];
         return view("admin.order_list",$dataView);
     }
+    public function orderDetailById(Request $request)
+    {   
+        $inputs = $request->all();
+        $order_id = $inputs['order_id'];
+        $result = getOrderDetailById($order_id);
+        return response()->json(['result' => $result], 200);
+    }
+
 }
+

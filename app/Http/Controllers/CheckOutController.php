@@ -20,7 +20,7 @@ class CheckOutController extends Controller
 {   
     public function checkout()
     {   
-        if(Session::has('customer')){
+         if(Session::has('customer')){
             $customer_login = Session::get('customer');
             $customer_id = $customer_login['customer_id'];
             $customer_info = getCustomerById($customer_id);
@@ -80,8 +80,8 @@ class CheckOutController extends Controller
             }
             Session::forget('cart');
             $NewOrder = getOrderById($order_id);
-            // send mail 
-            // Mail::to($input['customer_email'])->send(new SendMail($NewOrder));
+            // send mail
+            Mail::to($input['customer_email'])->send(new SendMail($NewOrder));
             DB::commit();
             return response()->json(['message' => 'Success!', 'data' => $order_id], 200);
         } catch (Exception $e) {
