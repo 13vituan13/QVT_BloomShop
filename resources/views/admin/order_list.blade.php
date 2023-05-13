@@ -32,12 +32,12 @@
                                 <th>Số Điện Thoại</th>
                                 <th>Ngày Đặt</th>
                                 <th>Email</th>
-                                <th>Địa Chỉ</th>
                                 <th>Tổng Tiền</th>
                                 <th>Trạng Thái</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th>Xuất Hóa Đơn</th>
                             </thead>
                             <tbody>
                                 @if (count($order_list) > 0)
@@ -47,7 +47,6 @@
                                             <td>{{ isset($item->cusName) ? $item->cusName : '' }}</td>
                                             <td>{{ isset($item->cusPhone) ? $item->cusPhone : '' }}</td>
                                             <td>{{ isset($item->date) ? $item->date : '' }}</td>
-                                            <td>{{ isset($item->cusEmail) ? $item->cusEmail : '' }}</td>
                                             <td>{{ isset($item->cusAddress) ? $item->cusAddress : '' }}</td>
                                             <td>${{ isset($item->total) ? $item->total : 0 }}</td>
                                             <td>
@@ -68,8 +67,16 @@
                                                     onclick="goToPage('{{ route('admin.customer_detail', ['id' => $item->order_id]) }}')">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </button>
+                                            </td>
+                                            <td>
                                                 <button data-toggle="tooltip" title="Trash" class="pd-setting-ed">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button data-toggle="tooltip" title="ExportEx" class="pd-setting-ed"
+                                                onclick="exportBill('{{ $item->order_id }}')">
+                                                    <i class="icon nalika-download"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -155,6 +162,25 @@
                 }
             }); //end ajax
         }
+        function exportBill(order_id) {
+            $.ajax({
+                url: "{{ route('admin.export_bill') }}",
+                type: 'GET',
+                data: {
+                    order_id: order_id,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response.path)
+                    // Tải xuống file Excel
+                    var link = document.createElement('a');
+                    link.href = response.path;
+                    link.download = response.path.substring(response.path.lastIndexOf('/')+1);
+                    link.click();
+                }
+            });//end ajax
+        }
+        
     </script>
 
 @endsection
