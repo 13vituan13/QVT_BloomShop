@@ -104,7 +104,7 @@ class AdminController extends Controller
     {   
         $inputs = $request->all();
         $dataView = [
-            'title' => 'Danh Sách Đặt Hàng',
+            'title' => 'Danh Sách Đơn Hàng',
             'order_list' => getOrderList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
         ];

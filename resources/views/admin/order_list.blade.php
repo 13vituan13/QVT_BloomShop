@@ -35,6 +35,9 @@
         .btn__status--w{
             width: 120px;
         }
+        button:disabled{
+            background: #3f3f3f;
+        }
     </style>
     <div class="product-status mg-b-30">
         <div class="container-fluid">
@@ -102,7 +105,8 @@
                                             </td>
                                             <td>
                                                 <button id="btnShowDetail" type="button" class="pd_btn pd-export"
-                                                    onclick="exportBill('{{ $item->order_id }}')">
+                                                    onclick="exportBill('{{ $item->order_id }}')"
+                                                    @if($item->status_id != 4) disabled @endif>
                                                     Xuất hóa đơn <i class="icon nalika-download"></i>
                                                 </button>
                                             </td>
@@ -164,11 +168,10 @@
             $("#theDetailPopupClose").click(function() {
                 $("#theDetailPopup").modal("hide");
             });
-
-            function goToPage(url) {
-                window.location.href = url
-            }
         }); //end doccument ready
+        function goToPage(url) {
+                window.location.href = url
+        }
         function showDetail(order_id) {
             $.ajax({
                 url: "{{ route('admin.get_order_detail_by_id') }}",
