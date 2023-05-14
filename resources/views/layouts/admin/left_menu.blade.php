@@ -35,15 +35,15 @@
                         </a>
                     </li>
                     @if(Auth::guard('admin')->user()->hasRole('admin'))
-                        <li>
-                            <a href="index.html">
+                        <li class="{{ Request::routeIs('admin.user') ? 'active' : '' }}">
+                            <a title="product" href="{{ route('admin.user') }}">
                                 <i class="fa-solid fa-user icon-wrap"></i>
                                 <span class="mini-click-non">Nhân Viên</span>
                             </a>
                         </li>
                     @endif
                     @php
-                    if( Request::routeIs('admin.product') || 
+                    if( Request::routeIs('admin.product') || Request::routeIs('admin.product_detail') ||
                         Request::routeIs('admin.order')   ||
                         Request::routeIs('admin.customer') ) 
                        {
@@ -56,7 +56,7 @@
                             <span class="mini-click-non">Danh Mục</span>
                         </a>
                         <ul class="submenu-angle" aria-expanded="false">
-                            <li class="{{ Request::routeIs('admin.product') ? 'activeSub' : '' }}">
+                            <li class="{{ Request::routeIs('admin.product') || Request::routeIs('admin.product_detail') ? 'activeSub' : '' }}">
                                 <a title="product" href="{{ route('admin.product') }}">
                                     <span class="mini-sub-pro">Sản Phẩm</span>
                                 </a>

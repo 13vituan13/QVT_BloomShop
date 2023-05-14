@@ -52,6 +52,18 @@ class AdminController extends Controller
         }
         return view("admin.product_detail", $dataView);
     }
+    //User List Page
+    public function user(Request $request)
+    {   
+        $inputs = $request->all();
+        $dataView = [
+            'title' => 'Danh Sách Sản Phẩm',
+            'user_list' => getUserList($inputs,10),
+            'icon_title' => 'fa-solid fa-table-list',
+        ];
+        return view("admin.user_list",$dataView);
+
+    }
     //Customer List Page
     public function customer(Request $request)
     {   

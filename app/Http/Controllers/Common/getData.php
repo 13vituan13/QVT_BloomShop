@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\VipMember;
+use App\Models\User;
 use App\Models\PersonalAccessToken;
 use Illuminate\Support\Facades\Session;
 
@@ -190,6 +191,14 @@ function getProductList($inputs, $pagination = null)
         $query->where('product.inventory_number', '=', $inventory_number);
     }
     $query->orderBy('product_id', 'DESC');
+    $res = !$pagination ? $query->get() : $query->paginate($pagination);
+    return $res;
+}
+function getUserList($inputs, $pagination = null)
+{
+    $id = isset($inputs['id']) ? $inputs['id'] : null;
+    $query = User::with('role')->where('flg_del','<>',1);
+    $query->orderBy('id', 'DESC');
     $res = !$pagination ? $query->get() : $query->paginate($pagination);
     return $res;
 }

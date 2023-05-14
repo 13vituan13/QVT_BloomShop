@@ -48,12 +48,12 @@
                         <table>
                             <thead>
                                 <th>Mã đơn hàng</th>
-                                <th>Tên Khách Hàng</th>
-                                <th>Trạng Thái</th>
-                                <th>Số Điện Thoại</th>
-                                <th>Ngày Đặt</th>
-                                <th>Email</th>
-                                <th>Tổng Tiền</th>
+                                <th>Tên khách hàng</th>
+                                <th>Trạng thái</th>
+                                <th>Số điện thoại</th>
+                                <th>Ngày đặt</th>
+                                <th>Địa chỉ</th>
+                                <th>Thành tiền</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -110,9 +110,6 @@
                                                 <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"
                                                     onclick="goToPage('{{ route('admin.customer_detail', ['id' => $item->order_id]) }}')">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </button>
-                                                <button data-toggle="tooltip" title="Trash" class="pd-setting-ed">
-                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                         </tr>
