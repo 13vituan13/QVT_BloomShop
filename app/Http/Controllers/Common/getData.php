@@ -101,6 +101,13 @@ function getOrderDetailById($id){
     $res = OrderDetail::with('product')->where('order_id', $id)->get();
     return $res;
 }
+function getUserById($id){
+    $res = User::with('role')
+                ->where('id', $id)
+                ->where('flg_del','<>',1)
+                ->get();
+    return $res;
+}
 function getBestChoiceProduct($limit)
 {
     $res = Product::with('category')->with('product_image')
@@ -198,7 +205,6 @@ function getUserList($inputs, $pagination = null)
 {
     $id = isset($inputs['id']) ? $inputs['id'] : null;
     $query = User::with('role')->where('flg_del','<>',1);
-    $query->orderBy('id', 'DESC');
     $res = !$pagination ? $query->get() : $query->paginate($pagination);
     return $res;
 }

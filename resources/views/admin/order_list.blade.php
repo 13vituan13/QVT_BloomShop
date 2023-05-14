@@ -131,7 +131,7 @@
         aria-hidden="true">
         <div class=" modal-dialog" role="document">
             <div class="set-color-change modal-popup modal-content model-w" style="width:100%!important">
-                <div class="modal-header" style="position: relative;">
+                <div class="modal-header">
                     <h5 class="modal-title font-weight-bold">Chi Tiết Đơn Hàng</h5>
                     <button type="button" class="close" id="theDetailPopupClose" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

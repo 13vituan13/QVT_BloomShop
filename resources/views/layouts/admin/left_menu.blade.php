@@ -14,8 +14,12 @@
         </div>
         <div class="nalika-profile">
             <div class="profile-dtl">
-                <a href="#"><img src="{{ asset('/images/admin/avt.png') }}" alt="" /></a>
-                <h2>Vĩ <span class="min-dtn">Tuấn</span></h2>
+                @php 
+                    $path = Auth::guard('admin')->user()->avatar;
+                @endphp
+                <a href="#">
+                    <img src="{{ asset("storage/{$path}")  }}" alt="" /></a>
+                <h2>{{ Auth::guard('admin')->user()->name }}</span></h2>
             </div>
             <div class="profile-social-dtl">
                 <ul class="dtl-social">

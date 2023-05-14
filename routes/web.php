@@ -83,6 +83,6 @@ Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
     Route::get('export_bill', [ExcelController::class, 'exportBill'])->name('admin.export_bill');
     // ****** USER ******
     Route::get('user', [AdminController::class, 'user'])->name('admin.user');
+    Route::get('get_user_by_id', [AdminController::class, 'ajaxUserById'])->name('admin.ajax_get_user_by_id');
 });
-
 

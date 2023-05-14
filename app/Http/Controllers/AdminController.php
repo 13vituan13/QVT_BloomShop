@@ -117,6 +117,13 @@ class AdminController extends Controller
         $result = getOrderDetailById($order_id);
         return response()->json(['result' => $result], 200);
     }
-
+    public function ajaxUserById(Request $request)
+    {   
+        $inputs = $request->all();
+        $id = $inputs['id'];
+        $result = getUserById($id);
+        return response()->json(['result' => $result], 200);
+    }
+    
 }
 
