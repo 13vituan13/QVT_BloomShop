@@ -23,7 +23,7 @@ class AdminController extends Controller
         $sessionLifetime = config('session.lifetime') * 60;
         $dataView = [
             'title' => 'Danh Sách Sản Phẩm',
-            'product_list' => getProductList($inputs,5),
+            'product_list' => getProductList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
         ];
         if ($request->ajax()) {
@@ -58,7 +58,7 @@ class AdminController extends Controller
         $inputs = $request->all();
         $dataView = [
             'title' => 'Danh Sách Sản Phẩm',
-            'customer_list' => getCustomerList($inputs,5),
+            'customer_list' => getCustomerList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
         ];
         return view("admin.customer_list",$dataView);
@@ -93,7 +93,7 @@ class AdminController extends Controller
         $inputs = $request->all();
         $dataView = [
             'title' => 'Danh Sách Đặt Hàng',
-            'order_list' => getOrderList($inputs,5),
+            'order_list' => getOrderList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
         ];
         return view("admin.order_list",$dataView);

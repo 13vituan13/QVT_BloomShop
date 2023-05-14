@@ -81,6 +81,7 @@ Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
     Route::get('order', [AdminController::class, 'order'])->name('admin.order');
     Route::get('get_order_detail_by_id', [AdminController::class, 'orderDetailById'])->name('admin.get_order_detail_by_id');
     Route::get('export_bill', [ExcelController::class, 'exportBill'])->name('admin.export_bill');
+    // ****** USER ******
 });
 
 

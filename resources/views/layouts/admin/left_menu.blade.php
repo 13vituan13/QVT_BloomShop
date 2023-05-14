@@ -1,3 +1,11 @@
+<style>
+    li.active{
+       background: #152036; 
+    }
+    li.activeSub{
+       background: #6e5fe9; 
+    }
+</style>
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
@@ -20,7 +28,7 @@
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
                 <ul class="metismenu" id="menu1">
-                    <li class="active">
+                    <li >
                         <a href="index.html">
                             <i class="fa-solid fa-house icon-wrap"></i>
                             <span class="mini-click-non">Trang Chủ</span>
@@ -34,20 +42,38 @@
                             </a>
                         </li>
                     @endif
-                    <li>
+                    @php
+                    if( Request::routeIs('admin.product') || 
+                        Request::routeIs('admin.order')   ||
+                        Request::routeIs('admin.customer') ) 
+                       {
+                         $flgActive = 1;
+                       }
+                    @endphp
+                    <li class="{{ isset($flgActive) && $flgActive ? 'active' : '' }}">
                         <a class="has-arrow" href="mailbox.html" aria-expanded="false">
                             <i class="fa-solid fa-list icon-wrap"></i>
                             <span class="mini-click-non">Danh Mục</span>
                         </a>
                         <ul class="submenu-angle" aria-expanded="false">
-                            <li><a title="product" href="{{ route('admin.product') }}"><span class="mini-sub-pro">Sản Phẩm</span></a>
+                            <li class="{{ Request::routeIs('admin.product') ? 'activeSub' : '' }}">
+                                <a title="product" href="{{ route('admin.product') }}">
+                                    <span class="mini-sub-pro">Sản Phẩm</span>
+                                </a>
                             </li>
-                            <li><a title="custome" href="{{ route('admin.order') }}"><span class="mini-sub-pro">Đơn Hàng</span></a></li>
-                            <li><a title="customer" href="{{ route('admin.customer') }}"><span class="mini-sub-pro">Khách
-                                        Hàng</span></a></li>
+                            <li class="{{ Request::routeIs('admin.order') ? 'activeSub' : '' }}">
+                                <a title="custome" href="{{ route('admin.order') }}">
+                                    <span class="mini-sub-pro">Đơn Hàng</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::routeIs('admin.customer') ? 'activeSub' : '' }}">
+                                <a title="customer" href="{{ route('admin.customer') }}">
+                                    <span class="mini-sub-pro">Khách Hàng</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-                    <li class="active">
+                    <li >
                         <a href="{{ route('admin.logout') }}">
                             <i class="fa-solid fa-arrow-right-from-bracket icon-wrap"></i>
                             <span class="mini-click-non">Đăng Xuất</span>

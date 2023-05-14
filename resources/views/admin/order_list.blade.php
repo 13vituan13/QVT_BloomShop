@@ -7,13 +7,33 @@
             top: 25%;
             right: 15px;
         }
-        .pd-detail {
+        .pd_btn{
             border: none;
             color: #fff;
             padding: 5px 15px;
             font-size: 15px;
-            background: #c1780a;
             border-radius: 3px;
+        }
+        .pd-status_wait {
+            background: #a5a0a0;
+        }
+        .pd-status_confirm {
+            background: #2665f5;
+        }
+        .pd-status_destroys {
+            background: #f72f2f;
+        }
+        .pd-status_complete{
+            background: #24ad43;
+        }
+        .pd-detail {
+            background: #c1780a;
+        }
+        .pd-export {
+            background: #06520f;
+        }
+        .btn__status--w{
+            width: 120px;
         }
     </style>
     <div class="product-status mg-b-30">
@@ -22,22 +42,21 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="product-status-wrap">
                         <h4>Danh Sách Đơn Hàng</h4>
-                        <div class="add-product">
+                        <div class="add-product ">
                             <a href="">Thêm mới</a>
                         </div>
                         <table>
                             <thead>
                                 <th>Mã đơn hàng</th>
                                 <th>Tên Khách Hàng</th>
+                                <th>Trạng Thái</th>
                                 <th>Số Điện Thoại</th>
                                 <th>Ngày Đặt</th>
                                 <th>Email</th>
                                 <th>Tổng Tiền</th>
-                                <th>Trạng Thái</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th>Xuất Hóa Đơn</th>
                             </thead>
                             <tbody>
                                 @if (count($order_list) > 0)
@@ -45,21 +64,46 @@
                                         <tr>
                                             <td>{{ isset($item->order_id) ? $item->order_id : '' }}</td>
                                             <td>{{ isset($item->cusName) ? $item->cusName : '' }}</td>
+                                            <td>
+                                                @php 
+                                                    switch ($item->status_id) {
+                                                        case 1:
+                                                            $status_cl = 'pd-status_wait';
+                                                            break;
+                                                        case 2:
+                                                            $status_cl = 'pd-status_confirm';
+                                                            break;
+                                                        case 3:
+                                                            $status_cl = 'pd-status_destroys';
+                                                            break;
+                                                        case 4:
+                                                            $status_cl = 'pd-status_complete';
+                                                            break;
+                                                        default:
+                                                            $status_cl = '';
+                                                            break;
+                                                    }
+                                                @endphp
+                                                @if (isset($item->statusName))
+                                                    <button class="pd_btn btn__status--w {{$status_cl}}">
+                                                        {{ $item->statusName }}
+                                                    </button>
+                                                @endif
+                                            </td>
                                             <td>{{ isset($item->cusPhone) ? $item->cusPhone : '' }}</td>
                                             <td>{{ isset($item->date) ? $item->date : '' }}</td>
                                             <td>{{ isset($item->cusAddress) ? $item->cusAddress : '' }}</td>
                                             <td>${{ isset($item->total) ? $item->total : 0 }}</td>
                                             <td>
-                                                @if (isset($item->statusName))
-                                                    <button class="pd-setting">
-                                                        {{ $item->statusName }}
-                                                    </button>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <button id="btnShowDetail" type="button" class="pd-detail"
+                                                <button id="btnShowDetail" type="button" class="pd_btn pd-detail"
                                                     onclick="showDetail('{{ $item->order_id }}')">
                                                     Chi tiết
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button id="btnShowDetail" type="button" class="pd_btn pd-export"
+                                                    onclick="exportBill('{{ $item->order_id }}')">
+                                                    Xuất hóa đơn <i class="icon nalika-download"></i>
                                                 </button>
                                             </td>
                                             <td>
@@ -67,16 +111,8 @@
                                                     onclick="goToPage('{{ route('admin.customer_detail', ['id' => $item->order_id]) }}')">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </button>
-                                            </td>
-                                            <td>
                                                 <button data-toggle="tooltip" title="Trash" class="pd-setting-ed">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button data-toggle="tooltip" title="ExportEx" class="pd-setting-ed"
-                                                onclick="exportBill('{{ $item->order_id }}')">
-                                                    <i class="icon nalika-download"></i>
                                                 </button>
                                             </td>
                                         </tr>
