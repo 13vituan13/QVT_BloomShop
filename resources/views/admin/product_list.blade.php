@@ -1,9 +1,22 @@
 @extends('layouts.admin.master')
 @section('title', 'Product')
 @section('content')
-
-
-
+<style>
+        .pd_btn{
+            border: none;
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 15px;
+            border-radius: 3px;
+        }
+        .pd-blue {
+            background: #2665f5;
+        }
+        .product-status-wrap img{
+            width: 40px;
+            height: 40px;
+        }
+</style>
     <div class="product-status mg-b-30">
         <div class="container-fluid">
             <div class="row">
@@ -29,14 +42,14 @@
                                         <tr>
                                             <td>
                                                 @php
-                                                    $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : '';
+                                                    $path = count($item->product_image) > 0 ? $item->product_image[0]['image'] : 'unknow';
                                                 @endphp
-                                                <img src="{{ asset("storage/{$path}") }}" alt="" />
+                                                <img src="{{ asset("storage/{$path}") }}" alt="{{ $path }}"/>
                                             </td>
                                             <td>{{ $item->name }}</td>
                                             <td>
                                                 @if ($item->status && $item->status['status_id'] == 1)
-                                                    <button class="pd-setting">{{ $item->status['name'] }}</button>
+                                                    <button class="pd_btn pd-blue">{{ $item->status['name'] }}</button>
                                                 @else
                                                     <button class="ds-setting">{{ $item->status['name'] }}</button>
                                                 @endif

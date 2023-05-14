@@ -1203,12 +1203,15 @@ ul.two-part-sp li{
 .mini-navbar .header-top-area{
 	left: 80px;
 }
+.modal-header{
+    position: relative!important;
+}
 .add-product a {
     float: right;
     position: absolute;
     top: 20px;
     right: 35px;
-    background: #152036;
+    background: #4c36ff;
     padding: 6px 20px;
     color: #fff;
     border-radius: 4px;

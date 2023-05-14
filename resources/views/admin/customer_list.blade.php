@@ -1,6 +1,11 @@
 @extends('layouts.admin.master')
 @section('title', 'Customer')
 @section('content')
+<style>
+    .w95{
+        width: 95px;
+    }    
+</style>
     <div class="product-status mg-b-30">
         <div class="container-fluid">
             <div class="row">
@@ -43,7 +48,7 @@
                                                                 $item->vip_member['vip_color'] : '';
                                                 @endphp
                                                     <button style="background:{{ $colorVIP }}"  
-                                                    class="pd-setting">
+                                                    class="pd-setting w95">
                                                         {{ $item->vip_member['name'] }}
                                                     </button>
                                                 @endif

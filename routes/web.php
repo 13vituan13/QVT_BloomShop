@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckOutController;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\ExcelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,12 @@ Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
     // ****** CUSTOMER ******
     Route::get('customer', [AdminController::class, 'customer'])->name('admin.customer');
     Route::get('customer_detail/{id?}', [AdminController::class, 'customer_detail'])->name('admin.customer_detail');
+    // ****** ORDER ******
+    Route::get('order', [AdminController::class, 'order'])->name('admin.order');
+    Route::get('get_order_detail_by_id', [AdminController::class, 'orderDetailById'])->name('admin.get_order_detail_by_id');
+    Route::get('export_bill', [ExcelController::class, 'exportBill'])->name('admin.export_bill');
+    // ****** USER ******
+    Route::get('user', [AdminController::class, 'user'])->name('admin.user');
+    Route::get('get_user_by_id', [AdminController::class, 'ajaxUserById'])->name('admin.ajax_get_user_by_id');
 });
-
 
