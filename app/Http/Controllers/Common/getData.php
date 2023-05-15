@@ -7,6 +7,7 @@ use App\Models\District;
 use App\Models\Ward;
 use App\Models\Customer;
 use App\Models\Status;
+use App\Models\StatusOrder;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
@@ -67,6 +68,11 @@ function getAllBanner()
 function getAllStatus()
 {
     $res = Status::all();
+    return $res;
+}
+function getAllStatusOrder()
+{
+    $res = StatusOrder::all();
     return $res;
 }
 function getAllCategory()

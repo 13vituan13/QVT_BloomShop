@@ -95,7 +95,8 @@
                                                     onclick="showEditModal('{{ $item->id }}')">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </button>
-                                                <button data-toggle="tooltip" title="Trash" class="pd-setting-ed">
+                                                <button onclick="remove('{{ $item->id }}',this)" data-toggle="tooltip"
+                                                    title="Trash" class="pd-setting-ed">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </button>
                                             </td>
@@ -150,46 +151,44 @@
                                 <option value="2">User</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="description" class="col-form-label">Mô tả:</label>
-                            <textarea class="form-control" id="description"></textarea>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" onclick="store()">Lưu</button>
+                    <button type="button" class="btn btn-primary" onclick="save()">Lưu</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
         $(function() {
-            $('#UserModal').on('hidden.bs.modal', function() {
+                $('#UserModal').on('hidden.bs.modal', function() {
                 $('#userid').val('')
                 $('#name').val('')
                 $('#email').val('')
-                $('#description').val('')
+                $('#password').val('')
+                $('#password-confirm').val('')
                 $("#role-select").val('').change();
             });
         }); //end document ready
         function goToPage(url) {
             window.location.href = url
         }
+
         function save() {
             let id = $('#userid').val()
-            if(id){
+            if (id == "") {
                 store()
-            }else{
+            } else {
                 update(id)
             }
         }
+
         function store() {
             var formData = new FormData();
             formData.append('name', $('#name').val())
             formData.append('email', $('#email').val())
             formData.append('password', $('#password').val())
-            formData.append('description', $('#description').val())
             formData.append('role_id', $('#role-select').val())
             console.log([...formData])
             $.ajax({
@@ -204,19 +203,28 @@
                 },
                 success: function(response) {
                     console.log(response)
+                    const res = response.dataReponse;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thêm Thành Công',
+                        text: 'Đã thêm nhân viên mới!!!',
+                        confirmButtonText: 'OK',
+                    }).then((result) => {
+                        location.reload();
+                    });
                 },
                 error: function(e) {
                     console.log(e)
                 }
             }); //end ajax
         }
+
         function update(id) {
             var formData = new FormData();
             formData.append('id', id)
             formData.append('name', $('#name').val())
             formData.append('email', $('#email').val())
             formData.append('password', $('#password').val())
-            formData.append('description', $('#description').val())
             formData.append('role_id', $('#role-select').val())
             console.log([...formData])
             $.ajax({
@@ -231,12 +239,23 @@
                 },
                 success: function(response) {
                     console.log(response)
+                    const res = response.dataReponse;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sửa Thành Công',
+                        text: 'Đã cập nhật lại nhân viên!!!',
+                        confirmButtonText: 'OK',
+                    }).then((result) => {
+                        location.reload();
+                        
+                    });
                 },
                 error: function(e) {
                     console.log(e)
                 }
             }); //end ajax
         }
+
         function showEditModal(id) {
             $.ajax({
                 url: "{{ route('admin.ajax_get_user_by_id') }}",
@@ -257,6 +276,41 @@
                     console.log(xhr)
                 }
             }); //end ajax
+        }
+
+        function remove(id, element) {
+            Swal.fire({
+                icon: 'question',
+                title: 'Bạn có chắc muốn xóa ?',
+                confirmButtonText: 'OK',
+            }).then((result) => {
+                $.ajax({
+                    url: "{{ route('api.user.remove') }}",
+                    type: 'DELETE',
+                    data: {
+                        id: id,
+                    },
+                    dataType: "json",
+                    headers: {
+                        'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        const res = response.dataResponse;
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Xóa Thành Công',
+                            confirmButtonText: 'OK',
+                        }).then((result) => {
+                            var row = element.parentNode.parentNode;
+                            row.parentNode.removeChild(row);
+                        });
+                    },
+                    error: function(e) {
+                        console.log(e);
+                    }
+                }); //end ajax
+            });
         }
     </script>
 

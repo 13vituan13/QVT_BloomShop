@@ -8,9 +8,8 @@ use App\Http\Controllers\API\APIStatusController; //Get custom status reponse
 use Illuminate\Support\Facades\Storage; //Handle File
 use Illuminate\Support\Facades\DB; //Handle DB && Transaction
 use Exception; //Return Msg Error 
-
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Role;
 use App\Models\RoleUser;
 
 class UserController extends APIStatusController
@@ -21,85 +20,28 @@ class UserController extends APIStatusController
         $this->PATH_USER_IMAGE = config('path.USER_IMAGE');
 
     }
-    private static $Rules = [
-        'name' => 'required|string|max:20',
-        'price' => 'required|integer',
-        'inventory_number' => 'required|integer',
-        'category_id' => 'required',
-        'status_id' => 'required',
-    ];
-    private static $Messages = [
-        'name.required' => 'Vui lòng nhập tên sản phẩm',
-        'price.required' => 'Vui lòng nhập giá sản phẩm',
-        'price.integer' => 'Giá sản phẩm phải là số nguyên',
-        'inventory_number.required' => 'Vui lòng nhập số lượng tồn kho',
-        'inventory_number.integer' => 'Số lượng tồn kho phải là số nguyên',
-        'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
-        'status_id.required' => 'Vui lòng chọn trạng thái sản phẩm',
-    ];
     
-    public function validateInput($input)
-    {
-        
-        $validator = Validator::make($input, self::$Rules, self::$Messages); // Initialization validator with rules
-
-        // Check input request from client
-        $result_validator = [
-            'status' => true,
-        ];
-        // If fails
-        if ($validator->fails()) {
-            $result_validator['status'] = false;
-            $result_validator['msg_error'] = $validator->errors();
-        }
-        return $result_validator;
-    }
-
     public function store(Request $request)
     {   
         $input = $request->all();
-
-        $result_validator = self::validateInput($input);
-
-        if (!$result_validator['status']) {
-            return response()->json($result_validator['msg_error'], 400);
-        }
 
         //Start create
         DB::beginTransaction();
         try {
             $input['created_at'] = now();
             $input['updated_at'] = now();
+            $input['flg_del'] = 0;
+            $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             $user = $user->fresh(); // Fresh product table in Db
-            $last_id = $user->product_id; //Just apply for Id = auto-incrementing
-
-            //handle image product
-            if ($request->hasFile('images_list')) {
-                $images_list = $request->file('images_list');
-                
-                $folder_path = $this->PATH_USER_IMAGE.$last_id;
-                Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
-
-                foreach ($images_list as $file) {
-                    $file_name = uniqid().'_'.$file->getClientOriginalName();
-                    $file_path = $folder_path.'/'.$file_name;
-
-                    $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
-                    
-                    //create ImageProduct row
-                    $user_image = [
-                        'product_id' => $last_id,
-                        'image' => $file_path,
-                    ];
-
-                    Role::create($user_image);
-                }
-            }
-            $file_list = Role::where('product_id','=',$last_id)->get();
+            $last_id = $user->id; //Just apply for Id = auto-incrementing
+            $data_role_user = [
+                'role_id' => $input['role_id'],
+                'user_id' => $last_id
+            ];
+            RoleUser::create($data_role_user);
             $result = [
-                'product_id' => $last_id,
-                'file_list'  => $file_list
+                'user_id' => $last_id,
             ];
             //End create
             DB::commit();
@@ -114,61 +56,27 @@ class UserController extends APIStatusController
     public function update(Request $request)
     {
         $input = $request->all();
-        $user_id = $input['product_id'];
-        $result_validator = self::validateInput($input);
-
-        if (!$result_validator['status']) {
-            return response()->json($result_validator['msg_error'], 400);
-        }
+        $id = $input['id'];
 
         //Start create
         DB::beginTransaction();
         try {
-            $user = User::find($user_id);
+            $user = User::find($id);
             $user->name = $input['name'];
-            $user->description = $input['description'];
-            $user->price = $input['price'];
-            $user->inventory_number = $input['inventory_number'];
-            $user->category_id = $input['category_id'];
-            $user->status_id = $input['status_id'];
+            $user->email = $input['email'];
+            $user->password = $input['password'];
             $user->updated_at = now();
             $user->save();
+            RoleUser::where('user_id',$id)->delete();
 
-            //handle image product
-            $arr_remove_image = json_decode($input['arr_remove_image']);
-            if(count($arr_remove_image) > 0){
-                foreach ($arr_remove_image as $remove_item) {
-                    Role::where('image','=',$remove_item)->delete();
-                    Storage::delete('public/'.$remove_item);
-                }
-            }
-            if ($request->hasFile('images_list')) {
-                $images_list = $request->file('images_list');
-
-                $folder_path = $this->PATH_USER_IMAGE.$user_id;
-                Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
-
-                foreach ($images_list as $file) {
-                    $file_name = uniqid().'_'.$file->getClientOriginalName();
-                    $file_path = $folder_path.'/'.$file_name;
-
-                    $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
-                    
-                    //create ImageProduct row
-                    $user_image = [
-                        'product_id' => $user_id,
-                        'image' => $file_path,
-                    ];
-
-                    Role::create($user_image);
-                }
-            }
-            //end handle image product
-            $file_list = Role::where('product_id','=',$user_id)->get();
-            $result = [
-                'product_id' => $user_id,
-                'file_list'  => $file_list
+            $data_role_user = [
+                'role_id' => $input['role_id'],
+                'user_id' => $id
             ];
+            RoleUser::create($data_role_user);
+            $result = [
+                'user_id' => $id,
+            ];       
             //End create
             DB::commit();
             return $this->successResponse('Update successfully created.',  $result);
@@ -178,16 +86,19 @@ class UserController extends APIStatusController
         }
     }
 
-    public function destroy($Kokyaku_Id)
-    {
-        // $Kokyaku = MKokyaku::find($Kokyaku_Id);
+    public function remove(Request $request)
+    {   
+        $input = $request->all();
+        $id = $input['id'];
 
-        // if (is_null($Kokyaku)) {
-        //     return $this->errorResponse('Koguchi does not exist.');
-        // }
+    	$user = User::where('id',$id);
 
-        // $Kokyaku->delete();
+        if (is_null($user)) {
+            return $this->errorResponse('User does not exist.');
+        }
 
-        // return $this->successResponse('Kokyaku successfully deleted.');
+        $user->delete();
+
+        return $this->successResponse('User successfully deleted.');
     }
 }

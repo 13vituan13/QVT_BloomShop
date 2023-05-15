@@ -23,14 +23,15 @@ Route::prefix('/admin')->group(function() {
     Route::post('product_store', [ProductController::class, 'store'])->name('api.product.store');
     Route::post('product_update', [ProductController::class, 'update'])->name('api.product.update');
     // ****** USER API ******
-    Route::get('user_store', [UserController::class, 'store'])->name('api.user.store');
-    Route::get('user_update', [UserController::class, 'update'])->name('api.user.update');
+    Route::post('user_store', [UserController::class, 'store'])->name('api.user.store');
+    Route::post('user_update', [UserController::class, 'update'])->name('api.user.update');
+    Route::delete('user_remove', [UserController::class, 'remove'])->name('api.user.remove');
     // ****** CUSTOMER API ******
-    Route::get('customer_store', [CustomerController::class, 'store'])->name('api.customer.store');
-    Route::get('customer_update', [CustomerController::class, 'update'])->name('api.customer.update');
+    Route::post('customer_store', [CustomerController::class, 'store'])->name('api.customer.store');
+    Route::post('customer_update', [CustomerController::class, 'update'])->name('api.customer.update');
     // ****** ORDER API ******
-    Route::get('order_store', [OrderController::class, 'store'])->name('api.order.store');
-    Route::get('order_update', [OrderController::class, 'update'])->name('api.order.update');
+    Route::post('order_store', [OrderController::class, 'store'])->name('api.order.store');
+    Route::post('order_update', [OrderController::class, 'update'])->name('api.order.update');
 });
 
 

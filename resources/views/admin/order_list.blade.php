@@ -46,7 +46,7 @@
                     <div class="product-status-wrap">
                         <h4>Danh Sách Đơn Hàng</h4>
                         <div class="add-product ">
-                            <a href="">Thêm mới</a>
+                            <a href="{{ route('admin.order_detail') }}">Thêm mới</a>
                         </div>
                         <table>
                             <thead>
@@ -112,7 +112,7 @@
                                             </td>
                                             <td>
                                                 <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"
-                                                    onclick="goToPage('{{ route('admin.customer_detail', ['id' => $item->order_id]) }}')">
+                                                    onclick="goToPage('{{ route('admin.order_detail', ['id' => $item->order_id]) }}')">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </button>
                                             </td>
