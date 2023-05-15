@@ -23,7 +23,7 @@ use App\Http\Controllers\ExcelController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/test01', [UserController::class, 'test01'])->name('test01');
 //______________________________ USER SITE_______________________________
 Route::get('/', [UserController::class, 'home'])->name('home');
 Route::get('/about', [UserController::class, 'about'])->name('about');
