@@ -125,6 +125,7 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                        <input type="text" id="userid" hidden value="">
                         <div class="form-group">
                             <label for="name" class="col-form-label">Tên nhân viên:</label>
                             <input type="text" class="form-control" id="name">
@@ -157,7 +158,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
+                    <button type="button" class="btn btn-primary" onclick="store()">Lưu</button>
                 </div>
             </div>
         </div>
@@ -165,16 +166,76 @@
     <script>
         $(function() {
             $('#UserModal').on('hidden.bs.modal', function() {
+                $('#userid').val('')
                 $('#name').val('')
                 $('#email').val('')
                 $('#description').val('')
                 $("#role-select").val('').change();
             });
         }); //end document ready
-
-        
         function goToPage(url) {
             window.location.href = url
+        }
+        function save() {
+            let id = $('#userid').val()
+            if(id){
+                store()
+            }else{
+                update(id)
+            }
+        }
+        function store() {
+            var formData = new FormData();
+            formData.append('name', $('#name').val())
+            formData.append('email', $('#email').val())
+            formData.append('password', $('#password').val())
+            formData.append('description', $('#description').val())
+            formData.append('role_id', $('#role-select').val())
+            console.log([...formData])
+            $.ajax({
+                url: '{{ route('api.user.store') }}',
+                type: 'POST',
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                headers: {
+                    'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response)
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            }); //end ajax
+        }
+        function update(id) {
+            var formData = new FormData();
+            formData.append('id', id)
+            formData.append('name', $('#name').val())
+            formData.append('email', $('#email').val())
+            formData.append('password', $('#password').val())
+            formData.append('description', $('#description').val())
+            formData.append('role_id', $('#role-select').val())
+            console.log([...formData])
+            $.ajax({
+                url: '{{ route('api.user.update') }}',
+                type: 'POST',
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                headers: {
+                    'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response)
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            }); //end ajax
         }
         function showEditModal(id) {
             $.ajax({
@@ -185,6 +246,7 @@
                 },
                 success: function(response) {
                     let res = response.result
+                    $('#userid').val(res[0].id)
                     $('#name').val(res[0].name)
                     $('#email').val(res[0].email)
                     $('#description').val(res[0].role[0].description)
