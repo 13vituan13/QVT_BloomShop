@@ -3,7 +3,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 class UserController extends Controller
-{
+{   
+    public function test01(){
+        $array = [3, 1, 4, 1, 5, 9, 2,6,8,7,10];
+        $sortedArray = mergeSort($array);
+        $result = binarySearch($sortedArray, 7);
+        if ($result == -1) {
+            echo "Không tìm thấy phần tử trong mảng";
+        } else {
+            echo "Phần tử được tìm thấy tại vị trí " . $result;
+        }
+        return $sortedArray;
+    }
     public function home()
     {   
         $banner = getAllBanner();

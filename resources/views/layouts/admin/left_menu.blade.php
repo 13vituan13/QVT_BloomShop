@@ -48,7 +48,7 @@
                     @endif
                     @php
                     if( Request::routeIs('admin.product') || Request::routeIs('admin.product_detail') ||
-                        Request::routeIs('admin.order')   ||
+                        Request::routeIs('admin.order')   || Request::routeIs('admin.order_detail') ||
                         Request::routeIs('admin.customer') ) 
                        {
                          $flgActive = 1;
@@ -65,7 +65,7 @@
                                     <span class="mini-sub-pro">Sản Phẩm</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::routeIs('admin.order') ? 'activeSub' : '' }}">
+                            <li class="{{ Request::routeIs('admin.order') || Request::routeIs('admin.order_detail')? 'activeSub' : '' }}">
                                 <a title="custome" href="{{ route('admin.order') }}">
                                     <span class="mini-sub-pro">Đơn Hàng</span>
                                 </a>

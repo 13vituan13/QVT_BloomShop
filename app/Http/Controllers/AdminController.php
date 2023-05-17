@@ -52,6 +52,8 @@ class AdminController extends Controller
         }
         return view("admin.product_detail", $dataView);
     }
+    
+    
     //User List Page
     public function user(Request $request)
     {   
@@ -109,6 +111,26 @@ class AdminController extends Controller
             'icon_title' => 'fa-solid fa-table-list',
         ];
         return view("admin.order_list",$dataView);
+    }
+    public function order_detail($id = null)
+    {   
+        $dataView = [
+            'customer_list' => getAllCustomer(),
+            'status_order_list' => getAllStatusOrder(),
+        ];
+        if ($id) { 
+            // update
+            $dataView['title'] = 'Cập nhật đơn hàng';
+            $dataView['icon_title'] = 'fa fa-pencil-square-o';
+
+            $order = getOrderById($id);
+            $dataView['order'] = $order;
+        } else { 
+            // create
+            $dataView['title'] = 'Thêm Sản Phẩm';
+            $dataView['icon_title'] = 'fa-solid fa-plus';
+        }
+        return view("admin.order_detail", $dataView);
     }
     public function orderDetailById(Request $request)
     {   
