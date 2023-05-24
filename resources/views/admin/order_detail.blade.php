@@ -91,6 +91,11 @@
         .input-group span {
             width: 120px;
         }
+        input.disabled {
+            background-color: #424242!important; /* Màu sắc nền của trường input khi bị vô hiệu hóa */
+            color: #fff; /* Màu sắc chữ của trường input khi bị vô hiệu hóa */
+            cursor: not-allowed; /* Hiển thị con trỏ "not-allowed" khi di chuột vào trường input */
+        }
     </style>
     <!-- Single pro tab start-->
     <div class="single-product-tab-area mg-b-30">
@@ -108,7 +113,7 @@
                                 </ul>
 
                                 <div id="btnSubmit" class="text-center custom-pro-edt-ds">
-                                    @if (isset($customers->product_id))
+                                    @if (isset($order->order_id))
                                         <button type="button"
                                             class="btnSubmit btn btn-ctl-bt waves-effect waves-light m-r-10"
                                             onclick="update()">Cập Nhật
@@ -131,12 +136,11 @@
                                                     <span class="input-group-addon title_input_label">
                                                         Mã đơn hàng
                                                     </span>
-                                                    <input id="name" type="text" class="form-control"
-                                                        placeholder="Mã đơn hàng"
+                                                    <input id="order_id" type="text" name="order_id" class="form-control"
+                                                        placeholder="Mã đơn hàng" disabled="disabled"
                                                         value="{{ isset($order) ? $order->order_id : '' }}">
-
                                                 </div>
-                                                <p class="text_error__name"></p>
+                                                <p class="text_error__order_id"></p>
 
                                             </div>
                                         </div>
@@ -148,16 +152,16 @@
                                                     <span class="input-group-addon title_input_label">
                                                         Thành Tiền
                                                     </span>
-                                                    <input id="phone" type="text" name="phone" class="form-control"
+                                                    <input id="total_money" type="text" name="total_money" class="form-control"
                                                         placeholder="Thành Tiền"
                                                         value="{{ isset($order) ? $order->total_money : '' }}">
                                                 </div>
-                                                <p class="text_error__phone"></p>
+                                                <p class="text_error__total_money"></p>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="review-content-section">
-                                                <select id="category_id" name="select"
+                                                <select id="status_id" name="status_id"
                                                     class="form-control pro-edt-select form-control-primary mg-b-pro-edt">
                                                     <option value="0">Chọn Trạng Thái</option>
                                                     @if (count($status_order_list) > 0)
@@ -169,14 +173,14 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
-                                                <p class="text_error text_error__category_id"></p>
+                                                <p class="text_error text_error__status_id"></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="review-content-section">
-                                                <select id="category_id" name="select"
+                                                <select id="customer_id" name="customer_id"
                                                     class="form-control pro-edt-select form-control-primary mg-b-pro-edt">
                                                     <option value="0">Chọn Khách Hàng</option>
                                                     @if (count($customer_list) > 0)
@@ -188,7 +192,7 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
-                                                <p class="text_error text_error__category_id"></p>
+                                                <p class="text_error text_error__customer_id"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -199,20 +203,20 @@
                                                     <span class="input-group-addon title_input_label">
                                                         Tên khách hàng
                                                     </span>
-                                                    <input id="phone" type="text" name="phone" class="form-control"
+                                                    <input id="customer_name" type="text" name="customer_name" class="form-control"
                                                         placeholder="Tên khách hàng"
                                                         value="{{ isset($order) ? $order->customer_name : '' }}">
                                                 </div>
-                                                <p class="text_error__phone"></p>
+                                                <p class="text_error__customer_name"></p>
                                                 <div class="input-group mg-b-pro-edt">
                                                     <span class="input-group-addon title_input_label">
                                                         Số điện thoại
                                                     </span>
-                                                    <input id="phone" type="text" name="phone" class="form-control"
+                                                    <input id="customer_phone" type="text" name="customer_phone" class="form-control"
                                                         placeholder="Số Điện Thoại"
                                                         value="{{ isset($order) ? $order->customer_phone : '' }}">
                                                 </div>
-                                                <p class="text_error__phone"></p>
+                                                <p class="text_error__customer_phone"></p>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -221,21 +225,21 @@
                                                     <span class="input-group-addon title_input_label">
                                                         Email
                                                     </span>
-                                                    <input id="phone" type="text" name="phone" class="form-control"
+                                                    <input id="customer_email" type="text" name="customer_email" class="form-control"
                                                         placeholder="Email"
-                                                        value="{{ isset($order) ? $order->customer_phone : '' }}">
+                                                        value="{{ isset($order) ? $order->customer_email : '' }}">
                                                 </div>
-                                                <p class="text_error__phone"></p>
+                                                <p class="text_error__customer_email"></p>
 
                                                 <div class="input-group mg-b-pro-edt">
                                                     <span class="input-group-addon title_input_label">
                                                         Địa Chỉ
                                                     </span>
-                                                    <input id="zipcode" type="text" name="zipcode"
+                                                    <input id="customer_address" type="text" name="customer_address"
                                                         class="form-control" placeholder="Địa Chỉ"
                                                         value="{{ isset($order) ? $order->customer_address : '' }}">
                                                 </div>
-                                                <p class="text_error__zipcode"></p>
+                                                <p class="text_error__customer_address"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -245,49 +249,52 @@
                         <div class="review-tab-pro-inner" style="margin-top: 15px;">
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 <div class="product-tab-list tab-pane fade active in" id="detail_Group">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="review-content-section">
-                                                <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon title_input_label">
-                                                        Mã Sản Phẩm
-                                                    </span>
-                                                    <input id="name" type="text" class="form-control"
-                                                        placeholder="Mã Sản Phẩm"
-                                                        value="{{ isset($order) ? $order->order_id : '' }}">
+                                    @isset($order->order_detail)
+                                        @foreach ( $order->order_detail as $item )
+                                        <div class="row order_group">
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="review-content-section">
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon title_input_label">
+                                                            Mã Sản Phẩm
+                                                        </span>
+                                                        <input id="product_id" type="text" class="form-control"
+                                                            placeholder="Mã Sản Phẩm"
+                                                            value="{{ isset($item->product_id) ? $item->product_id : '' }}">
+                                                    </div>
+                                                    <p class="text_error__name"></p>
                                                 </div>
-                                                <p class="text_error__name"></p>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="review-content-section">
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon title_input_label">
+                                                            Số Lượng
+                                                        </span>
+                                                        <input id="quantity" type="text" class="form-control"
+                                                            placeholder="Số Lượng"
+                                                            value="{{ isset($item->quantity) ? $item->quantity : '' }}">
+                                                    </div>
+                                                    <p class="text_error__name"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="review-content-section">
+                                                    <div class="input-group mg-b-pro-edt">
+                                                        <span class="input-group-addon title_input_label">
+                                                            Giá
+                                                        </span>
+                                                        <input id="price" type="text" class="form-control"
+                                                            placeholder="Giá"
+                                                            value="{{ isset($item->price) ? $item->price : '' }}">
+                                                    </div>
+                                                    <p class="text_error__name"></p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="review-content-section">
-                                                <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon title_input_label">
-                                                        Số Lượng
-                                                    </span>
-                                                    <input id="name" type="text" class="form-control"
-                                                        placeholder="Số Lượng"
-                                                        value="{{ isset($order) ? $order->order_id : '' }}">
-
-                                                </div>
-                                                <p class="text_error__name"></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="review-content-section">
-                                                <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon title_input_label">
-                                                        Giá
-                                                    </span>
-                                                    <input id="name" type="text" class="form-control"
-                                                        placeholder="Giá"
-                                                        value="{{ isset($order) ? $order->order_id : '' }}">
-
-                                                </div>
-                                                <p class="text_error__name"></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        @endforeach
+                                    @endisset
+                                    
                                 </div>
                             </div>
 
@@ -310,6 +317,10 @@
     </div>
     </div>
     <script>
+        // JavaScript để thay đổi trạng thái vô hiệu hóa của trường input
+        const input = document.querySelector('input[type="text"]');
+        input.disabled = true; // Vô hiệu hóa trường input
+        input.classList.add('disabled'); // Thêm lớp 'disabled' để áp dụng CSS tương ứng
         let assetPath = "{{ asset('storage/') }}/";
         $(function() {
             $('#name').on('input', function() {
@@ -325,16 +336,16 @@
             let order_id = null;
         @endif
         function addGr(){
-            let html = `<div class="row">
+            let html = `<div class="row order_group">
                                         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="review-content-section">
+                                            <div class="review-content-section ">
                                                 <div class="input-group mg-b-pro-edt">
                                                     <span class="input-group-addon title_input_label">
                                                         Mã Sản Phẩm
                                                     </span>
                                                     <input id="name" type="text" class="form-control"
                                                         placeholder="Mã Sản Phẩm"
-                                                        value="{{ isset($order) ? $order->order_id : '' }}">
+                                                        value="">
                                                 </div>
                                                 <p class="text_error__name"></p>
                                             </div>
@@ -347,7 +358,7 @@
                                                     </span>
                                                     <input id="name" type="text" class="form-control"
                                                         placeholder="Số Lượng"
-                                                        value="{{ isset($order) ? $order->order_id : '' }}">
+                                                        value="">
 
                                                 </div>
                                                 <p class="text_error__name"></p>
@@ -371,23 +382,33 @@
                                     $('#detail_Group').append(html)
         }
         function save() {
+            var product_detail = [];
+            $('.order_group').each(function() {
+                var product_id = $(this).find('input[type="text"]').eq(0).val();
+                var quantity = $(this).find('input[type="text"]').eq(1).val();
+                var price = $(this).find('input[type="text"]').eq(2).val();
+
+                var item = {
+                    product_id: product_id,
+                    quantity: quantity,
+                    price: price
+                };
+
+                product_detail.push(item);
+            });
             var formData = new FormData();
-            fileList.forEach((file, index) => {
-                formData.append('images_list[]', file)
-            })
-
-            // console.log([...formData]);
-            let description = CKEDITOR.instances.desc.getData();
-
-            formData.append('name', $('#name').val())
-            formData.append('inventory_number', $('#inventory_number').val())
-            formData.append('price', $('#price').val())
+            formData.append('product_detail', JSON.stringify(product_detail))
+            formData.append('order_id', $('#order_id').val())
+            formData.append('customer_id', $('#customer_id').val())
+            formData.append('customer_name', $('#customer_name').val())
+            formData.append('customer_email', $('#customer_email').val())
+            formData.append('customer_address', $('#customer_address').val())
+            formData.append('customer_phone', $('#customer_phone').val())
             formData.append('status_id', $('#status_id').val())
-            formData.append('category_id', $('#category_id').val())
-            formData.append('description', description)
+            formData.append('total_money', $('#total_money').val())
             console.log([...formData])
             $.ajax({
-                url: '{{ route('api.product.store') }}',
+                url: '{{ route('api.order.store') }}',
                 type: 'POST',
                 data: formData,
                 dataType: "json",
@@ -402,49 +423,52 @@
                     const res = response.dataReponse;
                     Swal.fire({
                         icon: 'success',
-                        title: 'Thêm Thành Công',
-                        text: 'Đã thêm sản phẩm mới!!!',
+                        title: 'Thêm Đơn Hàng',
+                        text: 'Đã thêm đơn hàng mới!!!',
                         confirmButtonText: 'OK',
                     }).then((result) => {
-                        product_id = res.product_id;
-                        fileList = res.file_list;
-                        renderImageHTML(fileList)
+                        order_id = res.order_id;
                         $('.btnSubmit').attr('onclick', 'update()')
                         $('.btnSubmit').html('Cập Nhật')
-                        var newUrl = window.location.pathname + '/' + product_id;
+                        $('#order_id').val(order_id)
+                        var newUrl = window.location.pathname + '/' + order_id;
                         window.history.pushState(null, null, newUrl);
                     });
-
                 },
                 error: function(e) {
                     console.log(e)
-                    $.each(e.responseJSON, function(key, err_val) {
-                        $('#' + key).addClass('error_input')
-                        $('.text_error__' + key).addClass('text_error')
-                        $('.text_error__' + key).html(err_val[0])
-                    });
                 }
             }); //end ajax
         }
 
         function update() {
+            var product_detail = [];
+            $('.order_group').each(function() {
+                var product_id = $(this).find('input[type="text"]').eq(0).val();
+                var quantity = $(this).find('input[type="text"]').eq(1).val();
+                var price = $(this).find('input[type="text"]').eq(2).val();
+
+                var item = {
+                    product_id: product_id,
+                    quantity: quantity,
+                    price: price
+                };
+
+                product_detail.push(item);
+            });
             var formData = new FormData();
-            fileList.forEach((file, index) => {
-                formData.append('images_list[]', file)
-            })
-
-
-            formData.append('product_id', product_id)
-            formData.append('name', $('#name').val())
-            formData.append('inventory_number', $('#inventory_number').val())
-            formData.append('price', $('#price').val())
+            formData.append('product_detail', JSON.stringify(product_detail))
+            formData.append('order_id', $('#order_id').val())
+            formData.append('customer_id', $('#customer_id').val())
+            formData.append('customer_name', $('#customer_name').val())
+            formData.append('customer_email', $('#customer_email').val())
+            formData.append('customer_address', $('#customer_address').val())
+            formData.append('customer_phone', $('#customer_phone').val())
             formData.append('status_id', $('#status_id').val())
-            formData.append('category_id', $('#category_id').val())
-            formData.append('description', description)
-            formData.append('arr_remove_image', JSON.stringify(arrRemoveImage))
+            formData.append('total_money', $('#total_money').val())
             console.log([...formData])
             $.ajax({
-                url: '{{ route('api.product.update') }}',
+                url: '{{ route('api.order.update') }}',
                 type: 'POST',
                 data: formData,
                 dataType: "json",
@@ -453,7 +477,6 @@
                 headers: {
                     'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
                 },
-
                 beforeSend: function() {},
                 success: function(response) {
                     console.log(response)
@@ -461,21 +484,14 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Cập Nhật Thành Công',
-                        text: 'Đã cập nhật lại sản phẩm!!!',
+                        text: 'Đã cập nhật lại đơn hàng!!!',
                         confirmButtonText: 'OK',
                     }).then((result) => {
-                        fileList = res.file_list;
-                        renderImageHTML(fileList)
-                        arrRemoveImage = [];
+
                     });
                 },
                 error: function(e) {
                     console.log(e)
-                    $.each(e.responseJSON, function(key, err_val) {
-                        $('#' + key).addClass('error_input')
-                        $('.text_error__' + key).addClass('text_error')
-                        $('.text_error__' + key).html(err_val[0])
-                    });
                 }
             }); //end ajax
         }
