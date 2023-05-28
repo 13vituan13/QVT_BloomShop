@@ -116,8 +116,10 @@ function getUserById($id){
 }
 function getBestChoiceProduct($limit)
 {
-    $res = Product::with('category')->with('product_image')
-        ->limit($limit)
+    $res = Product::with('category')->with('product_image')->where(function ($query) {
+        $query->where('product.flg_del', '<>', 1)
+            ->orWhereNull('product.flg_del');
+    })->limit($limit)
         ->get();
 
     return $res;
@@ -172,7 +174,10 @@ function getProductList($inputs, $pagination = null)
 
     $query = Product::with('category')
         ->with('status')
-        ->with('product_image');
+        ->with('product_image')->where(function ($query) {
+            $query->where('product.flg_del', '<>', 1)
+                ->orWhereNull('product.flg_del');
+        });
 
     if ($product_id) {
         $query->where('product.product_id', '=', $product_id);
@@ -224,7 +229,10 @@ function getCustomerList($inputs, $pagination = null)
 
     $query = Customer::with('vip_member')
         ->with('city')
-        ->with('district');
+        ->with('district')->where(function ($query) {
+            $query->where('customer.flg_del', '<>', 1)
+                ->orWhereNull('customer.flg_del');
+        });
 
     if ($customer_id) {
         $query->where('customer.customer_id', '=', $customer_id);
@@ -252,6 +260,10 @@ function getCustomerList($inputs, $pagination = null)
 
 function getOrderList($inputs, $pagination = null)
 {
+    $order_id = isset($inputs['order_id']) ? $inputs['order_id'] : null;
+    $customer_name = isset($inputs['customer_name']) ? $inputs['customer_name'] : null;
+    $customer_phone = isset($inputs['customer_phone']) ? $inputs['customer_phone'] : null;
+    $status_id = isset($inputs['status_id']) ? $inputs['status_id'] : null;
 
     $res = Order::select(
         'order.order_id',
@@ -268,9 +280,25 @@ function getOrderList($inputs, $pagination = null)
         'status_order.name as statusName')
     ->leftjoin('status_order', 'status_order.status_id', '=', 'order.status_id')
     ->leftjoin('order_detail', 'order_detail.order_id', '=', 'order.order_id')
-    ->leftjoin('product', 'product.product_id', '=', 'order_detail.product_id')
-    ->groupBy('order.order_id')
-    ->orderBy('order.order_id','DESC');
+    ->leftjoin('product', 'product.product_id', '=', 'order_detail.product_id');
+    if ($order_id) {
+        $res->where('order.order_id', '=', $order_id);
+    }
+
+    if ($customer_name) {
+        $res->where('order.customer_name', 'like', '%' . $customer_name . '%');
+    }
+
+    if ($customer_phone) {
+        $res->where('order.customer_phone', 'like', '%' . $customer_phone . '%');
+    }
+
+    if ($status_id) {
+        $res->where('order.status_id', '=', $status_id);
+    }
+
+    $res->groupBy('order.order_id');
+    $res->orderBy('order.order_id','DESC');
     $res = !$pagination ? $res->get() : $res->paginate($pagination);
     return $res;
 }

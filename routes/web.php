@@ -74,14 +74,14 @@ Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
     // ****** PRODUCT ******
     Route::get('product', [AdminController::class, 'product'])->name('admin.product');
     Route::get('product_detail/{id?}', [AdminController::class, 'product_detail'])->name('admin.product_detail');
-    // ****** CUSTOMER ******
-    Route::get('customer', [AdminController::class, 'customer'])->name('admin.customer');
-    Route::get('customer_detail/{id?}', [AdminController::class, 'customer_detail'])->name('admin.customer_detail');
     // ****** ORDER ******
     Route::get('order', [AdminController::class, 'order'])->name('admin.order');
     Route::get('order_detail/{id?}', [AdminController::class, 'order_detail'])->name('admin.order_detail');
     Route::get('get_order_detail_by_id', [AdminController::class, 'orderDetailById'])->name('admin.get_order_detail_by_id');
     Route::get('export_bill', [ExcelController::class, 'exportBill'])->name('admin.export_bill');
+    // ****** CUSTOMER ******
+    Route::get('customer', [AdminController::class, 'customer'])->name('admin.customer');
+    Route::get('get_customer_by_id', [AdminController::class, 'ajaxCustomerById'])->name('admin.ajax_get_customer_by_id');
     // ****** USER ******
     Route::get('user', [AdminController::class, 'user'])->name('admin.user');
     Route::get('get_user_by_id', [AdminController::class, 'ajaxUserById'])->name('admin.ajax_get_user_by_id');

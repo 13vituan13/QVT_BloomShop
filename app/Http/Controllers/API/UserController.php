@@ -64,7 +64,9 @@ class UserController extends APIStatusController
             $user = User::find($id);
             $user->name = $input['name'];
             $user->email = $input['email'];
-            $user->password = $input['password'];
+            if(isset($input['password'])){
+                $user->password = Hash::make($input['password']);
+            }
             $user->updated_at = now();
             $user->save();
             RoleUser::where('user_id',$id)->delete();

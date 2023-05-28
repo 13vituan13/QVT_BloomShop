@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Session;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
 class ExcelController extends Controller
 {   
     private $TEMPLATE_BILL;
@@ -35,9 +34,8 @@ class ExcelController extends Controller
         $sheet->setCellValue('E6', $res->customer_name);
         $sheet->setCellValue('E7', $res->customer_address);
         $sheet->setCellValue('E8', $res->customer_phone);
-
-        if(count($order_detail) > 0){
-            $rowIndex = 10; // Bắt đầu từ ô hàng thứ 10
+        if (count($order_detail) > 0) {
+            $rowIndex = 10; // Start from row 10
             foreach ($order_detail as $key => $value) {
                 $sheet->insertNewRowBefore($rowIndex + 1, 1);
                 $sheet->setCellValue('C'.$rowIndex, ($key+1));
@@ -45,12 +43,12 @@ class ExcelController extends Controller
                 $sheet->setCellValue('E'.$rowIndex, 'Bó');
                 $sheet->setCellValue('F'.$rowIndex, $value->quantity);
                 $sheet->setCellValue('G'.$rowIndex, $value->price);
-                $sheet->setCellValue('H'.$rowIndex, $value->price*$value->quantity);
+                $sheet->setCellValue('H'.$rowIndex, $value->price * $value->quantity);
                 $rowIndex++;
             }
-            $sheet->setCellValue('H'.$rowIndex+1, '=SUM(H10:H'.($rowIndex).')');
+            $sumFormula = '=SUM(H10:H'.$rowIndex.')';
+            $sheet->setCellValue('H'.($rowIndex+1), $sumFormula);
         }
-        
         // Lưu Spreadsheet vào bộ nhớ tạm
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $namefile = 'bill_'.$res->order_id.'.xlsx';

@@ -106,7 +106,7 @@ class ProductController extends APIStatusController
             return $this->successResponse('Insert successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -174,20 +174,23 @@ class ProductController extends APIStatusController
             return $this->successResponse('Update successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
-    public function destroy($Kokyaku_Id)
+    public function destroy(Request $request)
     {
-        // $Kokyaku = MKokyaku::find($Kokyaku_Id);
+        $input = $request->all();
+        $id = $input['id'];
 
-        // if (is_null($Kokyaku)) {
-        //     return $this->errorResponse('Koguchi does not exist.');
-        // }
+    	$product = Product::find($id);
 
-        // $Kokyaku->delete();
+        if (is_null($product)) {
+            return $this->errorResponse('Product does not exist.');
+        }
+        $product->flg_del = 1;
+        $product->save();
 
-        // return $this->successResponse('Kokyaku successfully deleted.');
+        return $this->successResponse('Product successfully deleted.');
     }
 }
