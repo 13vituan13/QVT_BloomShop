@@ -8,7 +8,7 @@ use App\Http\Controllers\API\APIStatusController; //Get custom status reponse
 use Illuminate\Support\Facades\Storage; //Handle File
 use Illuminate\Support\Facades\DB; //Handle DB && Transaction
 use Exception; //Return Msg Error 
-
+use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
 class CustomerController extends APIStatusController
 {   
@@ -17,57 +17,18 @@ class CustomerController extends APIStatusController
     {
         $this->PATH_Customer_IMAGE = config('path.Customer_IMAGE');
     }
-    private static $Rules = [
-        'name' => 'required|string|max:20',
-        'zipcode' => 'required|integer',
-        'phone' => 'required|integer',
-        'district_id' => 'required|integer',
-        'city_id' => 'required|integer',
-        'address' => 'required',
-        'email' => 'required',
-    ];
-    private static $Messages = [
-        'name.required' => 'Vui lòng nhập tên khách hàng',
-        'zipcode.required' => 'Vui lòng nhập zipcode',
-        'phone.required' => 'Vui lòng nhập số điện thoại',
-        'district_id.required' => 'Vui lòng chọn quận/huyện',
-        'city_id.required' => 'Vui lòng chọn thành phố',
-        'address.required' => 'Vui lòng nhập địa chỉ',
-        'email.required' => 'Vui lòng nhập địa chỉ email',
-    ];
     
-    public function validateInput($input)
-    {
-        
-        $validator = Validator::make($input, self::$Rules, self::$Messages); // Initialization validator with rules
-
-        // Check input request from client
-        $result_validator = [
-            'status' => true,
-        ];
-        // If fails
-        if ($validator->fails()) {
-            $result_validator['status'] = false;
-            $result_validator['msg_error'] = $validator->errors();
-        }
-        return $result_validator;
-    }
-
     public function store(Request $request)
     {   
         $input = $request->all();
-
-        $result_validator = self::validateInput($input);
-
-        if (!$result_validator['status']) {
-            return response()->json($result_validator['msg_error'], 400);
-        }
 
         //Start create
         DB::beginTransaction();
         try {
             $input['created_at'] = now();
             $input['updated_at'] = now();
+            $input['flg_del'] = 0;
+            $input['password'] = Hash::make($input['password']);
             $customer = Customer::create($input);
             $customer = $customer->fresh(); // Fresh Customer table in Db
             $last_id = $customer->Customer_id; //Just apply for Id = auto-incrementing
@@ -86,24 +47,21 @@ class CustomerController extends APIStatusController
     {
         $input = $request->all();
         $customer_id = $input['customer_id'];
-        $result_validator = self::validateInput($input);
-
-        if (!$result_validator['status']) {
-            return response()->json($result_validator['msg_error'], 400);
-        }
 
         //Start create
         DB::beginTransaction();
         try {
             $customer = Customer::find($customer_id);
             $customer->name = $input['name'];
-            $customer->zipcode = $input['zipcode'];
             $customer->address = $input['address'];
             $customer->district_id = $input['district_id'];
             $customer->city_id = $input['city_id'];
             $customer->phone = $input['phone'];
             $customer->email = $input['email'];
-
+            if(isset($input['password'])){
+                $customer->password = Hash::make($input['password']);
+            }
+            $customer->vip_id = $input['vip_id'];
             $customer->updated_at = now();
             $customer->save();
             $result = [
@@ -114,20 +72,23 @@ class CustomerController extends APIStatusController
             return $this->successResponse('Update successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
-    public function destroy($Kokyaku_Id)
-    {
-        // $Kokyaku = MKokyaku::find($Kokyaku_Id);
+    public function remove(Request $request)
+    {   
+        $input = $request->all();
+        $id = $input['id'];
 
-        // if (is_null($Kokyaku)) {
-        //     return $this->errorResponse('Koguchi does not exist.');
-        // }
+    	$customer = Customer::find($id);
 
-        // $Kokyaku->delete();
+        if (is_null($customer)) {
+            return $this->errorResponse('Customer does not exist.');
+        }
+        $customer->flg_del = 1;
+        $customer->save();
 
-        // return $this->successResponse('Kokyaku successfully deleted.');
+        return $this->successResponse('Customer successfully deleted.');
     }
 }

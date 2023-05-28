@@ -62,7 +62,7 @@
                                                     onclick="goToPage('{{ route('admin.product_detail', ['id' => $item->product_id]) }}')"><i
                                                         class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                                 <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"
-                                                    onclick="remove('{{ $item->product_id }}')"><i class="fa fa-trash-o"
+                                                    onclick="remove('{{ $item->product_id }}',this)"><i class="fa fa-trash-o"
                                                         aria-hidden="true"></i></button>
                                             </td>
                                         </tr>
@@ -87,14 +87,39 @@
             window.location.href = url
         }
 
-        function remove(id) {
+        function remove(id, element) {
             Swal.fire({
                 icon: 'question',
                 title: 'Xóa Sản Phẩm',
                 text: 'Bạn có chắc muốn xóa?',
                 confirmButtonText: 'OK',
             }).then((result) => {
-                
+                $.ajax({
+                    url: "{{ route('api.product.remove') }}",
+                    type: 'DELETE',
+                    data: {
+                        id: id,
+                    },
+                    dataType: "json",
+                    headers: {
+                        'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        const res = response.dataResponse;
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Xóa Thành Công',
+                            confirmButtonText: 'OK',
+                        }).then((result) => {
+                            var row = element.parentNode.parentNode;
+                            row.parentNode.removeChild(row);
+                        });
+                    },
+                    error: function(e) {
+                        console.log(e);
+                    }
+                }); //end ajax
             });
         }
     </script>

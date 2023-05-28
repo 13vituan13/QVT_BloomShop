@@ -106,7 +106,7 @@ class ProductController extends APIStatusController
             return $this->successResponse('Insert successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -174,7 +174,7 @@ class ProductController extends APIStatusController
             return $this->successResponse('Update successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

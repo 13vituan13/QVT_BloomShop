@@ -229,7 +229,10 @@ function getCustomerList($inputs, $pagination = null)
 
     $query = Customer::with('vip_member')
         ->with('city')
-        ->with('district');
+        ->with('district')->where(function ($query) {
+            $query->where('customer.flg_del', '<>', 1)
+                ->orWhereNull('customer.flg_del');
+        });
 
     if ($customer_id) {
         $query->where('customer.customer_id', '=', $customer_id);

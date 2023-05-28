@@ -140,10 +140,6 @@
                             <input type="password" class="form-control" id="password">
                         </div>
                         <div class="form-group">
-                            <label for="password-confirm" class="col-form-label">Xác nhận mật khẩu:</label>
-                            <input type="password" class="form-control" id="password-confirm">
-                        </div>
-                        <div class="form-group">
                             <label for="role-select" class="col-form-label">Chức vụ:</label>
                             <select id="role-select" class="form-control" aria-label="Default select example">
                                 <option value="" selected>Chọn chức vụ</option>
@@ -284,32 +280,35 @@
                 title: 'Bạn có chắc muốn xóa ?',
                 confirmButtonText: 'OK',
             }).then((result) => {
-                $.ajax({
-                    url: "{{ route('api.user.remove') }}",
-                    type: 'DELETE',
-                    data: {
-                        id: id,
-                    },
-                    dataType: "json",
-                    headers: {
-                        'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        const res = response.dataResponse;
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Xóa Thành Công',
-                            confirmButtonText: 'OK',
-                        }).then((result) => {
-                            var row = element.parentNode.parentNode;
-                            row.parentNode.removeChild(row);
-                        });
-                    },
-                    error: function(e) {
-                        console.log(e);
-                    }
-                }); //end ajax
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ route('api.user.remove') }}",
+                        type: 'DELETE',
+                        data: {
+                            id: id,
+                        },
+                        dataType: "json",
+                        headers: {
+                            'Authorization': 'Bearer ' + $('meta[name="token"]').attr('content')
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            const res = response.dataResponse;
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Xóa Thành Công',
+                                confirmButtonText: 'OK',
+                            }).then((result) => {
+                                var row = element.parentNode.parentNode;
+                                row.parentNode.removeChild(row);
+                            });
+                        },
+                        error: function(e) {
+                            console.log(e);
+                        }
+                    }); //end ajax
+                }
+                
             });
         }
     </script>

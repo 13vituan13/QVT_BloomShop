@@ -74,31 +74,12 @@ class AdminController extends Controller
             'title' => 'Danh Sách Sản Phẩm',
             'customer_list' => getCustomerList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
+            'citys_list' => getAllCity(),
+            'districts_list' => getAllDistrict(),
+            'vip_member_list' => getAllVipMemBer(),
         ];
         return view("admin.customer_list",$dataView);
 
-    }
-    public function customer_detail($id = null)
-    {   
-        $dataView = [
-            'vip_member_list' => getAllVipMemBer(),
-            'citys_list' => getAllCity(),
-            'districts_list' => getAllDistrict(),
-        ];
-        if ($id) { 
-            // update
-            $dataView['title'] = 'Cập nhật khách hàng';
-            $dataView['icon_title'] = 'fa fa-pencil-square-o';
-
-            $customers = getCustomerById($id);
-            $dataView['customers'] = $customers;
-        } else { 
-            // create
-            $dataView['title'] = 'Thêm khách hàng';
-            $dataView['icon_title'] = 'fa-solid fa-plus';
-        }
-
-        return view("admin.customer_detail", $dataView);
     }
 
     //Order List Page
@@ -149,6 +130,12 @@ class AdminController extends Controller
         $result = getUserById($id);
         return response()->json(['result' => $result], 200);
     }
-    
+    public function ajaxCustomerById(Request $request)
+    {   
+        $inputs = $request->all();
+        $id = $inputs['id'];
+        $result = getCustomerById($id);
+        return response()->json(['result' => $result], 200);
+    }
 }
 
