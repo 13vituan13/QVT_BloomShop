@@ -71,24 +71,10 @@ class CustomerController extends APIStatusController
             $customer = Customer::create($input);
             $customer = $customer->fresh(); // Fresh Customer table in Db
             $last_id = $customer->Customer_id; //Just apply for Id = auto-incrementing
-
-            //handle image Customer
-            // if ($request->hasFile('avatar')) {
-            //     $images_list = $request->file('avatar');
-                
-            //     $folder_path = $this->PATH_Customer_IMAGE.$last_id;
-            //     Storage::makeDirectory('public/'.$folder_path); //Create folder if not exist
-
-            //     foreach ($images_list as $file) {
-            //         $file_name = uniqid().'_'.$file->getClientOriginalName();
-            //         $file_path = $folder_path.'/'.$file_name;
-
-            //         $file->storeAs('public/'.$folder_path, $file_name); //storePubliclyAs('public', $file_name);
-            //     }
-            // }
+            
             //End create
             DB::commit();
-            return $this->successResponse('Insert successfully created.',  $result);
+            return $this->successResponse('Insert successfully created.',  $last_id);
         } catch (Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
@@ -120,7 +106,9 @@ class CustomerController extends APIStatusController
 
             $customer->updated_at = now();
             $customer->save();
-
+            $result = [
+                'customer_id' => $customer_id,
+            ];
             //End create
             DB::commit();
             return $this->successResponse('Update successfully created.',  $result);

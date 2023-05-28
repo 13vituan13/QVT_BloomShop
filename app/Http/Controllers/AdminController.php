@@ -109,7 +109,10 @@ class AdminController extends Controller
             'title' => 'Danh Sách Đơn Hàng',
             'order_list' => getOrderList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
+            'status_order_list' => getAllStatusOrder(),
         ];
+        $request->flash();
+
         return view("admin.order_list",$dataView);
     }
     public function order_detail($id = null)
