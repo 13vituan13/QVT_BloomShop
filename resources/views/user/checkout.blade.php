@@ -41,6 +41,88 @@
                 font-size: 3.5rem;
             }
         }
+
+        /* loader */
+        #loading {
+            width: 100vw;
+            height: 100vh;
+            transition: all 1s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .loader {
+            /* color: rgba(255, 255, 255, 0.8) */
+            font-size: 15px;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            position: relative;
+            text-indent: -9999em;
+            margin: 50vh auto;
+            animation: mulShdSpin 1.3s infinite linear;
+            transform: translateZ(0);
+        }
+
+        @keyframes mulShdSpin {
+
+            0%,
+            100% {
+                box-shadow: 0 -3em 0 0.2em,
+                    2em -2em 0 0em, 3em 0 0 -1em,
+                    2em 2em 0 -1em, 0 3em 0 -1em,
+                    -2em 2em 0 -1em, -3em 0 0 -1em,
+                    -2em -2em 0 0;
+            }
+
+            12.5% {
+                box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em,
+                    3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em,
+                    -2em 2em 0 -1em, -3em 0 0 -1em,
+                    -2em -2em 0 -1em;
+            }
+
+            25% {
+                box-shadow: 0 -3em 0 -0.5em,
+                    2em -2em 0 0, 3em 0 0 0.2em,
+                    2em 2em 0 0, 0 3em 0 -1em,
+                    -2em 2em 0 -1em, -3em 0 0 -1em,
+                    -2em -2em 0 -1em;
+            }
+
+            37.5% {
+                box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em,
+                    3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em,
+                    -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+            }
+
+            50% {
+                box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em,
+                    3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em,
+                    -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+            }
+
+            62.5% {
+                box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em,
+                    3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0,
+                    -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+            }
+
+            75% {
+                box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em,
+                    3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em,
+                    -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+            }
+
+            87.5% {
+                box-shadow: 0em -3em 0 0, 2em -2em 0 -1em,
+                    3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em,
+                    -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+            }
+        }
     </style>
 
 
@@ -125,7 +207,7 @@
                     <form id="payment__form" class="needs-validation" novalidate method="POST"
                         action="{{ route('checkout.submit') }}">
                         <input hidden id="customer_id" name="customer_id"
-                            value="@if($customer_info){{$customer_info->customer_id}}@endif">
+                            value="@if ($customer_info) {{ $customer_info->customer_id }} @endif">
                         <div class="row g-3">
                             {{-- Name --}}
                             <div class="col-sm-6">
@@ -133,7 +215,7 @@
                                     tên</label>
                                 <input type="text" class="form-control required" data-name="Họ tên"
                                     id="customer_name" name="customer_name" placeholder="VD: Quach Vi Tuan"
-                                    value="@if($customer_info){{$customer_info->name}}@endif"
+                                    value="@if ($customer_info) {{ $customer_info->name }} @endif"
                                     required>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập họ tên.
@@ -145,7 +227,7 @@
                                     thoại</label>
                                 <input type="text" class="form-control required" id="customer_phone"
                                     name="customer_phone" placeholder="0903123456"
-                                    value="@if($customer_info){{$customer_info->phone}}@endif"
+                                    value="@if ($customer_info) {{ $customer_info->phone }} @endif"
                                     required pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
                                 <div class="invalid-feedback">
                                     Vui lòng cung cấp một số điện thoại hợp lệ.
@@ -157,7 +239,7 @@
                                     Email</label>
                                 <input type="text" class="form-control required" id="customer_email"
                                     name="customer_email" placeholder="you@example.com"
-                                    value="@if($customer_info){{$customer_info->email}}@endif"
+                                    value="@if ($customer_info) {{ $customer_info->email }} @endif"
                                     required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                 <div class="invalid-feedback">
                                     Vui lòng cung cấp một email hợp lệ.
@@ -240,7 +322,10 @@
                 </div>
             </div>
         </main>
-
+        {{-- LOADING --}}
+        <div id="loading" hidden>
+            <div class="loader">Loading...</div>
+        </div>
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <small class="block">&copy; 2022 BloomShop. Đã đăng ký Bản quyền.</small>
             <small class="block">Designed by <a href="#" target="_blank">Q.V.T</a> Demo Images: <a
@@ -260,8 +345,11 @@
     <script src="{{ asset('js/user/usersite.js') }}"></script>
     <script src="{{ asset('js/user/jquery.min.js') }}"></script>
     <script src="{{ asset('js/user/checkout/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- main Start action submit form to checkout -->
     <script src="{{ asset('js/user/checkout/form-validation.js') }}"></script>
+    <!-- main End action submit form to checkout -->
     <script>
+        
         //payment
         var stripe = Stripe('{{ config('services.stripe.key') }}'); // Create a Stripe client.
 
@@ -348,6 +436,7 @@
         }
 
         $(document).ready(function() {
+            // $("#loading").removeAttr("hidden");
             // Get the input field element
             const customer_phone = $('#customer_phone');
 

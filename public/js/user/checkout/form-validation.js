@@ -47,9 +47,8 @@
     })
 })()
 
-function submitForm(formData, form) {
-
-  loadStart();
+function submitForm(formData, form) { 
+  $("#loading").removeAttr("hidden");
   $.ajax({
     url: $(form).attr('action'),
     type: $(form).attr('method'),
@@ -60,7 +59,7 @@ function submitForm(formData, form) {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (response) {
-      loadEnd();
+      $("#loading").attr("hidden", true);
       console.log(response)
       Swal.fire({
         icon: 'success',
@@ -73,7 +72,7 @@ function submitForm(formData, form) {
     },
     error: function (e) {
       console.log(e)
-      loadEnd();
+      $("#loading").attr("hidden", true);
       Swal.fire({
         icon: 'error',
         title: 'Đặt Hàng Thất Bại',
