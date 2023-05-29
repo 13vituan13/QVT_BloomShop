@@ -57,10 +57,14 @@ class UserController extends Controller
     {   
         $input = $request->all();
         $category_id = isset($input['category_id']) ? $input['category_id'] : null;
+        $sr_price = isset($input['price']) ? $input['price'] : null;
+        $sr_product_name = isset($input['product_name']) ? $input['product_name'] : null;
         $category = getCategoryById($category_id); 
         $data = [
             'product_list' => getProductList($input,6),
             'category'    => $category,
+            'sr_price' => $sr_price,
+            'sr_product_name' => $sr_product_name,
         ];
         return view("user.product",$data);
     }
