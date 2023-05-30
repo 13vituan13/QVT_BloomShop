@@ -55,7 +55,7 @@ class CheckOutController extends Controller
                 $charge = Charge::create([
                     'amount' => $amount,
                     'currency' => 'usd',
-                    'description' => 'test thanh toán',
+                    'description' => $input['customer_name'].' thanh toán',
                     'source' => $input['stripeToken'],
                 ]);
             } catch (Exception $e) {

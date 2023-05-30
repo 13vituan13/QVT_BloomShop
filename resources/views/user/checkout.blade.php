@@ -286,7 +286,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <label for="zip" class="form-label required">Zip</label>
                                 <input type="text" class="form-control" placeholder="VD: 70000" id="zipcode"
                                     name="zipcode" required
@@ -294,7 +294,7 @@
                                 <div class="invalid-feedback">
                                     Vui lòng nhập mã zip.
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <hr class="my-4">
 
