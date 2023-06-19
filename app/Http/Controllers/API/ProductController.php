@@ -54,7 +54,28 @@ class ProductController extends APIStatusController
         }
         return $result_validator;
     }
+    
+    public function update_test(Request $request, $id)
+    {
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+        $product->name = $request->input('name');
+        $product->save();
+        
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            
+            foreach ($files as $file) {
+                // Xử lý từng tệp ở đây
+                $filename = $file->getClientOriginalName();
+            }
+        }
 
+        return response()->json($product);
+    }
+    
     public function store(Request $request)
     {   
         $input = $request->all();
