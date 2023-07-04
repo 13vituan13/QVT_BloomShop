@@ -59,7 +59,7 @@ class AdminController extends Controller
     {   
         $inputs = $request->all();
         $dataView = [
-            'title' => 'Danh Sách Sản Phẩm',
+            'title' => 'Danh Sách Nhân Viên',
             'user_list' => getUserList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
         ];
@@ -71,7 +71,7 @@ class AdminController extends Controller
     {   
         $inputs = $request->all();
         $dataView = [
-            'title' => 'Danh Sách Sản Phẩm',
+            'title' => 'Danh Sách Khách Hàng',
             'customer_list' => getCustomerList($inputs,10),
             'icon_title' => 'fa-solid fa-table-list',
             'citys_list' => getAllCity(),

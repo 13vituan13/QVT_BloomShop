@@ -189,15 +189,15 @@ function getProductList($inputs, $pagination = null)
 
     if ($price) {
         if($price == "1"){
-            $query->where('product.price', '<', 200);
+            $query->where('product.price', '<', 50);
         }
 
         if($price == "2"){
-            $query->where('product.price', '>=', 200)->where('product.price', '=<', 500);
+            $query->whereBetween('product.price', [50, 100]);
         }
 
         if($price == "3"){
-            $query->where('product.price', '>', 500);
+            $query->where('product.price', '>', 100);
         }
     }
 

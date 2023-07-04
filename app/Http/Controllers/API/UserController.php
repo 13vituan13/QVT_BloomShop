@@ -31,6 +31,7 @@ class UserController extends APIStatusController
             $input['created_at'] = now();
             $input['updated_at'] = now();
             $input['flg_del'] = 0;
+            $input['avatar'] = "images/users/2/avt2.png";
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             $user = $user->fresh(); // Fresh product table in Db
@@ -48,7 +49,7 @@ class UserController extends APIStatusController
             return $this->successResponse('Insert successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -84,7 +85,7 @@ class UserController extends APIStatusController
             return $this->successResponse('Update successfully created.',  $result);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

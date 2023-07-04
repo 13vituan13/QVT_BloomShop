@@ -24,6 +24,8 @@ Route::prefix('/admin')->group(function() {
     Route::post('product_update', [ProductController::class, 'update'])->name('api.product.update');
     Route::delete('product_remove', [ProductController::class, 'destroy'])->name('api.product.remove');
     
+    Route::put('update_test/{id}', [ProductController::class, 'update_test'])->name('api.product.updatetest');
+
     // ****** ORDER API ******
     Route::post('order_store', [OrderController::class, 'store'])->name('api.order.store');
     Route::post('order_update', [OrderController::class, 'update'])->name('api.order.update');

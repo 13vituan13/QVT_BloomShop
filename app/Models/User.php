@@ -19,6 +19,7 @@ class User extends Authenticatable
         'password',
         'created_at',
         'updated_at',
+        'avatar',
         'flg_del',
     ];
 

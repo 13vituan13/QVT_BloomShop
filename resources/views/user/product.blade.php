@@ -36,33 +36,44 @@
             </div>
         </div>
         <form id="signUpForm" method="GET" action="{{ route('product') }}">
-        <div class="row">
+            <input type="hidden" class="form-control" name="category_id" id="category_id" value="{{ isset($category->category_id) ? $category->category_id : null }}">
+
+            <div class="row">
             <div class="col-5">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" >Tên sản phẩm</span>
-                    <input type="text" class="form-control" name="product_name" id="product_name" value="{{ old('product_name') }}">
+                    <input type="text" class="form-control" name="product_name" id="product_name" value="{{ isset($sr_product_name) ? $sr_product_name : null }}">
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="price" id="price1" value="1" 
-                    checked >
+                    <input class="form-check-input" type="radio" name="price" id="price1" value="" 
+                    @if(!$sr_price) checked @endif >
                     <label class="form-check-label" >
-                      Dưới $200
+                      Tất cả
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="price" id="price1" value="1" 
+                    @if($sr_price == 1) checked @endif >
+                    <label class="form-check-label" >
+                      Dưới $50
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="price" id="price2" value="2" 
+                    @if($sr_price == 2) checked @endif
                     >
                     <label class="form-check-label" >
-                      $200 ~ $500
+                      $50 ~ $100
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="price" id="price4" value="3"
+                    @if($sr_price == 3) checked @endif
                     >
                     <label class="form-check-label" >
-                      Trên $500
+                      Trên $100
                     </label>
                 </div>
             </div>
