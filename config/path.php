@@ -4,4 +4,3 @@ return [
     'BILL_PATH'      =>  'files/bill/', // BILL path -- public
     'TEMPLATE_BILL'  =>  'template/BILL.xlsx', // BILL path -- public
 ];
-

@@ -29,7 +29,7 @@
 
             <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
                 <ul class="fh5co-footer-links">
-                    <li><a href="#"><img src="{{ asset('images/logo/Favicons/favicon-16x16.png') }}" width="20" height="20">  Bloom Shop</a></li>
+                    <li><a href="#"><img src="{{ asset('/images/logo/Favicons/favicon-16x16.png') }}" width="20" height="20">  Bloom Shop</a></li>
                     <li><a href="#"><i class="icon-facebook"> Facebook</i></a></li>
                     <li><a href="#"><i class="icon-linkedin"> Linkedin</i></a></li>
                     <li><a href="#"><i class="icon-twitter"> Twitter</i></a></li>

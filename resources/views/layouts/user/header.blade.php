@@ -66,7 +66,7 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li class="@if (Request::routeIs('services')) active @endif"><a href="{{ route('services') }}">Hoa Kể
+                    <li class="@if (Request::routeIs('blog')) active @endif"><a href="{{ route('blog') }}">Hoa Kể
                             Chuyện</a></li>
                     <li class="@if (Request::routeIs('contact')) active @endif"><a href="{{ route('contact') }}">Liên
                             Lạc</a></li>

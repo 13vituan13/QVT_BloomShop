@@ -2,7 +2,7 @@
 @section('title', 'About')
 @section('content')
 <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner"
-        style="background-image:url({{asset('/images/html/about_us_banner.png')}});">
+        style="background-image:url({{asset('images/html/about_us_banner.png')}});">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <img class="img-responsive" src="{{ asset('./images/html/about_us_small_01.png') }}" alt="about">
+                    <img class="img-responsive" src="{{ asset('.assets/images/html/about_us_small_01.png') }}" alt="about">
                 </div>
             </div>
         </div>

@@ -16,20 +16,45 @@ use Exception;
 
 use Stripe\Stripe;
 use Stripe\Charge;
+use App\Interfaces\ICity;
+use App\Interfaces\IDistrict;
+use App\Interfaces\ICustomer;
+use App\Interfaces\ICart;
+use App\Interfaces\IOrder;
 class CheckOutController extends Controller
 {   
+    protected $_cart;
+    protected $_cityRepo;
+    protected $_customerRepo;
+    protected $_districtRepo;
+    protected $_orderRepo;
+    
+    public function __construct(
+        ICart $cartRepo,
+        ICity $cityRepo,
+        ICustomer $customerRepo,
+        IDistrict $districtRepo,
+        IOrder $orderRepo
+    )
+    {       
+        $this->_cart = $cartRepo;
+        $this->_cityRepo = $cityRepo;
+        $this->_customerRepo = $customerRepo;
+        $this->_districtRepo = $districtRepo;
+        $this->_orderRepo = $orderRepo;
+    }
     public function checkout()
     {   
          if(Session::has('customer')){
             $customer_login = Session::get('customer');
             $customer_id = $customer_login['customer_id'];
-            $customer_info = getCustomerById($customer_id);
+            $customer_info = $this->_customerRepo->getById($customer_id);
         }
         $cart = Session::get('cart', []);
-        $cartCounter = cartCounter();
-        $citys_list  = getAllCity();
-        $districts_list = getAllDistrict();
-        $totalMoney = cartTotalMoney();
+        $cartCounter = $this->_cart->cartCounter();
+        $citys_list  = $this->_cityRepo->getAll();
+        $districts_list = $this->_districtRepo->getAll();
+        $totalMoney = $this->_cart->cartTotalMoney();
         if(isset($customer_info) && isset($customer_info->vip_id)){
             //tính tiền giảm giá theo hạng Khách Hàng
             $totalMoney = (int) $totalMoney * ((100 - $customer_info->offer)/100);
@@ -79,7 +104,7 @@ class CheckOutController extends Controller
                 OrderDetail::create($item);
             }
             Session::forget('cart');
-            $NewOrder = getOrderById($order_id);
+            $NewOrder = $this->_orderRepo->getById($order_id);
             // send mail
             Mail::to($input['customer_email'])->send(new SendMail($NewOrder));
             DB::commit();

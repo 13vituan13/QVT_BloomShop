@@ -2,35 +2,42 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserLoginController;
-use App\Http\Controllers\UserSignUpController;
+//User Site Controller
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
 
-
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminLoginController;
-use App\Http\Controllers\ExcelController;
+//Admin Site Controller
+use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\CustomerManageController;
+use App\Http\Controllers\Admin\ExcelController;
+use App\Http\Controllers\Admin\OrderManageController;
+use App\Http\Controllers\Admin\ProductManageController;
+use App\Http\Controllers\Admin\UserManageController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
+
+___________________________________________________________________________
+
+|--------------------------------------------------------------------------
+| USER SITE
+|--------------------------------------------------------------------------
 */
-Route::get('/test01', [UserController::class, 'test01'])->name('test01');
-//______________________________ USER SITE_______________________________
-Route::get('/', [UserController::class, 'home'])->name('home');
-Route::get('/about', [UserController::class, 'about'])->name('about');
-Route::get('/contact', [UserController::class, 'contact'])->name('contact');
-Route::get('/product', [UserController::class, 'product'])->name('product');
-Route::get('/services', [UserController::class, 'services'])->name('services');
-Route::get('/product_detail/{id}', [UserController::class, 'product_detail'])->name('product_detail');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/product', [ProductController::class, 'index'])->name('product');
+Route::get('/product_detail/{id}', [ProductController::class, 'product_detail'])->name('product_detail');
 
 // ****** CART ******
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
@@ -41,49 +48,44 @@ Route::get('/checkout', [CheckOutController::class, 'checkout'])->name('checkout
 Route::post('/checkout_submit', [CheckOutController::class, 'checkout_submit'])->name('checkout.submit');
 
 // ****** LOGIN ******
-Route::get('/login', [UserLoginController::class, 'login'])->name('login');
-Route::post('login_submit', [UserLoginController::class, 'post_Login'])->name('login.submit');
-Route::get('/logout', [UserLoginController::class, 'logout'])->name('logout');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('login_submit', [LoginController::class, 'post_Login'])->name('login.submit');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // ****** SIGNUP ******
-Route::get('/sign_up', [UserSignUpController::class, 'sign_up'])->name('sign_up');
-Route::post('/sign_up_submit', [UserSignUpController::class, 'sign_up_submit'])->name('sign_up.submit');
-Route::post('/check_email_exist', [UserSignUpController::class, 'check_email_exist'])->name('check.email');
+Route::get('/sign_up', [SignUpController::class, 'sign_up'])->name('sign_up');
+Route::post('/sign_up_submit', [UserSigSignUpControllernUpController::class, 'sign_up_submit'])->name('sign_up.submit');
+Route::post('/check_email_exist', [SignUpController::class, 'check_email_exist'])->name('check.email');
 
 Route::post('/add_comment', [UserController::class, 'addComment'])->name('admin.addComment');
 
 /*
-|
-|
-|-------------------------------------------------------------------------
-| 
-| 
+|--------------------------------------------------------------------------
+| ADMIN SITE
+|--------------------------------------------------------------------------
 */
-
-//______________________________ ADMIN SITE_______________________________
-Route::get('/test', [AdminController::class, 'test'])->name('test');
 
 Route::prefix('/admin')->group(function() {
     // ****** LOGIN ******
-    Route::get('login', [AdminLoginController::class, 'login'])->name('admin.login');
+    Route::get('/', [AdminLoginController::class, 'index'])->name('admin.login');
     Route::post('login_submit', [AdminLoginController::class, 'post_Login'])->name('admin.login.submit');
     Route::get('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
 Route::prefix('/admin')->middleware(['admin.session'])->group(function() {
     // ****** PRODUCT ******
-    Route::get('product', [AdminController::class, 'product'])->name('admin.product');
-    Route::get('product_detail/{id?}', [AdminController::class, 'product_detail'])->name('admin.product_detail');
+    Route::get('product', [ProductManageController::class, 'product'])->name('admin.product');
+    Route::get('product_detail/{id?}', [ProductManageController::class, 'product_detail'])->name('admin.product_detail');
     // ****** ORDER ******
-    Route::get('order', [AdminController::class, 'order'])->name('admin.order');
-    Route::get('order_detail/{id?}', [AdminController::class, 'order_detail'])->name('admin.order_detail');
-    Route::get('get_order_detail_by_id', [AdminController::class, 'orderDetailById'])->name('admin.get_order_detail_by_id');
+    Route::get('order', [OrderManageController::class, 'order'])->name('admin.order');
+    Route::get('order_detail/{id?}', [OrderManageController::class, 'order_detail'])->name('admin.order_detail');
+    Route::get('get_order_detail_by_id', [OrderManageController::class, 'orderDetailById'])->name('admin.get_order_detail_by_id');
     Route::get('export_bill', [ExcelController::class, 'exportBill'])->name('admin.export_bill');
     // ****** CUSTOMER ******
-    Route::get('customer', [AdminController::class, 'customer'])->name('admin.customer');
-    Route::get('get_customer_by_id', [AdminController::class, 'ajaxCustomerById'])->name('admin.ajax_get_customer_by_id');
+    Route::get('customer', [CustomerManageController::class, 'customer'])->name('admin.customer');
+    Route::get('get_customer_by_id', [CustomerManageController::class, 'ajaxCustomerById'])->name('admin.ajax_get_customer_by_id');
     // ****** USER ******
-    Route::get('user', [AdminController::class, 'user'])->name('admin.user');
-    Route::get('get_user_by_id', [AdminController::class, 'ajaxUserById'])->name('admin.ajax_get_user_by_id');
+    Route::get('user', [UserManageController::class, 'user'])->name('admin.user');
+    Route::get('get_user_by_id', [UserManageController::class, 'ajaxUserById'])->name('admin.ajax_get_user_by_id');
 });
 

@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ICart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+    protected $_cart;
+    public function __construct(ICart $cartRepo)
+    {
+        $this->_cart = $cartRepo;
+    }
     public function cart()
     {
         // Get current cart from session
         $cart = Session::get('cart', []);
-        $cartCounter = cartCounter();
-        $totalMoney = cartTotalMoney();
+        $cartCounter = $this->_cart->cartCounter();
+        $totalMoney = $this->_cart->cartTotalMoney();
         $dataCart = [
             'cart' => $cart,
             'cartCounter' => $cartCounter,
@@ -55,7 +61,7 @@ class CartController extends Controller
             Session::put('cart', $cart);
 
             // Get cart couter
-            $cartCounter = cartCounter();
+            $cartCounter = $this->_cart->cartCounter();
             $response = [
                 'msg' => 'success',
                 'cartCounter' => $cartCounter,
@@ -86,8 +92,8 @@ class CartController extends Controller
             Session::put('cart', $cart);
 
             // Get cart couter
-            $cartCounter = cartCounter();
-            $totalMoney = cartTotalMoney();
+            $cartCounter = $this->_cart->cartCounter();
+            $totalMoney = $this->_cart->cartTotalMoney();
             $response = [
                 'msg' => 'success',
                 'cartCounter' => $cartCounter,
@@ -123,8 +129,8 @@ class CartController extends Controller
             Session::put('cart', $cart);
 
             // Get cart couter
-            $cartCounter = cartCounter();
-            $totalMoney = cartTotalMoney();
+            $cartCounter = $this->_cart->cartCounter();
+            $totalMoney = $this->_cart->cartTotalMoney();
             $response = [
                 'msg' => 'success',
                 'cartCounter' => $cartCounter,

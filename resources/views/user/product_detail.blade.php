@@ -379,7 +379,7 @@
                         @if (count($product_detail->product_image))
                             @foreach ($product_detail->product_image as $item)
                                 @php
-                                    $image = $item->image ? $item->image : '/images/no_image.png';
+                                    $image = $item->image ? $item->image : 'assets/images/no_image.png';
                                 @endphp
                                 <div class="item">
                                     <img src="{{ asset("storage/{$image}") }}" />
@@ -391,7 +391,7 @@
                         @if (count($product_detail->product_image))
                             @foreach ($product_detail->product_image as $item)
                                 @php
-                                    $image = $item->image ? $item->image : '/images/no_image.png';
+                                    $image = $item->image ? $item->image : 'assets/images/no_image.png';
                                 @endphp
                                 <div class="item" style="padding-right: 8px;">
                                     <img src="{{ asset("storage/{$image}") }}" />
@@ -458,7 +458,7 @@
                                 <div class="qtyplus">+</div>
                             </form>
                             @php    
-                                $image_product = count($product_detail->product_image) > 0 ? $product_detail->product_image[0]['image'] : '/images/no_image.png';
+                                $image_product = count($product_detail->product_image) > 0 ? $product_detail->product_image[0]['image'] : 'assets/images/no_image.png';
                             @endphp
                             <a href="#" class="add_to_cart round-black-btn"
                                     data-productId="{{$product_detail->product_id}}"
